@@ -1,0 +1,5 @@
+package com.github.aguilasa.metadata;
+
+public enum ColumnType {
+	STRING, INTEGER, LONG, FLOAT, DOUBLE, BIGDECIMAL, LOCALDATE, INSTANT, ZONEDDATETIME, DURATION, UUID, BOOLEAN, ENUMERATION, BLOB;
+}
