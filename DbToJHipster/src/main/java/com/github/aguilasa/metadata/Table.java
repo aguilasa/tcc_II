@@ -1,13 +1,24 @@
 package com.github.aguilasa.metadata;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Table {
 
 	@Getter
 	@Setter
+	@NonNull
 	private String name;
+
+	@Override
+	public String toString() {
+		return name;
+	}
 
 	@Override
 	public int hashCode() {
