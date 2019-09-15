@@ -1,21 +1,21 @@
 package com.github.aguilasa.db.connection;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
-import com.zaxxer.hikari.HikariDataSource;
 
 public class ConnectionFactory {
 
-	public static HikariDataSource createConnection(DatabaseType databaseType, DatabaseConfiguration configuration) throws SQLException {
+	public static Connection createConnection(DatabaseType databaseType, DatabaseConfiguration configuration) throws SQLException {
 		switch (databaseType) {
 		case Oracle:
 			return new OracleConnection(configuration).getConnection();
 		case PostgreSQL:
-			new PostgreSQLConnection(configuration).getConnection();;
+			return new PostgreSQLConnection(configuration).getConnection();
 		case SqlServer:
-			new SqlServerConnection(configuration).getConnection();;
+			return new SqlServerConnection(configuration).getConnection();
 		default:
 			break;
 		}

@@ -1,10 +1,10 @@
 package com.github.aguilasa.db.connection;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 public class PostgreSQLConnection extends BaseConnection {
 
@@ -15,13 +15,8 @@ public class PostgreSQLConnection extends BaseConnection {
 	}
 
 	@Override
-	public HikariDataSource getConnection() throws SQLException {
-		HikariConfig config = getBaseConfig();
-		config.setDriverClassName("org.postgresql.ds.PGSimpleDataSource");
-		config.setJdbcUrl(getJdbcUrl());
-		config.setUsername(configuration.getUsername());
-		config.setPassword(configuration.getPassword());
-		return new HikariDataSource(config);
+	public Connection getConnection() throws SQLException {
+		return DriverManager.getConnection(getJdbcUrl(), configuration.getUsername(), configuration.getPassword());
 	}
 
 	@Override

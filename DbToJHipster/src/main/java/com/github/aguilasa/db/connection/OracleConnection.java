@@ -1,10 +1,11 @@
 package com.github.aguilasa.db.connection;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
+
+import oracle.jdbc.pool.OracleDataSource;
 
 public class OracleConnection extends BaseConnection {
 
@@ -15,14 +16,10 @@ public class OracleConnection extends BaseConnection {
 	}
 
 	@Override
-	public HikariDataSource getConnection() throws SQLException {
-		HikariConfig config = getBaseConfig();
-		config.setDriverClassName("oracle.jdbc.pool.OracleDataSource");
-		config.setJdbcUrl(getJdbcUrl());
-		config.setUsername(configuration.getUsername());
-		config.setPassword(configuration.getPassword());
-
-		return new HikariDataSource(config);
+	public Connection getConnection() throws SQLException {
+		OracleDataSource dataSource = new OracleDataSource();
+		dataSource.setURL(getJdbcUrl());
+		return dataSource.getConnection(configuration.getUsername(), configuration.getPassword());
 	}
 
 	@Override

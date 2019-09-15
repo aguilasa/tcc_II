@@ -1,10 +1,10 @@
 package com.github.aguilasa.db.connection;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
-import com.zaxxer.hikari.HikariConfig;
-import com.zaxxer.hikari.HikariDataSource;
 
 public class SqlServerConnection extends BaseConnection {
 
@@ -15,14 +15,14 @@ public class SqlServerConnection extends BaseConnection {
 	}
 
 	@Override
-	public HikariDataSource getConnection() throws SQLException {
-		HikariConfig config = getBaseConfig();
-		config.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDataSource");
-		config.setJdbcUrl(getJdbcUrl());
-		config.setUsername(configuration.getUsername());
-		config.setPassword(configuration.getPassword());
+	public Connection getConnection() throws SQLException {
+		try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
 
-		return new HikariDataSource(config);
+		return DriverManager.getConnection(getJdbcUrl(), configuration.getUsername(), configuration.getPassword());
 	}
 
 	@Override
