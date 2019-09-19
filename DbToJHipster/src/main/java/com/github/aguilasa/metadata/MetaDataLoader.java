@@ -3,6 +3,7 @@ package com.github.aguilasa.metadata;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -36,14 +37,22 @@ public class MetaDataLoader {
 	private Set<Table> tables = new LinkedHashSet<>();
 
 	private DatabaseMetaData getMetaData() throws SQLException {
+		checkConnection();
 		if (metaData == null) {
 			metaData = connection.getMetaData();
 		}
 		return metaData;
 	}
 
+	public void printResultset(ResultSet result) throws SQLException {
+		ResultSetMetaData md = result.getMetaData();
+		for (int i = 1; i <= md.getColumnCount(); i++) {
+			System.out.println(md.getColumnName(i));
+		}
+		System.out.println();
+	}
+
 	public void loadTables() throws SQLException {
-		checkConnection();
 		tables.clear();
 		ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);
 		while (result.next()) {
