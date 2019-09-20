@@ -13,5 +13,6 @@ public class DatabaseConfiguration {
 	private String username = "";
 	private String password = "";
 	private String schema = "";
+	private DatabaseType databaseType;
 
 }

@@ -11,9 +11,15 @@ http://tutorials.jenkov.com/jdbc/databasemetadata.html
 https://www.progress.com/blogs/jdbc-tutorial-extracting-database-metadata-via-jdbc-driver
 
 
-getTable columns: table_cat, table_schem, table_name, table_type, remarks
+getTable columns: 
+TABLE_CAT
+TABLE_SCHEM
+TABLE_NAME
+TABLE_TYPE
+REMARKS
 
-getColumns columns: TABLE_CAT
+getColumns columns: 
+TABLE_CAT
 TABLE_SCHEM
 TABLE_NAME
 COLUMN_NAME

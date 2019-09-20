@@ -10,19 +10,16 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.github.aguilasa.db.DatabaseType;
+import com.github.aguilasa.db.DatabaseConfiguration;
 
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class MetaDataLoader {
 
-	private static final String[] TABLE_TYPE = { "TABLE" };
+	private static final String TABLE = "TABLE";
+	private static final String[] TABLE_TYPE = { TABLE };
 
 	@Getter
 	@Setter
@@ -31,12 +28,20 @@ public class MetaDataLoader {
 	@Getter
 	@Setter
 	@NonNull
-	private DatabaseType databaseType;
+	private DatabaseConfiguration configuration;
 
 	private DatabaseMetaData metaData;
 
+	private String schema;
+
 	@Getter
 	private Set<Table> tables = new LinkedHashSet<>();
+
+	public MetaDataLoader(Connection connection, DatabaseConfiguration configuration) {
+		this.connection = connection;
+		this.configuration = configuration;
+		this.schema = getSchema();
+	}
 
 	private DatabaseMetaData getMetaData() throws SQLException {
 		checkConnection();
@@ -78,12 +83,31 @@ public class MetaDataLoader {
 		tables.clear();
 		try (ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);) {
 			while (result.next()) {
-				Table table = new Table(result.getString("TABLE_NAME"));
-				loadColumns(table);
-				tables.add(table);
+				String tableSchema = result.getString("TABLE_SCHEM");
+				String tableType = result.getString("TABLE_TYPE");
+				if (isTable(tableType) && validateSchema(tableSchema)) {
+					Table table = new Table(result.getString("TABLE_NAME"));
+					loadColumns(table);
+					tables.add(table);
+				}
 			}
 			printTypes();
 		}
+	}
+
+	private boolean validateSchema(String tableSchema) {
+		if (this.schema != null) {
+			return this.schema.equalsIgnoreCase(tableSchema);
+		}
+		return true;
+	}
+
+	private String getSchema() {
+		return !StringUtils.isEmpty(configuration.getSchema()) ? configuration.getSchema() : null;
+	}
+
+	private boolean isTable(String tableType) {
+		return tableType.equalsIgnoreCase(TABLE);
 	}
 
 	public void printTypes() {
@@ -99,7 +123,6 @@ public class MetaDataLoader {
 	 * @throws SQLException
 	 */
 	public void loadColumns(Table table) throws SQLException {
-		System.out.println(table.getName());
 		try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
 			while (result.next()) {
 				Column column = new Column();
