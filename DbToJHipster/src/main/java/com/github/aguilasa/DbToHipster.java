@@ -19,7 +19,7 @@ public class DbToHipster {
 		pg.setUsername("postgres");
 		pg.setPassword("admin");
 		pg.setSchema("test_e");
-		
+
 		DatabaseConfiguration sql = new DatabaseConfiguration();
 		sql.setHost("teste65");
 		sql.setPort(1433);
@@ -27,8 +27,15 @@ public class DbToHipster {
 		sql.setUsername("sa");
 		sql.setPassword("S3nior2018");
 
-		DatabaseType dbType = DatabaseType.SqlServer;
-		Connection connection = ConnectionFactory.createConnection(dbType, sql);
+		DatabaseConfiguration ora = new DatabaseConfiguration();
+		ora.setHost("teste65");
+		ora.setPort(1521);
+		ora.setDatabase("XE");
+		ora.setUsername("rhpayroll");
+		ora.setPassword("rhpayroll");
+
+		DatabaseType dbType = DatabaseType.Oracle;
+		Connection connection = ConnectionFactory.createConnection(dbType, ora);
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, dbType);
 		metaDataLoader.loadTables();
 	}

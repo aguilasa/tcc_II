@@ -76,12 +76,17 @@ public class MetaDataLoader {
 	public void loadTables() throws SQLException {
 		header = true;
 		tables.clear();
-		ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);
-		while (result.next()) {
-			Table table = new Table(result.getString("TABLE_NAME"));
-			loadColumns(table);
-			tables.add(table);
+		try (ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);) {
+			while (result.next()) {
+				Table table = new Table(result.getString("TABLE_NAME"));
+				loadColumns(table);
+				tables.add(table);
+			}
+			printTypes();
 		}
+	}
+
+	public void printTypes() {
 		for (String type : types) {
 			System.out.println(String.format("%s(\"%s\"), //", type.toUpperCase(), type.toLowerCase()));
 		}
@@ -94,11 +99,13 @@ public class MetaDataLoader {
 	 * @throws SQLException
 	 */
 	public void loadColumns(Table table) throws SQLException {
-		ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);
-		while (result.next()) {
-			Column column = new Column();
-			loadColumnProperties(column, result);
-			table.addColumn(column);
+		System.out.println(table.getName());
+		try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
+			while (result.next()) {
+				Column column = new Column();
+				loadColumnProperties(column, result);
+				table.addColumn(column);
+			}
 		}
 	}
 
