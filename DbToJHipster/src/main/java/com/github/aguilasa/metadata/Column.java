@@ -14,6 +14,7 @@ public class Column {
 	private int precision;
 	private int scale;
 	private boolean notNull;
+	private boolean autoIncrement;
 
 	@Override
 	public int hashCode() {

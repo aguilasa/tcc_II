@@ -1,5 +1,8 @@
 package com.github.aguilasa.metadata;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -14,6 +17,14 @@ public class Table {
 	@Setter
 	@NonNull
 	private String name;
+	
+	@Getter
+	private Set<Column> columns = new LinkedHashSet<>();
+	
+	public void addColumn(Column column) {
+		column.setOwner(this);
+		this.columns.add(column);
+	}
 
 	@Override
 	public String toString() {
