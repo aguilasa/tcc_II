@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.github.aguilasa.db.DatabaseType;
 
 import lombok.Getter;
@@ -80,6 +82,9 @@ public class MetaDataLoader {
 			loadColumns(table);
 			tables.add(table);
 		}
+		for (String type : types) {
+			System.out.println(String.format("%s(\"%s\"), //", type.toUpperCase(), type.toLowerCase()));
+		}
 	}
 
 	/**
@@ -106,13 +111,31 @@ public class MetaDataLoader {
 	 */
 	private void loadColumnProperties(Column column, ResultSet result) throws SQLException {
 		column.setName(result.getString("COLUMN_NAME"));
-		column.setType(ColumnType.getEnum(result.getString("TYPE_NAME")));
-		column.setLength(Integer.valueOf(result.getString("COLUMN_SIZE")));
+		String typeName = result.getString("TYPE_NAME");
+		types.add(typeName);
+		column.setType(ColumnType.getEnum(typeName));
+		String columnSize = result.getString("COLUMN_SIZE");
+		if (StringUtils.isNumeric(columnSize)) {
+			column.setLength(Integer.valueOf(columnSize));
+		}
 		column.setPrecision(column.getLength());
-		column.setScale(Integer.valueOf(result.getString("DECIMAL_DIGITS")));
+		String decimalDigits = result.getString("DECIMAL_DIGITS");
+		if (StringUtils.isNumeric(decimalDigits)) {
+			column.setScale(Integer.valueOf(decimalDigits));
+		}
 		column.setNotNull(result.getString("IS_NULLABLE").equalsIgnoreCase("YES"));
-		column.setAutoIncrement(result.getString("IS_AUTOINCREMENT").equalsIgnoreCase("YES"));
+		if (findColumn("IS_AUTOINCREMENT", result)) {
+			column.setAutoIncrement(result.getString("IS_AUTOINCREMENT").equalsIgnoreCase("YES"));
+		}
 //		printResultset(result);
+	}
+
+	private boolean findColumn(String name, ResultSet result) {
+		try {
+			return result.findColumn(name) > 0;
+		} catch (SQLException e) {
+		}
+		return false;
 	}
 
 	private void checkConnection() {
@@ -120,5 +143,7 @@ public class MetaDataLoader {
 			throw new RuntimeException("O objeto de conexão com o banco de dados não foi informado.");
 		}
 	}
+
+	private Set<String> types = new LinkedHashSet<>();
 
 }

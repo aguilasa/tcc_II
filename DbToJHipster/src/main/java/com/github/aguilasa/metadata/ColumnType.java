@@ -13,7 +13,21 @@ public enum ColumnType {
 	TEXT("text"), //
 	JSONB("jsonb"), //
 	SERIAL("serial"), //
-	BIGSERIAL("bigserial");
+	BIGSERIAL("bigserial"), //
+	FLOAT8("float8"), //
+	TIMESTAMPTZ("timestamptz"), //
+	INT2("int2"), //
+	TIME("time"), //
+	BPCHAR("bpchar"), //
+	BYTEA("bytea"), //
+	BIGINT("bigint"), //
+	DATETIME("datetime"), //
+	BIGINT_IDENTITY("bigint identity"), //
+	SMALLINT("smallint"), //
+	INT("int"), //
+	IMAGE("image"), //
+	INT_IDENTITY("int identity"), //
+	NVARCHAR("nvarchar"); //
 
 	private String value;
 

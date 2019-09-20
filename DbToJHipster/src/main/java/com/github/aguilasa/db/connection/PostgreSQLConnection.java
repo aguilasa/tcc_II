@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.github.aguilasa.db.DatabaseConfiguration;
 
 public class PostgreSQLConnection extends BaseConnection {
@@ -16,7 +18,11 @@ public class PostgreSQLConnection extends BaseConnection {
 
 	@Override
 	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(getJdbcUrl(), configuration.getUsername(), configuration.getPassword());
+		Connection connection = DriverManager.getConnection(getJdbcUrl(), configuration.getUsername(), configuration.getPassword());
+		if (!StringUtils.isEmpty(configuration.getSchema())) {
+			connection.setSchema(configuration.getSchema());
+		}
+		return connection;
 	}
 
 	@Override
