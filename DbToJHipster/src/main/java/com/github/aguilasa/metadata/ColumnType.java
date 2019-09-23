@@ -27,7 +27,11 @@ public enum ColumnType {
 	INT("int"), //
 	IMAGE("image"), //
 	INT_IDENTITY("int identity"), //
-	NVARCHAR("nvarchar"); //
+	NVARCHAR("nvarchar"), //
+	VARCHAR2("varchar2"), //
+	NUMBER("number"), //
+	CLOB("clob"), //
+	BLOB("blob");
 
 	private String value;
 
