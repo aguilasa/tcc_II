@@ -9,7 +9,7 @@
     "baseName": "app",
     "packageName": "com.aguilasa.app",
     "packageFolder": "com/aguilasa/app",
-    "serverPort": "8080",
+    "serverPort": "8181",
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",
     "enableHibernateCache": true,
