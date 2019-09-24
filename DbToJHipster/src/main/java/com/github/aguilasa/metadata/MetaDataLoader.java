@@ -95,6 +95,12 @@ public class MetaDataLoader {
 		}
 	}
 
+	public void printTables() {
+		for (Table table : tables) {
+
+		}
+	}
+
 	private boolean validateSchema(String tableSchema) {
 		if (this.schema != null) {
 			return this.schema.equalsIgnoreCase(tableSchema);

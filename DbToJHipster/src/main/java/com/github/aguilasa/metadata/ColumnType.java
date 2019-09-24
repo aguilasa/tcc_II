@@ -48,4 +48,9 @@ public enum ColumnType {
 		}
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return value;
+	}
 }

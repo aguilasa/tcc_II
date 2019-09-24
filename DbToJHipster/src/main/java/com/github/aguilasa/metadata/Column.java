@@ -2,11 +2,14 @@ package com.github.aguilasa.metadata;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class Column {
 
+	@ToString.Exclude
 	private Table owner;
 	private String name;
 	private ColumnType type;
