@@ -10,6 +10,8 @@ http://tutorials.jenkov.com/jdbc/databasemetadata.html
 
 https://www.progress.com/blogs/jdbc-tutorial-extracting-database-metadata-via-jdbc-driver
 
+https://www.baeldung.com/jhipster
+
 
 getTable columns: 
 TABLE_CAT

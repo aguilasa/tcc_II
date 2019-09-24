@@ -21,6 +21,15 @@ public class DbToHipster {
 		pg.setSchema("test_e");
 		pg.setDatabaseType(DatabaseType.PostgreSQL);
 
+		DatabaseConfiguration pg_local = new DatabaseConfiguration();
+		pg_local.setHost("localhost");
+		pg_local.setPort(5432);
+		pg_local.setDatabase("postgres");
+		pg_local.setUsername("postgres");
+		pg_local.setPassword("postgres");
+		pg_local.setSchema("analytics");
+		pg_local.setDatabaseType(DatabaseType.PostgreSQL);
+
 		DatabaseConfiguration sql = new DatabaseConfiguration();
 		sql.setHost("teste65");
 		sql.setPort(1433);
@@ -37,7 +46,7 @@ public class DbToHipster {
 		ora.setPassword("rhpayroll");
 		ora.setDatabaseType(DatabaseType.Oracle);
 
-		DatabaseConfiguration conf = ora;
+		DatabaseConfiguration conf = pg_local;
 		Connection connection = ConnectionFactory.createConnection(conf);
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, conf);
 		metaDataLoader.loadTables();

@@ -1,0 +1,6 @@
+Install Yeoman
+
+npm install -g npm
+
+npm install -g yo generator-jhipster
+npm install -g generator-jhipster
