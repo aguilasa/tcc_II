@@ -3,14 +3,11 @@ package com.github.aguilasa.metadata;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
+@ToString
 public class Table {
 
 	@Getter
@@ -24,11 +21,6 @@ public class Table {
 	public void addColumn(Column column) {
 		column.setOwner(this);
 		this.columns.add(column);
-	}
-
-	@Override
-	public String toString() {
-		return name;
 	}
 
 	@Override
