@@ -4,3 +4,8 @@ npm install -g npm
 
 npm install -g yo generator-jhipster
 npm install -g generator-jhipster
+
+npm install -g generator-jhipster-module
+npm install -g generator-jhipster-bootswatch
+
+yo jhipster-bootswatch

@@ -12,7 +12,7 @@
     "serverPort": "8181",
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",
-    "enableHibernateCache": true,
+    "enableHibernateCache": false,
     "websocket": false,
     "databaseType": "sql",
     "devDatabaseType": "h2Disk",
@@ -21,14 +21,14 @@
     "messageBroker": false,
     "serviceDiscoveryType": false,
     "buildTool": "maven",
-    "enableSwaggerCodegen": false,
-    "jwtSecretKey": "MTAxMzQ0M2JhZTNjNzM1ZDU0MmVhMmM4ODQ0OTczNTNmNWE4MGRiNWE4MjExM2EwYmZiZGJlNjgyM2MzMmMzZWMxNGUzYjJjODM5YTM4NDM4YzgxNTEzYjAzYjRiYTUxN2NhZTQ5Mzc1ZjliYWVjMGYwOTdkMzRjNDhkNTE1MmQ=",
+    "enableSwaggerCodegen": true,
+    "jwtSecretKey": "NzQyMDYyOTdjMWRmZjcxMjE0NTY3YjFlYWJlNTNhYWJiMzY4ZThkYjNmMGU4NjA5ZWUzZGQ0ODRhM2Y4YTgxYTUyNGQ3YjQ1ZWMzZDJkOWYxMGRmYzdhZWIyNGNjNzU0Yzc1OWE0MDk5YjA2OGE2ZTllOTRmOTc1YTE0ZGE2YjM=",
     "embeddableLaunchScript": false,
     "useSass": true,
     "clientPackageManager": "npm",
     "clientFramework": "angularX",
-    "clientTheme": "materia",
-    "clientThemeVariant": "primary",
+    "clientTheme": "none",
+    "clientThemeVariant": "",
     "testFrameworks": [
       "gatling",
       "protractor"
@@ -41,7 +41,8 @@
     "nativeLanguage": "en",
     "languages": [
       "en",
-      "pt-br"
+      "pt-br",
+      "es"
     ],
     "blueprints": []
   }

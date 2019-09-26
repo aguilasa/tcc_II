@@ -91,13 +91,14 @@ public class MetaDataLoader {
 					tables.add(table);
 				}
 			}
-			printTypes();
+//			printTypes();
+			printTables();
 		}
 	}
 
 	public void printTables() {
 		for (Table table : tables) {
-
+			System.out.println(table);
 		}
 	}
 
@@ -125,7 +126,7 @@ public class MetaDataLoader {
 	/**
 	 * Carrega os campos da tabela
 	 * 
-	 * @param table tabela de onde serão carregados os campos
+	 * @param table tabela de onde serï¿½o carregados os campos
 	 * @throws SQLException
 	 */
 	public void loadColumns(Table table) throws SQLException {
@@ -139,10 +140,10 @@ public class MetaDataLoader {
 	}
 
 	/**
-	 * Carrega as informações do campo
+	 * Carrega as informaï¿½ï¿½es do campo
 	 * 
 	 * @param column campo a ser carregado
-	 * @param result ResultSet com as informações do campo
+	 * @param result ResultSet com as informaï¿½ï¿½es do campo
 	 * @throws SQLException
 	 */
 	private void loadColumnProperties(Column column, ResultSet result) throws SQLException {
@@ -176,7 +177,7 @@ public class MetaDataLoader {
 
 	private void checkConnection() {
 		if (connection == null) {
-			throw new RuntimeException("O objeto de conexão com o banco de dados não foi informado.");
+			throw new RuntimeException("O objeto de conexï¿½o com o banco de dados nï¿½o foi informado.");
 		}
 	}
 

@@ -2,12 +2,12 @@ package com.github.aguilasa.metadata;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import lombok.*;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString
 public class Table {
 
 	@Getter
@@ -21,6 +21,12 @@ public class Table {
 	public void addColumn(Column column) {
 		column.setOwner(this);
 		this.columns.add(column);
+	}
+
+	@Override
+	public String toString() {
+		String fields = columns.stream().map(Column::toString).collect(Collectors.joining("\r\n\t")).trim();
+		return String.format("TABLE %s (\r\n\t%s\r\n)", name, fields);
 	}
 
 	@Override

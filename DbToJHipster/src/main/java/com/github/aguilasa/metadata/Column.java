@@ -6,7 +6,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class Column {
 
 	@ToString.Exclude
@@ -18,6 +17,11 @@ public class Column {
 	private int scale;
 	private boolean notNull;
 	private boolean autoIncrement;
+
+	@Override
+	public String toString() {
+		return String.format("%s %s", name, type);
+	}
 
 	@Override
 	public int hashCode() {

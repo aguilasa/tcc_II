@@ -63,6 +63,7 @@
         <validation-api.version>2.0.1.Final</validation-api.version>
         <jaxb-runtime.version>2.3.2</jaxb-runtime.version>
         <mapstruct.version>1.3.0.Final</mapstruct.version>
+        <jackson-databind-nullable.version>0.2.0</jackson-databind-nullable.version>
         <!-- Plugin versions -->
         <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
@@ -79,6 +80,7 @@
         <jacoco-maven-plugin.version>0.8.4</jacoco-maven-plugin.version>
         <jib-maven-plugin.version>1.5.1</jib-maven-plugin.version>
         <lifecycle-mapping.version>1.0.0</lifecycle-mapping.version>
+        <openapi-generator-maven-plugin.version>4.1.2</openapi-generator-maven-plugin.version>
         <properties-maven-plugin.version>1.0.0</properties-maven-plugin.version>
         <sonar-maven-plugin.version>3.6.1.1688</sonar-maven-plugin.version>
         <jacoco.utReportFolder>${project.build.directory}/jacoco/test</jacoco.utReportFolder>
@@ -157,6 +159,11 @@
             <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.openapitools</groupId>
+            <artifactId>jackson-databind-nullable</artifactId>
+            <version>${jackson-databind-nullable.version}</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
@@ -177,10 +184,6 @@
         <dependency>
             <groupId>org.ehcache</groupId>
             <artifactId>ehcache</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-jcache</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -449,6 +452,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <!--
+                    Plugin that provides API-first development using openapi-generator to
+                    generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
+                -->
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
             </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
@@ -767,6 +778,35 @@
                             <goals>
                                 <goal>verify</goal>
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <!--
+                        Plugin that provides API-first development using openapi-generator to
+                        generate Spring-MVC endpoint stubs at compile time from an OpenAPI definition file
+                    -->
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>${openapi-generator-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>generate</goal>
+                            </goals>
+                            <configuration>
+                                <inputSpec>${project.basedir}/src/main/resources/swagger/api.yml</inputSpec>
+                                <generatorName>spring</generatorName>
+                                <apiPackage>com.aguilasa.app.web.api</apiPackage>
+                                <modelPackage>com.aguilasa.app.web.api.model</modelPackage>
+                                <supportingFilesToGenerate>ApiUtil.java</supportingFilesToGenerate>
+                                <importMappings>Problem=org.zalando.problem.Problem</importMappings>
+                                <skipValidateSpec>false</skipValidateSpec>
+                                <configOptions>
+                                    <delegatePattern>true</delegatePattern>
+                                    <title>app</title>
+                                </configOptions>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -1100,6 +1140,19 @@
                                             </pluginExecutionFilter>
                                             <action>
                                                 <ignore/>
+                                            </action>
+                                        </pluginExecution>
+                                        <pluginExecution>
+                                            <pluginExecutionFilter>
+                                                <groupId>org.openapitools</groupId>
+                                                <artifactId>openapi-generator-maven-plugin</artifactId>
+                                                <versionRange>${openapi-generator-maven-plugin.version}</versionRange>
+                                                <goals>
+                                                    <goal>generate</goal>
+                                                </goals>
+                                            </pluginExecutionFilter>
+                                            <action>
+                                                <ignore />
                                             </action>
                                         </pluginExecution>
                                     </pluginExecutions>
