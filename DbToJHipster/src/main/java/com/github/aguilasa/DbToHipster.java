@@ -46,7 +46,7 @@ public class DbToHipster {
 		ora.setPassword("rhpayroll");
 		ora.setDatabaseType(DatabaseType.Oracle);
 
-		DatabaseConfiguration conf = pg;
+		DatabaseConfiguration conf = pg_local;
 		Connection connection = ConnectionFactory.createConnection(conf);
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, conf);
 		metaDataLoader.loadTables();

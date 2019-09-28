@@ -32,7 +32,7 @@ public class MetaDataLoader {
 
 	private DatabaseMetaData metaData;
 
-	private String schema;
+	private String schema = null;
 
 	@Getter
 	private Set<Table> tables = new LinkedHashSet<>();
@@ -88,6 +88,7 @@ public class MetaDataLoader {
 				if (isTable(tableType) && validateSchema(tableSchema)) {
 					Table table = new Table(result.getString("TABLE_NAME"));
 					loadColumns(table);
+					loadPrimaryKeys(table);
 					tables.add(table);
 				}
 			}
@@ -140,10 +141,24 @@ public class MetaDataLoader {
 	}
 
 	/**
-	 * Carrega as informa��es do campo
+	 * Carrega as chaves primárias da tabela
+	 *
+	 * @param table tabela de onde ser�o carregados as chaves
+	 * @throws SQLException
+	 */
+	public void loadPrimaryKeys(Table table) throws SQLException {
+		try (ResultSet result = getMetaData().getPrimaryKeys(null, schema, table.getName());) {
+			while (result.next()) {
+//				printResultset(result);
+			}
+		}
+	}
+
+	/**
+	 * Carrega as informações do campo
 	 * 
 	 * @param column campo a ser carregado
-	 * @param result ResultSet com as informa��es do campo
+	 * @param result ResultSet com as informações do campo
 	 * @throws SQLException
 	 */
 	private void loadColumnProperties(Column column, ResultSet result) throws SQLException {
@@ -177,7 +192,7 @@ public class MetaDataLoader {
 
 	private void checkConnection() {
 		if (connection == null) {
-			throw new RuntimeException("O objeto de conex�o com o banco de dados n�o foi informado.");
+			throw new RuntimeException("O objeto de conexão com o banco de dados não foi informado.");
 		}
 	}
 

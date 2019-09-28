@@ -17,10 +17,18 @@ public class Table {
 	
 	@Getter
 	private Set<Column> columns = new LinkedHashSet<>();
-	
+
+	@Getter
+	private Set<PrimaryKey> primaryKeys = new LinkedHashSet<>();
+
 	public void addColumn(Column column) {
 		column.setOwner(this);
 		this.columns.add(column);
+	}
+
+	public void addPrimaryKey(PrimaryKey primaryKey) {
+		primaryKey.setOwner(this);
+		this.primaryKeys.add(primaryKey);
 	}
 
 	@Override

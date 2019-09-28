@@ -26,14 +26,14 @@ public class ForeignKey extends Constraint {
 
 	private void checkOwner(Column checkedColumn, boolean isReference) {
 		if (getOwner() == null) {
-			String reference = isReference ? " referência" : "";
-			throw new RuntimeException(String.format("Erro ao adicionar o campo%s '%s' na chave estrangeira, pois não foi atribuída uma tabela para esta chave.", reference, checkedColumn.getName()));
+			String reference = isReference ? " referÃªncia" : "";
+			throw new RuntimeException(String.format("Erro ao adicionar o campo%s '%s' na chave estrangeira, pois nÃ£o foi atribuÃ­da uma tabela para esta chave.", reference, checkedColumn.getName()));
 		}
 	}
 
 	private void checkColumnOwner(Column checkedColumn) {
 		if (checkedColumn.getOwner() == null) {
-			throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na chave estrangeira da tabela '%', pois o mesmo não pertence a nenhuma tabela.", checkedColumn.getName(), getOwner().getName()));
+			throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na chave estrangeira da tabela '%', pois o mesmo nÃ£o pertence a nenhuma tabela.", checkedColumn.getName(), getOwner().getName()));
 		}
 	}
 

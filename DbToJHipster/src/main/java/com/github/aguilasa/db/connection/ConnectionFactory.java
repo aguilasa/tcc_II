@@ -19,7 +19,7 @@ public class ConnectionFactory {
 			break;
 		}
 
-		throw new RuntimeException("Tipo de banco de dados n„o suportado.");
+		throw new RuntimeException("Tipo de banco de dados n√£o suportado.");
 	}
 
 }
