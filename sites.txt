@@ -15,3 +15,4 @@ https://www.baeldung.com/jhipster
 https://www.ionos.com/digitalguide/websites/web-development/jhipster/
 
 
+https://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html

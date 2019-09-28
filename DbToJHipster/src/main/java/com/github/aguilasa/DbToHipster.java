@@ -49,7 +49,7 @@ public class DbToHipster {
 		DatabaseConfiguration conf = pg_local;
 		Connection connection = ConnectionFactory.createConnection(conf);
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, conf);
-		metaDataLoader.loadTables();
+		metaDataLoader.loadAll();
 	}
 
 }

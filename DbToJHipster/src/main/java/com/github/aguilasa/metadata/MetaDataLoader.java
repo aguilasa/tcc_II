@@ -18,184 +18,226 @@ import lombok.Setter;
 
 public class MetaDataLoader {
 
-	private static final String TABLE = "TABLE";
-	private static final String[] TABLE_TYPE = { TABLE };
+    private static final String TABLE = "TABLE";
+    private static final String[] TABLE_TYPE = {TABLE};
 
-	@Getter
-	@Setter
-	@NonNull
-	private Connection connection;
-	@Getter
-	@Setter
-	@NonNull
-	private DatabaseConfiguration configuration;
+    @Getter
+    @Setter
+    @NonNull
+    private Connection connection;
+    @Getter
+    @Setter
+    @NonNull
+    private DatabaseConfiguration configuration;
 
-	private DatabaseMetaData metaData;
+    private DatabaseMetaData metaData;
 
-	private String schema = null;
+    private String schema = null;
 
-	@Getter
-	private Set<Table> tables = new LinkedHashSet<>();
+    @Getter
+    private Set<Table> tables = new LinkedHashSet<>();
 
-	public MetaDataLoader(Connection connection, DatabaseConfiguration configuration) {
-		this.connection = connection;
-		this.configuration = configuration;
-		this.schema = getSchema();
-	}
+    public MetaDataLoader(Connection connection, DatabaseConfiguration configuration) {
+        this.connection = connection;
+        this.configuration = configuration;
+        this.schema = getSchema();
+    }
 
-	private DatabaseMetaData getMetaData() throws SQLException {
-		checkConnection();
-		if (metaData == null) {
-			metaData = connection.getMetaData();
-		}
-		return metaData;
-	}
+    private DatabaseMetaData getMetaData() throws SQLException {
+        checkConnection();
+        if (metaData == null) {
+            metaData = connection.getMetaData();
+        }
+        return metaData;
+    }
 
-	private boolean header = false;
+    private boolean header = false;
 
-	public void printResultset(ResultSet result) throws SQLException {
-		ResultSetMetaData md = result.getMetaData();
-		int columnCount = md.getColumnCount();
-		if (header) {
-			for (int i = 1; i <= columnCount; i++) {
-				if (i > 1)
-					System.out.print("\t");
-				System.out.print(md.getColumnName(i));
-			}
-			System.out.println();
-			header = false;
-		}
-		for (int i = 1; i <= columnCount; i++) {
-			if (i > 1)
-				System.out.print("\t");
-			System.out.print(result.getString(i));
-		}
-		System.out.println();
-	}
+    public void printResultset(ResultSet result) throws SQLException {
+        ResultSetMetaData md = result.getMetaData();
+        int columnCount = md.getColumnCount();
+        if (header) {
+            for (int i = 1; i <= columnCount; i++) {
+                if (i > 1)
+                    System.out.print("\t");
+                System.out.print(md.getColumnName(i));
+            }
+            System.out.println();
+            header = false;
+        }
+        for (int i = 1; i <= columnCount; i++) {
+            if (i > 1)
+                System.out.print("\t");
+            System.out.print(result.getString(i));
+        }
+        System.out.println();
+    }
 
-	/**
-	 * Carrega as tabelas da base dados
-	 * 
-	 * @throws SQLException
-	 */
-	public void loadTables() throws SQLException {
-		header = true;
-		tables.clear();
-		try (ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);) {
-			while (result.next()) {
-				String tableSchema = result.getString("TABLE_SCHEM");
-				String tableType = result.getString("TABLE_TYPE");
-				if (isTable(tableType) && validateSchema(tableSchema)) {
-					Table table = new Table(result.getString("TABLE_NAME"));
-					loadColumns(table);
-					loadPrimaryKeys(table);
-					tables.add(table);
-				}
-			}
-//			printTypes();
-			printTables();
-		}
-	}
+    public Table getTableByName(String name) {
+        return tables.stream().filter(t -> t.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
 
-	public void printTables() {
-		for (Table table : tables) {
-			System.out.println(table);
-		}
-	}
+    /**
+     * Carrega as tabelas da base dados
+     *
+     * @throws SQLException
+     */
+    public void loadTables() throws SQLException {
+        header = true;
+        tables.clear();
+        try (ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);) {
+            while (result.next()) {
+                String tableSchema = result.getString("TABLE_SCHEM");
+                String tableType = result.getString("TABLE_TYPE");
+                if (isTable(tableType) && validateSchema(tableSchema)) {
+                    Table table = new Table(result.getString("TABLE_NAME"));
+                    tables.add(table);
+                }
+            }
+        }
+    }
 
-	private boolean validateSchema(String tableSchema) {
-		if (this.schema != null) {
-			return this.schema.equalsIgnoreCase(tableSchema);
-		}
-		return true;
-	}
+    /**
+     * Carrega todas as tabelas, campos, chaves primárias e chaves estrangeiras
+     */
+    public void loadAll() throws SQLException {
+        loadTables();
+        loadAllTablesColumns();
+        loadAllTablesPrimaryKeys();
+        loadAllTablesForeignKeys();
+    }
 
-	private String getSchema() {
-		return !StringUtils.isEmpty(configuration.getSchema()) ? configuration.getSchema() : null;
-	}
+    private void loadAllTablesColumns() throws SQLException {
+        for (Table table : tables) {
+            loadColumns(table);
+        }
+    }
 
-	private boolean isTable(String tableType) {
-		return tableType.equalsIgnoreCase(TABLE);
-	}
+    private void loadAllTablesPrimaryKeys() throws SQLException {
+        for (Table table : tables) {
+            loadPrimaryKeys(table);
+        }
+    }
 
-	public void printTypes() {
-		for (String type : types) {
-			System.out.println(String.format("%s(\"%s\"), //", type.toUpperCase(), type.toLowerCase()));
-		}
-	}
+    private void loadAllTablesForeignKeys() throws SQLException {
+        for (Table table : tables) {
+            loadForeignKeys(table);
+        }
+    }
 
-	/**
-	 * Carrega os campos da tabela
-	 * 
-	 * @param table tabela de onde ser�o carregados os campos
-	 * @throws SQLException
-	 */
-	public void loadColumns(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
-			while (result.next()) {
-				Column column = new Column();
-				loadColumnProperties(column, result);
-				table.addColumn(column);
-			}
-		}
-	}
+    public void printTables() {
+        for (Table table : tables) {
+            System.out.println(table);
+        }
+    }
 
-	/**
-	 * Carrega as chaves primárias da tabela
-	 *
-	 * @param table tabela de onde ser�o carregados as chaves
-	 * @throws SQLException
-	 */
-	public void loadPrimaryKeys(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getPrimaryKeys(null, schema, table.getName());) {
-			while (result.next()) {
+    private boolean validateSchema(String tableSchema) {
+        if (this.schema != null) {
+            return this.schema.equalsIgnoreCase(tableSchema);
+        }
+        return true;
+    }
+
+    private String getSchema() {
+        return !StringUtils.isEmpty(configuration.getSchema()) ? configuration.getSchema() : null;
+    }
+
+    private boolean isTable(String tableType) {
+        return tableType.equalsIgnoreCase(TABLE);
+    }
+
+    public void printTypes() {
+        for (String type : types) {
+            System.out.println(String.format("%s(\"%s\"), //", type.toUpperCase(), type.toLowerCase()));
+        }
+    }
+
+    /**
+     * Carrega os campos da tabela
+     *
+     * @param table tabela de onde ser�o carregados os campos
+     * @throws SQLException
+     */
+    public void loadColumns(Table table) throws SQLException {
+        try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
+            while (result.next()) {
+                Column column = new Column();
+                loadColumnProperties(column, result);
+                table.addColumn(column);
+            }
+        }
+    }
+
+    /**
+     * Carrega as chaves primárias da tabela
+     *
+     * @param table tabela de onde ser�o carregados as chaves
+     * @throws SQLException
+     */
+    public void loadPrimaryKeys(Table table) throws SQLException {
+        try (ResultSet result = getMetaData().getPrimaryKeys(null, schema, table.getName());) {
+            while (result.next()) {
 //				printResultset(result);
-			}
-		}
-	}
+            }
+        }
+    }
 
-	/**
-	 * Carrega as informações do campo
-	 * 
-	 * @param column campo a ser carregado
-	 * @param result ResultSet com as informações do campo
-	 * @throws SQLException
-	 */
-	private void loadColumnProperties(Column column, ResultSet result) throws SQLException {
-		column.setName(result.getString("COLUMN_NAME"));
-		String typeName = result.getString("TYPE_NAME");
-		types.add(typeName);
-		column.setType(ColumnType.getEnum(typeName));
-		String columnSize = result.getString("COLUMN_SIZE");
-		if (StringUtils.isNumeric(columnSize)) {
-			column.setLength(Integer.valueOf(columnSize));
-		}
-		column.setPrecision(column.getLength());
-		String decimalDigits = result.getString("DECIMAL_DIGITS");
-		if (StringUtils.isNumeric(decimalDigits)) {
-			column.setScale(Integer.valueOf(decimalDigits));
-		}
-		column.setNotNull(result.getString("IS_NULLABLE").equalsIgnoreCase("YES"));
-		if (findColumn("IS_AUTOINCREMENT", result)) {
-			column.setAutoIncrement(result.getString("IS_AUTOINCREMENT").equalsIgnoreCase("YES"));
-		}
+    /**
+     * Carrega as chaves estrangeiras da tabela
+     *
+     * @param table tabela de onde ser�o carregados as chaves
+     * @throws SQLException
+     */
+    public void loadForeignKeys(Table table) throws SQLException {
+        try (ResultSet result = getMetaData().getImportedKeys(null, schema, table.getName());) {
+            while (result.next()) {
+                printResultset(result);
+            }
+        }
+    }
+
+    /**
+     * Carrega as informações do campo
+     *
+     * @param column campo a ser carregado
+     * @param result ResultSet com as informações do campo
+     * @throws SQLException
+     */
+    private void loadColumnProperties(Column column, ResultSet result) throws SQLException {
+        column.setName(result.getString("COLUMN_NAME"));
+        String typeName = result.getString("TYPE_NAME");
+        types.add(typeName);
+        column.setType(ColumnType.getEnum(typeName));
+        String columnSize = result.getString("COLUMN_SIZE");
+        if (StringUtils.isNumeric(columnSize)) {
+            column.setLength(Integer.valueOf(columnSize));
+        }
+        column.setPrecision(column.getLength());
+        String decimalDigits = result.getString("DECIMAL_DIGITS");
+        if (StringUtils.isNumeric(decimalDigits)) {
+            column.setScale(Integer.valueOf(decimalDigits));
+        }
+        column.setNotNull(result.getString("IS_NULLABLE").equalsIgnoreCase("YES"));
+        if (findColumn("IS_AUTOINCREMENT", result)) {
+            column.setAutoIncrement(result.getString("IS_AUTOINCREMENT").equalsIgnoreCase("YES"));
+        }
 //		printResultset(result);
-	}
+    }
 
-	private boolean findColumn(String name, ResultSet result) {
-		try {
-			return result.findColumn(name) > 0;
-		} catch (SQLException e) {
-		}
-		return false;
-	}
+    private boolean findColumn(String name, ResultSet result) {
+        try {
+            return result.findColumn(name) > 0;
+        } catch (SQLException e) {
+        }
+        return false;
+    }
 
-	private void checkConnection() {
-		if (connection == null) {
-			throw new RuntimeException("O objeto de conexão com o banco de dados não foi informado.");
-		}
-	}
+    private void checkConnection() {
+        if (connection == null) {
+            throw new RuntimeException("O objeto de conexão com o banco de dados não foi informado.");
+        }
+    }
 
-	private Set<String> types = new LinkedHashSet<>();
+    private Set<String> types = new LinkedHashSet<>();
 
 }
