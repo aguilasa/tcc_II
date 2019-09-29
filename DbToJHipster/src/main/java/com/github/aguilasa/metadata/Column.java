@@ -17,6 +17,7 @@ public class Column {
 	private int scale;
 	private boolean notNull;
 	private boolean autoIncrement;
+	private int position;
 
 	@Override
 	public String toString() {

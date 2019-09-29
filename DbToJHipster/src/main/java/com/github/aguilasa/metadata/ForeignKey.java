@@ -1,7 +1,9 @@
 package com.github.aguilasa.metadata;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 public class ForeignKey extends Constraint {
 
 	@Getter

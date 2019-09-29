@@ -8,16 +8,16 @@ import lombok.Getter;
 public class PrimaryKey extends Constraint {
 
 	@Getter
-	private Set<Column> columns = new LinkedHashSet<>();
+	private Set<PrimaryKeyColumn> columns = new LinkedHashSet<>();
 
 	public PrimaryKey(Table owner) {
 		this.setOwner(owner);
 	}
 
-	public void addColumn(Column column) {
+	public void addColumn(Column column, int keyPosition) {
 		checkOwner(column);
 		checkColumnOwner(column);
-		columns.add(column);
+		columns.add(new PrimaryKeyColumn(column, keyPosition));
 	}
 
 	private void checkOwner(Column column) {

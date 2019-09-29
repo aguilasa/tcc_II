@@ -73,8 +73,11 @@ public class MetaDataLoader {
         System.out.println();
     }
 
-    public Table getTableByName(String name) {
-        return tables.stream().filter(t -> t.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
+    public Table findTableByName(String tableName) {
+        return tables.stream() //
+                .filter(t -> t.getName().equalsIgnoreCase(tableName)) //
+                .findFirst() //
+                .orElseThrow(() -> new RuntimeException(String.format("Tabela '%s' não encontrada.", tableName)));
     }
 
     /**
@@ -176,8 +179,15 @@ public class MetaDataLoader {
      */
     public void loadPrimaryKeys(Table table) throws SQLException {
         try (ResultSet result = getMetaData().getPrimaryKeys(null, schema, table.getName());) {
+            boolean hasSetName = false;
             while (result.next()) {
-//				printResultset(result);
+                String columnName = result.getString("COLUMN_NAME");
+                int keyPosition = result.getInt("KEY_SEQ");
+                table.addPrimaryKey(columnName, keyPosition);
+                if (!hasSetName) {
+                    table.getPrimaryKey().setName(result.getString("PK_NAME"));
+                    hasSetName = true;
+                }
             }
         }
     }
@@ -191,7 +201,17 @@ public class MetaDataLoader {
     public void loadForeignKeys(Table table) throws SQLException {
         try (ResultSet result = getMetaData().getImportedKeys(null, schema, table.getName());) {
             while (result.next()) {
-                printResultset(result);
+                String tableName = result.getString("FKTABLE_NAME");
+                if (!tableName.equalsIgnoreCase(table.getName())) {
+                    throw new RuntimeException(String.format("Não foi possível carregar as chaves estrangeiras da tabela '%s'.", table.getName()));
+                }
+                String columnName = result.getString("FKCOLUMN_NAME");
+                String referenceTableName = result.getString("PKTABLE_NAME");
+                String referenceColumnName = result.getString("PKCOLUMN_NAME");
+                Column column = table.findColumnByName(columnName);
+                Table referenceTable = findTableByName(referenceTableName);
+                Column referenceColumn = referenceTable.findColumnByName(referenceColumnName);
+                table.addForeignKey(column, referenceColumn);
             }
         }
     }
@@ -221,6 +241,7 @@ public class MetaDataLoader {
         if (findColumn("IS_AUTOINCREMENT", result)) {
             column.setAutoIncrement(result.getString("IS_AUTOINCREMENT").equalsIgnoreCase("YES"));
         }
+        column.setPosition(result.getInt("ORDINAL_POSITION"));
 //		printResultset(result);
     }
 
