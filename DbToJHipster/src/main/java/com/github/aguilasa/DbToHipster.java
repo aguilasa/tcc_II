@@ -50,6 +50,7 @@ public class DbToHipster {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, conf);
 		metaDataLoader.loadAll();
+		metaDataLoader.printTables();
 	}
 
 }

@@ -2,6 +2,7 @@ package com.github.aguilasa.metadata;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import lombok.Getter;
 
@@ -30,6 +31,15 @@ public class PrimaryKey extends Constraint {
 		if (!this.getOwner().equals(column.getOwner())) {
 			throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na chave primária da tabela '%', pois são de tabelas diferentes.", column.getName(), getOwner().getName()));
 		}
+	}
+
+	@Override
+	public String toString() {
+		if (!columns.isEmpty()) {
+			String fields = columns.stream().map(PrimaryKeyColumn::toString).collect(Collectors.joining(", ")).trim();
+			return String.format("CONSTRAINT %s PRIMARY KEY (%s)", getName(), fields);
+		}
+		return "";
 	}
 
 }

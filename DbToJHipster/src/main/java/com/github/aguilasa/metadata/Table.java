@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import lombok.*;
+import org.apache.commons.lang.StringUtils;
 
 @NoArgsConstructor
 @RequiredArgsConstructor
@@ -53,7 +54,12 @@ public class Table {
     @Override
     public String toString() {
         String fields = columns.stream().map(Column::toString).collect(Collectors.joining("\r\n\t")).trim();
-        return String.format("TABLE %s (\r\n\t%s\r\n)", name, fields);
+        String pk = primaryKey.toString();
+        if (StringUtils.isNotEmpty(pk)) {
+            pk = String.format("\t%s\r\n", pk);
+        }
+
+        return String.format("TABLE %s (\r\n\t%s\r\n%s)", name, fields, pk);
     }
 
     @Override
