@@ -21,6 +21,10 @@ public class PrimaryKey extends Constraint {
 		columns.add(new PrimaryKeyColumn(column, keyPosition));
 	}
 
+	public boolean existsColumnByName(String columnName) {
+		return columns.stream().anyMatch(c -> c.getColumn().getName().equalsIgnoreCase(columnName));
+	}
+
 	private void checkOwner(Column column) {
 		if (getOwner() == null) {
 			throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na chave primária, pois não foi atribuída uma tabela a esta chave.", column.getName()));

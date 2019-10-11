@@ -42,6 +42,18 @@ public class CacheConfiguration {
             createCache(cm, com.aguilasa.app.domain.User.class.getName());
             createCache(cm, com.aguilasa.app.domain.Authority.class.getName());
             createCache(cm, com.aguilasa.app.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.aguilasa.app.domain.Region.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Country.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Location.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Department.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Department.class.getName() + ".employees");
+            createCache(cm, com.aguilasa.app.domain.Task.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Task.class.getName() + ".jobs");
+            createCache(cm, com.aguilasa.app.domain.Employee.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Employee.class.getName() + ".jobs");
+            createCache(cm, com.aguilasa.app.domain.Job.class.getName());
+            createCache(cm, com.aguilasa.app.domain.Job.class.getName() + ".tasks");
+            createCache(cm, com.aguilasa.app.domain.JobHistory.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

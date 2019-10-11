@@ -108,6 +108,7 @@ public class MetaDataLoader {
         loadAllTablesColumns();
         loadAllTablesPrimaryKeys();
         loadAllTablesForeignKeys();
+        loadAllTablesUniqueConstraints();
     }
 
     private void loadAllTablesColumns() throws SQLException {
@@ -125,6 +126,12 @@ public class MetaDataLoader {
     private void loadAllTablesForeignKeys() throws SQLException {
         for (Table table : tables) {
             loadForeignKeys(table);
+        }
+    }
+
+    private void loadAllTablesUniqueConstraints() throws SQLException {
+        for (Table table : tables) {
+            loadUniqueConstraints(table);
         }
     }
 
@@ -244,6 +251,30 @@ public class MetaDataLoader {
         }
         column.setPosition(result.getInt("ORDINAL_POSITION"));
 //		printResultset(result);
+    }
+
+    /**
+     * Carrega as chaves estrangeiras da tabela
+     *
+     * @param table tabela de onde serã�o carregados as chaves
+     * @throws SQLException
+     */
+    public void loadUniqueConstraints(Table table) throws SQLException {
+        try (ResultSet result = getMetaData().getIndexInfo(null, schema, table.getName(), true, true);) {
+            while (result.next()) {
+                String tableName = result.getString("TABLE_NAME");
+                if (!tableName.equalsIgnoreCase(table.getName())) {
+                    throw new RuntimeException(String.format("Não foi possível carregar as constraints únicas da tabela '%s'.", table.getName()));
+                }
+                String columnName = result.getString("COLUMN_NAME");
+                Column column = table.findColumnByName(columnName);
+
+                UniqueConstraint unique = table.addUniqueConstraint(column);
+                if (unique != null) {
+                    unique.setName(result.getString("INDEX_NAME"));
+                }
+            }
+        }
     }
 
     private boolean findColumn(String name, ResultSet result) {

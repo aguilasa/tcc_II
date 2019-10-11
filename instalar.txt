@@ -9,3 +9,20 @@ npm install -g generator-jhipster-module
 npm install -g generator-jhipster-bootswatch
 
 yo jhipster-bootswatch
+
+
+
+
+
+Server application generated successfully.
+ 
+Run your Spring Boot application:
+ ./mvnw
+ 
+Client application generated successfully.
+ 
+Start your Webpack development server with:
+npm start
+
+
+jhipster import-jdl <arquivo.jdl>

@@ -27,6 +27,9 @@ public class Table {
     @Getter
     private List<ForeignKey> foreignKeys = new LinkedList<>();
 
+    @Getter
+    private List<UniqueConstraint> uniqueConstraints = new LinkedList<>();
+
     public void addColumn(Column column) {
         column.setOwner(this);
         this.columns.add(column);
@@ -44,6 +47,20 @@ public class Table {
     public ForeignKey addForeignKey(ForeignKey foreignKey) {
         this.foreignKeys.add(foreignKey);
         return foreignKey;
+    }
+
+    public UniqueConstraint addUniqueConstraint(Column column) {
+        if (!primaryKey.existsColumnByName(column.getName())) {
+            UniqueConstraint uniqueConstraint = new UniqueConstraint(this);
+            uniqueConstraint.setColumn(column);
+            return addUniqueConstraint(uniqueConstraint);
+        }
+        return null;
+    }
+
+    public UniqueConstraint addUniqueConstraint(UniqueConstraint uniqueConstraint) {
+        this.uniqueConstraints.add(uniqueConstraint);
+        return uniqueConstraint;
     }
 
     public Column findColumnByName(String columnName) {
@@ -65,12 +82,24 @@ public class Table {
             fk = String.format("\t%s\r\n", fk);
         }
 
-        return String.format("TABLE %s (\r\n\t%s\r\n%s%s)", name, fields, pk, fk);
+        String un = uniqueConstraintsToString();
+        if (StringUtils.isNotEmpty(un)) {
+            un = String.format("\t%s\r\n", un);
+        }
+
+        return String.format("TABLE %s (\r\n\t%s\r\n%s%s%s)", name, fields, pk, fk, un);
     }
 
     private String foreignKeysToString() {
         if (!foreignKeys.isEmpty()) {
             return foreignKeys.stream().map(ForeignKey::toString).collect(Collectors.joining("\r\n\t")).trim();
+        }
+        return "";
+    }
+
+    private String uniqueConstraintsToString() {
+        if (!uniqueConstraints.isEmpty()) {
+            return uniqueConstraints.stream().map(UniqueConstraint::toString).collect(Collectors.joining("\r\n\t")).trim();
         }
         return "";
     }
