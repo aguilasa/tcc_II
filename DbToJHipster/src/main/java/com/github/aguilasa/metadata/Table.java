@@ -37,12 +37,13 @@ public class Table {
         primaryKey.addColumn(column, keyPosition);
     }
 
-    public void addForeignKey(Column column, Column referenceColumn) {
-        addForeignKey(new ForeignKey(column, referenceColumn));
+    public ForeignKey addForeignKey(Column column, Column referenceColumn) {
+        return addForeignKey(new ForeignKey(column, referenceColumn));
     }
 
-    public void addForeignKey(ForeignKey foreignKey) {
+    public ForeignKey addForeignKey(ForeignKey foreignKey) {
         this.foreignKeys.add(foreignKey);
+        return foreignKey;
     }
 
     public Column findColumnByName(String columnName) {
@@ -59,7 +60,19 @@ public class Table {
             pk = String.format("\t%s\r\n", pk);
         }
 
-        return String.format("TABLE %s (\r\n\t%s\r\n%s)", name, fields, pk);
+        String fk = foreignKeysToString();
+        if (StringUtils.isNotEmpty(fk)) {
+            fk = String.format("\t%s\r\n", fk);
+        }
+
+        return String.format("TABLE %s (\r\n\t%s\r\n%s%s)", name, fields, pk, fk);
+    }
+
+    private String foreignKeysToString() {
+        if (!foreignKeys.isEmpty()) {
+            return foreignKeys.stream().map(ForeignKey::toString).collect(Collectors.joining("\r\n\t")).trim();
+        }
+        return "";
     }
 
     @Override

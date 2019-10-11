@@ -195,7 +195,7 @@ public class MetaDataLoader {
     /**
      * Carrega as chaves estrangeiras da tabela
      *
-     * @param table tabela de onde ser�o carregados as chaves
+     * @param table tabela de onde serã�o carregados as chaves
      * @throws SQLException
      */
     public void loadForeignKeys(Table table) throws SQLException {
@@ -211,7 +211,8 @@ public class MetaDataLoader {
                 Column column = table.findColumnByName(columnName);
                 Table referenceTable = findTableByName(referenceTableName);
                 Column referenceColumn = referenceTable.findColumnByName(referenceColumnName);
-                table.addForeignKey(column, referenceColumn);
+                ForeignKey foreignKey = table.addForeignKey(column, referenceColumn);
+                foreignKey.setName(result.getString("FK_NAME"));
             }
         }
     }
