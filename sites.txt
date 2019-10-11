@@ -4,6 +4,10 @@ https://www.jhipster.tech/creating-an-entity/
 
 https://www.jhipster.tech/managing-relationships/
 
+https://www.jhipster.tech/jdl/
+
+
+
 https://dzone.com/articles/jdbc-tutorial-extracting-database-metadata-via-jdb
 
 http://tutorials.jenkov.com/jdbc/databasemetadata.html
@@ -20,3 +24,6 @@ https://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html
 https://www.baeldung.com/apache-velocity
 
 https://www.javaguides.net/2019/04/how-to-generate-java-code-using-apache.html
+
+
+
