@@ -1,6 +1,9 @@
 package com.github.aguilasa.jhipster.generators;
 
+import com.github.aguilasa.jhipster.types.Entity;
+import com.github.aguilasa.jhipster.types.EntityField;
 import com.github.aguilasa.metadata.Table;
+import com.github.aguilasa.utils.Converter;
 import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
@@ -21,11 +24,10 @@ public class EntityWriter {
     }
 
     public String tableToJHipsterEntity(Table table) {
+        Entity entity = Converter.tableToEntity(table);
         VelocityContext context = new VelocityContext();
-        context.put("entityname", table.getName());
-        List<EntityField> fields = table.getColumns().stream().map(c -> {
-            return new EntityField(c.getName(), c.getType().toString());
-        }).collect(Collectors.toList());
+        context.put("entityname", entity.getName());
+        List<EntityField> fields = entity.getFields().stream().collect(Collectors.toList());
         context.put("fields", fields);
         StringWriter writer = new StringWriter();
         template.merge(context, writer);

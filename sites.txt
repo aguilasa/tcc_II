@@ -6,6 +6,7 @@ https://www.jhipster.tech/managing-relationships/
 
 https://www.jhipster.tech/jdl/
 
+https://github.com/jhipster/jdl-samples
 
 
 https://dzone.com/articles/jdbc-tutorial-extracting-database-metadata-via-jdb
@@ -27,3 +28,9 @@ https://www.javaguides.net/2019/04/how-to-generate-java-code-using-apache.html
 
 
 https://velocity.apache.org/engine/1.7/user-guide.html
+
+
+
+
+Banco de dados
+https://docs.microsoft.com/pt-br/sql/t-sql/statements/create-table-transact-sql-identity-property?view=sql-server-ver15

@@ -139,7 +139,7 @@ public class MetaDataLoader {
     public void printTables() {
         EntityWriter writer = new EntityWriter();
         for (Table table : tables) {
-            System.out.println(table);
+//            System.out.println(table);
             System.out.println(writer.tableToJHipsterEntity(table));
         }
     }

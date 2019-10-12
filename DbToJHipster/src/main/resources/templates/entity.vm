@@ -1,5 +1,6 @@
 entity ${entityname} {
 #foreach( $field in $fields )
-	$field.name $field.type
+	$field.name $field.type#if( $field.validations ) $field.validations #end
+
 #end
 }
