@@ -6,6 +6,7 @@ import com.github.aguilasa.jhipster.types.FieldType;
 import com.github.aguilasa.metadata.Column;
 import com.github.aguilasa.metadata.ColumnType;
 import com.github.aguilasa.metadata.Table;
+import org.apache.velocity.util.StringUtils;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class Converter {
     private static final Map<ColumnType, FieldType> COLUMN_TYPE_FIELD_TYPES_MAP = new LinkedHashMap<>();
 
     public static Entity tableToEntity(Table table) {
-        Entity entity = new Entity(table.getName());
+        Entity entity = new Entity(StringUtils.capitalizeFirstLetter(table.getName()));
         Set<Column> columns = table.getColumns();
         for(Column column : columns) {
             EntityField entityField = columnToEntityField(column);
