@@ -77,7 +77,7 @@ public class Converter {
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.NVARCHAR, FieldType.STRING);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SERIAL, FieldType.INTEGER);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SMALLINT, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.TEXTBLOB);
+        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.STRING);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIME, FieldType.DURATION);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMP, FieldType.INSTANT);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMPTZ, FieldType.INSTANT);
