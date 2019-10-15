@@ -29,15 +29,30 @@ public class Converter {
     public static EntityField columnToEntityField(Column column) {
         EntityField field = new EntityField();
         field.setName(column.getName());
-        field.setType(columnTypeToFieldType(column.getType()));
+        field.setType(fieldTypeFromColumn(column));
         return field;
     }
 
-    public static FieldType columnTypeToFieldType(ColumnType columnType) {
+    public static FieldType fieldTypeFromColumn(Column column) {
+        ColumnType columnType = column.getType();
         if (COLUMN_TYPE_FIELD_TYPES_MAP.containsKey(columnType)) {
            return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
+        } else if(columnType.equals(ColumnType.NUMBER) || columnType.equals(ColumnType.NUMERIC)) {
+            int columnSize = column.getLength();
+            if (column.getScale() >= 0) {
+                if (columnSize <= 19) {
+                    return FieldType.DOUBLE;
+                }
+            } else {
+                if (columnSize <= 10) {
+                    return FieldType.INTEGER;
+                } else if (columnSize <= 19) {
+                    return FieldType.LONG;
+                }
+            }
+            return FieldType.BIGDECIMAL;
         }
-        return FieldType.STRING;
+        return null;
     }
 
     static {
