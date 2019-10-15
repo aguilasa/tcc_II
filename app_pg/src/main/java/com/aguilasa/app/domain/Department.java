@@ -39,7 +39,7 @@ public class Department implements Serializable {
     @ApiModelProperty(value = "A relationship")
     @OneToMany(mappedBy = "department")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Employee> employees = new HashSet<>();
+    private Set<Employee> departmentEmployees = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,29 +76,29 @@ public class Department implements Serializable {
         this.location = location;
     }
 
-    public Set<Employee> getEmployees() {
-        return employees;
+    public Set<Employee> getDepartmentEmployees() {
+        return departmentEmployees;
     }
 
-    public Department employees(Set<Employee> employees) {
-        this.employees = employees;
+    public Department departmentEmployees(Set<Employee> employees) {
+        this.departmentEmployees = employees;
         return this;
     }
 
-    public Department addEmployee(Employee employee) {
-        this.employees.add(employee);
+    public Department addDepartmentEmployee(Employee employee) {
+        this.departmentEmployees.add(employee);
         employee.setDepartment(this);
         return this;
     }
 
-    public Department removeEmployee(Employee employee) {
-        this.employees.remove(employee);
+    public Department removeDepartmentEmployee(Employee employee) {
+        this.departmentEmployees.remove(employee);
         employee.setDepartment(null);
         return this;
     }
 
-    public void setEmployees(Set<Employee> employees) {
-        this.employees = employees;
+    public void setDepartmentEmployees(Set<Employee> employees) {
+        this.departmentEmployees = employees;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

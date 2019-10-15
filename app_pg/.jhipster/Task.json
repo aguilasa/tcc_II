@@ -15,7 +15,7 @@
             "relationshipType": "many-to-many",
             "otherEntityName": "job",
             "otherEntityRelationshipName": "task",
-            "relationshipName": "job",
+            "relationshipName": "jobTask",
             "otherEntityField": "id",
             "ownerSide": false
         }

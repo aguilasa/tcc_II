@@ -23,7 +23,7 @@
             "otherEntityName": "employee",
             "otherEntityRelationshipName": "department",
             "javadoc": "A relationship",
-            "relationshipName": "employee"
+            "relationshipName": "departmentEmployee"
         }
     ],
     "changelogDate": "20191011193543",

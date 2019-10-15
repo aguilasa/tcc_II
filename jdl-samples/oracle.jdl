@@ -1,3 +1,8 @@
+
+//
+// This is the entity model for for the Oracle Humar Resources sample
+//
+
 entity Region {
 	regionName String
 }
@@ -73,16 +78,16 @@ relationship OneToOne {
 }
 
 relationship ManyToMany {
-	Job{task(title)} to Task{jobTask}
+	Job{task(title)} to Task{job_task}
 }
 
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
-	Employee{employeeJob} to Job,
+	Employee{employee_job} to Job,
 	/**
 	* A relationship
 	*/
-	Department{departmentEmployee} to
+	Department{department_employee} to
 	/**
 	* Another side of the same relationship
 	*/

@@ -116,13 +116,13 @@ public class Job implements Serializable {
 
     public Job addTask(Task task) {
         this.tasks.add(task);
-        task.getJobs().add(this);
+        task.getJobTasks().add(this);
         return this;
     }
 
     public Job removeTask(Task task) {
         this.tasks.remove(task);
-        task.getJobs().remove(this);
+        task.getJobTasks().remove(this);
         return this;
     }
 

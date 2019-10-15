@@ -42,7 +42,7 @@
             "relationshipType": "one-to-many",
             "otherEntityName": "job",
             "otherEntityRelationshipName": "employee",
-            "relationshipName": "job"
+            "relationshipName": "employeeJob"
         },
         {
             "relationshipType": "many-to-one",

@@ -35,7 +35,7 @@ public class Task implements Serializable {
     @ManyToMany(mappedBy = "tasks")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JsonIgnore
-    private Set<Job> jobs = new HashSet<>();
+    private Set<Job> jobTasks = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -72,29 +72,29 @@ public class Task implements Serializable {
         this.description = description;
     }
 
-    public Set<Job> getJobs() {
-        return jobs;
+    public Set<Job> getJobTasks() {
+        return jobTasks;
     }
 
-    public Task jobs(Set<Job> jobs) {
-        this.jobs = jobs;
+    public Task jobTasks(Set<Job> jobs) {
+        this.jobTasks = jobs;
         return this;
     }
 
-    public Task addJob(Job job) {
-        this.jobs.add(job);
+    public Task addJobTask(Job job) {
+        this.jobTasks.add(job);
         job.getTasks().add(this);
         return this;
     }
 
-    public Task removeJob(Job job) {
-        this.jobs.remove(job);
+    public Task removeJobTask(Job job) {
+        this.jobTasks.remove(job);
         job.getTasks().remove(this);
         return this;
     }
 
-    public void setJobs(Set<Job> jobs) {
-        this.jobs = jobs;
+    public void setJobTasks(Set<Job> jobs) {
+        this.jobTasks = jobs;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -13,7 +13,7 @@ export interface IEmployee {
   salary?: number;
   commissionPct?: number;
   department?: IDepartment;
-  jobs?: IJob[];
+  employeeJobs?: IJob[];
   manager?: IEmployee;
 }
 
@@ -28,7 +28,7 @@ export class Employee implements IEmployee {
     public salary?: number,
     public commissionPct?: number,
     public department?: IDepartment,
-    public jobs?: IJob[],
+    public employeeJobs?: IJob[],
     public manager?: IEmployee
   ) {}
 }

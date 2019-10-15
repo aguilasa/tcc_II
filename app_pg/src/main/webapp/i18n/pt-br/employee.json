@@ -24,7 +24,7 @@
       "salary": "Salary",
       "commissionPct": "Commission Pct",
       "department": "Department",
-      "job": "Job",
+      "employeeJob": "Employee Job",
       "manager": "Manager",
       "help": {
         "firstName": "The firstname attribute."

@@ -59,7 +59,7 @@ public class Employee implements Serializable {
 
     @OneToMany(mappedBy = "employee")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Job> jobs = new HashSet<>();
+    private Set<Job> employeeJobs = new HashSet<>();
 
     @ManyToOne
     @JsonIgnoreProperties("employees")
@@ -178,29 +178,29 @@ public class Employee implements Serializable {
         this.department = department;
     }
 
-    public Set<Job> getJobs() {
-        return jobs;
+    public Set<Job> getEmployeeJobs() {
+        return employeeJobs;
     }
 
-    public Employee jobs(Set<Job> jobs) {
-        this.jobs = jobs;
+    public Employee employeeJobs(Set<Job> jobs) {
+        this.employeeJobs = jobs;
         return this;
     }
 
-    public Employee addJob(Job job) {
-        this.jobs.add(job);
+    public Employee addEmployeeJob(Job job) {
+        this.employeeJobs.add(job);
         job.setEmployee(this);
         return this;
     }
 
-    public Employee removeJob(Job job) {
-        this.jobs.remove(job);
+    public Employee removeEmployeeJob(Job job) {
+        this.employeeJobs.remove(job);
         job.setEmployee(null);
         return this;
     }
 
-    public void setJobs(Set<Job> jobs) {
-        this.jobs = jobs;
+    public void setEmployeeJobs(Set<Job> jobs) {
+        this.employeeJobs = jobs;
     }
 
     public Employee getManager() {

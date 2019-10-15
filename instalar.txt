@@ -27,6 +27,8 @@ npm start
 
 jhipster import-jdl <arquivo.jdl>
 
+jhipster import-jdl src\model\model.jdl
+
 
 
 http://localhost:8080/swagger-ui/index.html

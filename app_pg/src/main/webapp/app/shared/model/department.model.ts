@@ -5,9 +5,9 @@ export interface IDepartment {
   id?: number;
   departmentName?: string;
   location?: ILocation;
-  employees?: IEmployee[];
+  departmentEmployees?: IEmployee[];
 }
 
 export class Department implements IDepartment {
-  constructor(public id?: number, public departmentName?: string, public location?: ILocation, public employees?: IEmployee[]) {}
+  constructor(public id?: number, public departmentName?: string, public location?: ILocation, public departmentEmployees?: IEmployee[]) {}
 }
