@@ -8,6 +8,8 @@ https://www.jhipster.tech/jdl/
 
 https://github.com/jhipster/jdl-samples
 
+https://stackoverflow.com/questions/28226336/how-to-delete-an-entity-after-creating-it-using-jhipster
+
 
 https://dzone.com/articles/jdbc-tutorial-extracting-database-metadata-via-jdb
 
