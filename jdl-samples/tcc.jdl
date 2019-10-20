@@ -82,17 +82,17 @@ entity Track {
 }
 
 relationship OneToOne {
-	Album{artist} to Artist{album}
-	Customer{employee} to Employee{customer}
-	Employee{employee} to Employee{employee}
-	Invoice{customer} to Customer{invoice}
-	Invoiceline{invoice} to Invoice{invoiceline}
-	Invoiceline{track} to Track{invoiceline}
-	Track{album} to Album{track}
-	Track{genre} to Genre{track}
-	Track{mediatype} to Mediatype{track}
+	Album{artistAlbum} to Artist{albumArtist}
+	Customer{employeeCustomer} to Employee{customerEmployee}
+	Employee{employeeEmployee} to Employee{employeeEmployeeOne}
+	Invoice{customerInvoice} to Customer{invoiceCustomer}
+	Invoiceline{invoiceInvoiceline} to Invoice{invoicelineInvoice}
+	Invoiceline{trackInvoiceline} to Track{invoicelineTrack}
+	Track{albumTrack} to Album{trackAlbum}
+	Track{genreTrack} to Genre{trackGenre}
+	Track{mediatypeTrack} to Mediatype{trackMediatype}
 }
 
 relationship ManyToMany {
-	Playlist{track} to Track{playlist}
+	Playlist{trackPlaylist} to Track{playlistTrack}
 }
