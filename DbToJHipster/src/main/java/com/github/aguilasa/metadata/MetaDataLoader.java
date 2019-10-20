@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.github.aguilasa.jhipster.generators.EntityWriter;
+import com.github.aguilasa.jhipster.generators.JdlWriter;
 import org.apache.commons.lang.StringUtils;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
@@ -137,7 +137,7 @@ public class MetaDataLoader {
     }
 
     public void printTables() {
-        EntityWriter writer = new EntityWriter();
+        JdlWriter writer = new JdlWriter();
         for (Table table : tables) {
 //            System.out.println(table);
             System.out.println(writer.tableToJHipsterEntity(table));

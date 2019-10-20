@@ -1,0 +1,5 @@
+relationship ${name} {
+#foreach( $relationship in $relationships )
+	${relationship.fromEntity.name}{$relationship.fromName} to ${relationship.toEntity.name}{$relationship.toName}
+#end
+}

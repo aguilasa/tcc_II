@@ -5,6 +5,7 @@ import com.github.aguilasa.jhipster.types.EntityField;
 import com.github.aguilasa.jhipster.types.FieldType;
 import com.github.aguilasa.metadata.Column;
 import com.github.aguilasa.metadata.ColumnType;
+import com.github.aguilasa.metadata.PrimaryKey;
 import com.github.aguilasa.metadata.Table;
 import org.apache.velocity.util.StringUtils;
 
@@ -19,7 +20,11 @@ public class Converter {
     public static Entity tableToEntity(Table table) {
         Entity entity = new Entity(StringUtils.capitalizeFirstLetter(table.getName()));
         Set<Column> columns = table.getColumns();
-        for(Column column : columns) {
+        for (Column column : columns) {
+            PrimaryKey primaryKey = table.getPrimaryKey();
+            if (primaryKey.getColumns().size() == 1 && primaryKey.existsColumnByName(column.getName())) {
+                continue;
+            }
             EntityField entityField = columnToEntityField(column);
             entity.addField(entityField);
         }
@@ -36,8 +41,8 @@ public class Converter {
     public static FieldType fieldTypeFromColumn(Column column) {
         ColumnType columnType = column.getType();
         if (COLUMN_TYPE_FIELD_TYPES_MAP.containsKey(columnType)) {
-           return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
-        } else if(columnType.equals(ColumnType.NUMBER) || columnType.equals(ColumnType.NUMERIC)) {
+            return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
+        } else if (columnType.equals(ColumnType.NUMBER) || columnType.equals(ColumnType.NUMERIC)) {
             int columnSize = column.getLength();
             if (column.getScale() >= 0) {
                 if (columnSize <= 19) {
@@ -62,7 +67,7 @@ public class Converter {
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BLOB, FieldType.BLOB);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BOOL, FieldType.BOOLEAN);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BPCHAR, FieldType.STRING);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BYTEA, FieldType.INTEGER);
+        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BYTEA, FieldType.BLOB);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.CLOB, FieldType.TEXTBLOB);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATE, FieldType.LOCALDATE);
         COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATETIME, FieldType.LOCALDATE);

@@ -1,0 +1,98 @@
+entity Album {
+	title String
+	artistid Integer
+	column1 Blob
+}
+
+entity Artist {
+	name String
+}
+
+entity Customer {
+	firstname String
+	lastname String
+	company String
+	address String
+	city String
+	state String
+	country String
+	postalcode String
+	phone String
+	fax String
+	email String
+	supportrepid Integer
+}
+
+entity Employee {
+	lastname String
+	firstname String
+	title String
+	reportsto Integer
+	birthdate Instant
+	hiredate Instant
+	address String
+	city String
+	state String
+	country String
+	postalcode String
+	phone String
+	fax String
+	email String
+}
+
+entity Genre {
+	name String
+}
+
+entity Invoice {
+	customerid Integer
+	invoicedate Instant
+	billingaddress String
+	billingcity String
+	billingstate String
+	billingcountry String
+	billingpostalcode String
+	total Double
+}
+
+entity Invoiceline {
+	invoiceid Integer
+	trackid Integer
+	unitprice Double
+	quantity Integer
+}
+
+entity Mediatype {
+	name String
+}
+
+entity Playlist {
+	name String
+}
+
+entity Track {
+	name String
+	albumid Integer
+	mediatypeid Integer
+	genreid Integer
+	composer String
+	milliseconds Integer
+	bytes Integer
+	unitprice Double
+}
+
+relationship OneToOne {
+	Album{artist} to Artist{album}
+	Customer{employee} to Employee{customer}
+	Employee{employee} to Employee{employee}
+	Invoice{customer} to Customer{invoice}
+	Invoiceline{invoice} to Invoice{invoiceline}
+	Invoiceline{track} to Track{invoiceline}
+	Track{album} to Album{track}
+	Track{genre} to Genre{track}
+	Track{mediatype} to Mediatype{track}
+}
+
+relationship ManyToMany {
+	Playlist{track} to Track{playlist}
+}

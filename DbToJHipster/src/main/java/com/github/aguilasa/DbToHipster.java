@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
+import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.MetaDataLoader;
 
 public class DbToHipster {
@@ -27,7 +28,7 @@ public class DbToHipster {
 		pg_local.setDatabase("postgres");
 		pg_local.setUsername("postgres");
 		pg_local.setPassword("postgres");
-		pg_local.setSchema("analytics");
+		pg_local.setSchema("music");
 		pg_local.setDatabaseType(DatabaseType.PostgreSQL);
 
 		DatabaseConfiguration sql = new DatabaseConfiguration();
@@ -49,8 +50,11 @@ public class DbToHipster {
 		DatabaseConfiguration conf = pg_local;
 		Connection connection = ConnectionFactory.createConnection(conf);
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, conf);
-		metaDataLoader.loadAll();
-		metaDataLoader.printTables();
+//		metaDataLoader.loadAll();
+//		metaDataLoader.printTables();
+		EntityLoader entityLoader = new EntityLoader(metaDataLoader);
+		entityLoader.loadAll();
+		System.out.println(entityLoader.toJdl());
 	}
 
 }

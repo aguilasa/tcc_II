@@ -1,4 +1,4 @@
-entity ${entityname} {
+entity ${name} {
 #foreach( $field in $fields )
 	$field.name $field.type#if( $field.validations ) $field.validations #end
 
