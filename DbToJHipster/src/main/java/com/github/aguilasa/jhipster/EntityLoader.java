@@ -9,6 +9,7 @@ import com.github.aguilasa.utils.Converter;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.apache.velocity.util.StringUtils;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -19,12 +20,14 @@ public class EntityLoader {
 
     private static final int MTM_SIZE = 2;
     private static final String LB = "\r\n";
+    private static final String[] NAMES_SUFFIX = {"One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten"};
 
     @NonNull
     private MetaDataLoader metaDataLoader;
 
     private Set<Entity> entities = new LinkedHashSet<>();
     private Map<RelationshipType, List<Relationship>> relationships = new LinkedHashMap<>();
+    private Set<String> relationshipsNames = new LinkedHashSet<>();
 
     public void loadAll() throws SQLException {
         loadEntities();
@@ -60,14 +63,26 @@ public class EntityLoader {
         }
     }
 
+    private String relationshipName(String first, String second) {
+        String name = String.format("%s%s", first, StringUtils.capitalizeFirstLetter(second));
+        int index = 0;
+        while (relationshipsNames.contains(name)) {
+            name = name.concat(NAMES_SUFFIX[index++]);
+        }
+        relationshipsNames.add(name);
+        return name;
+    }
+
     public Relationship createRelationshipFromColumn(Column fromColumn, Column toColumn, RelationshipType relationshipType) {
         Relationship relationship = new Relationship();
         Entity from = findEntityByName(fromColumn.getOwner().getName());
         Entity to = findEntityByName(toColumn.getOwner().getName());
         relationship.setFromEntity(from);
-        relationship.setFromName(to.getName().toLowerCase());
+        String first = to.getName().toLowerCase();
+        String second = from.getName().toLowerCase();
+        relationship.setFromName(relationshipName(first, second));
         relationship.setToEntity(to);
-        relationship.setToName(from.getName().toLowerCase());
+        relationship.setToName(relationshipName(second, first));
         relationship.setRelationshipType(relationshipType);
         return relationship;
     }
