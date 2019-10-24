@@ -21,14 +21,20 @@ public class Converter {
         Entity entity = new Entity(StringUtils.capitalizeFirstLetter(table.getName()));
         Set<Column> columns = table.getColumns();
         for (Column column : columns) {
-            PrimaryKey primaryKey = table.getPrimaryKey();
-            if (primaryKey.getColumns().size() == 1 && primaryKey.existsColumnByName(column.getName())) {
-                continue;
+            if (checkCreateField(table, column)) {
+                EntityField entityField = columnToEntityField(column);
+                entity.addField(entityField);
             }
-            EntityField entityField = columnToEntityField(column);
-            entity.addField(entityField);
         }
         return entity;
+    }
+
+    private static boolean checkCreateField(Table table, Column column) {
+        PrimaryKey primaryKey = table.getPrimaryKey();
+        if (primaryKey.getColumns().size() == 1 && primaryKey.existsColumnByName(column.getName())) {
+            return false;
+        }
+        return !table.existsForeignKeyByColumnName(column.getName());
     }
 
     public static EntityField columnToEntityField(Column column) {

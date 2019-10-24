@@ -66,7 +66,12 @@ public class Table {
     public Column findColumnByName(String columnName) {
         return this.columns.stream() //
                 .filter(c -> c.getName().equalsIgnoreCase(columnName)) //
-                .findFirst().orElseThrow(() -> new RuntimeException(String.format("Coluna '%s' não encontrada.", columnName)));
+                .findFirst().orElseThrow(() -> new RuntimeException(String.format("Coluna '%s' nÃ£o encontrada.", columnName)));
+    }
+
+    public boolean existsForeignKeyByColumnName(String columnName) {
+        return this.foreignKeys.stream() //
+                .anyMatch(fk -> fk.getColumn().getName().equalsIgnoreCase(columnName));
     }
 
     @Override
