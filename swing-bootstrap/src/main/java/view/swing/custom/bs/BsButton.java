@@ -81,7 +81,7 @@ public class BsButton extends JButton {
 	}
 
 	private void resetFont() {
-		font = new Font(FONT_NAME, Font.TRUETYPE_FONT, buttonSize.getButtonHeight());
+		font = new Font(FONT_NAME, Font.TRUETYPE_FONT, buttonSize.getFontSize());
 		setFont(font);
 	}
 
