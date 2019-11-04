@@ -49,12 +49,12 @@ public class EntityLoader {
         for (Entity entity : entities) {
             Table table = metaDataLoader.findTableByName(entity.getName());
             if (isManyToManyTable(table)) {
-                addManyToManyRelationship(table);
+                addManyToManyRelationship(table, entity);
                 remove.add(entity);
             } else {
                 List<ForeignKey> foreignKeys = table.getForeignKeys();
                 foreignKeys.forEach(f -> {
-                    addOneToOneRelationship(f);
+                    addOneToOneRelationship(f, entity);
                 });
             }
         }
@@ -96,8 +96,9 @@ public class EntityLoader {
         return relationship;
     }
 
-    public void addOneToOneRelationship(ForeignKey foreignKey) {
+    public void addOneToOneRelationship(ForeignKey foreignKey, Entity entity) {
         Relationship relationship = createRelationshipFromForeignKey(foreignKey, RelationshipType.OneToOne);
+        entity.addRelationship(relationship);
         addRelationship(relationship);
     }
 
@@ -111,11 +112,12 @@ public class EntityLoader {
         addRelationship(relationship);
     }
 
-    public void addManyToManyRelationship(Table table) {
+    public void addManyToManyRelationship(Table table, Entity entity) {
         List<ForeignKey> foreignKeys = table.getForeignKeys();
         Column fromColumn = foreignKeys.get(0).getReferenceColumn();
         Column toColumn = foreignKeys.get(1).getReferenceColumn();
         Relationship relationship = createRelationshipFromColumn(fromColumn, toColumn, RelationshipType.ManyToMany);
+        entity.addRelationship(relationship);
         addRelationship(relationship);
     }
 

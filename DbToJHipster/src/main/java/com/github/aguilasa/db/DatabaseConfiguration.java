@@ -2,9 +2,11 @@ package com.github.aguilasa.db;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class DatabaseConfiguration {
 
 	private String host = "";

@@ -12,26 +12,34 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class Entity {
 
-    @NonNull
-    private String name;
+	@NonNull
+	private String name;
 
-    @Setter(AccessLevel.NONE)
-    private List<EntityField> fields = new LinkedList<>();
+	private List<Relationship> relationships = new LinkedList<>();
 
-    public void addField(EntityField field) {
-        fields.add(field);
-    }
+	@Setter(AccessLevel.NONE)
+	private List<EntityField> fields = new LinkedList<>();
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Entity entity = (Entity) o;
-        return name.equals(entity.name);
-    }
+	public void addField(EntityField field) {
+		fields.add(field);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name);
-    }
+	public void addRelationship(Relationship relationship) {
+		relationships.add(relationship);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Entity entity = (Entity) o;
+		return name.equals(entity.name);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
 }
