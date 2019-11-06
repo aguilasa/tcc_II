@@ -66,9 +66,11 @@ public class EntityLoader {
     private String relationshipName(String first, String second) {
         String name = String.format("%s%s", first, StringUtils.capitalizeFirstLetter(second));
         int index = 0;
-        while (relationshipsNames.contains(name)) {
-            name = name.concat(NAMES_SUFFIX[index++]);
+        String tmp = name;
+        while (relationshipsNames.contains(tmp)) {
+        	tmp = name.concat(NAMES_SUFFIX[index++]);
         }
+        name = tmp;
         relationshipsNames.add(name);
         return name;
     }
