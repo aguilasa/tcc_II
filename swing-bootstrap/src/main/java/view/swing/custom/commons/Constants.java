@@ -1,14 +1,17 @@
-package view.swing.custom.button;
+package view.swing.custom.commons;
 
 import java.awt.Color;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import view.swing.custom.button.ButtonColor;
+import view.swing.custom.button.ButtonType;
+
 enum ColorProperties {
 	fontColor, background, border, hover, hoverBorder, pressed, pressedBorder;
 }
 
-public class ButtonConstants {
+public class Constants {
 
 	private static final String[][] COLORS = { //
 			{ "#FFFFFF", "#007BFF", "#007BFF", "#0062CC", "#005CBF", "#0062CC", "#005CBF" }, //
@@ -46,6 +49,17 @@ public class ButtonConstants {
 	public static final ButtonColor getButtonColor(ButtonType buttonType) {
 		return BUTTONS_COLORS.get(buttonType);
 	}
+
+	public static final Color applyAlpha(Color color, float alpha) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(), Math.round(255 * alpha));
+	}
+
+	public static final Color INPUT_FONT = Color.decode("#495057");
+	public static final Color INPUT_BORDER = Color.decode("#CED4DA");
+	public static final Color INPUT_SELECTION = Color.decode("#338FFF");
+	public static final Color INPUT_SELECTED = Color.WHITE;
+	public static final Color INPUT_BORDER_FOCUS = Color.decode("#80BDFF");
+	public static final Color INPUT_BORDER_SHADOW = applyAlpha(Color.decode("#007BFF"), 0.25f);
 
 	static {
 		initialize();

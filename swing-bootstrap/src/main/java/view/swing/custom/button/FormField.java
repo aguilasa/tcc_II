@@ -15,7 +15,7 @@ import view.swing.utils.bo.CustomImageIcon;
 
 public class FormField extends JPanel {
 
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7777900109729956396L;
 	private TextField textField;
 	private JLabel label;
 

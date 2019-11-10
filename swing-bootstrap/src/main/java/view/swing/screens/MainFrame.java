@@ -24,9 +24,14 @@ import view.swing.custom.button.ButtonType;
 import view.swing.custom.button.CheckBox;
 import view.swing.custom.button.FormField;
 import view.swing.custom.commons.ComponentSize;
+import view.swing.custom.input.Input;
+import view.swing.custom.input.Input2;
 import view.swing.other.BottomPanel;
 import view.swing.other.RainbowPanel;
 import view.swing.other.TitlePanel;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
 
 public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
@@ -37,6 +42,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 	private JMenuItem jmiArquivoSair;
 
 	static Container container;
+	private JTextField txtInputPadro;
+	private JTextField textField;
 
 	public MainFrame() {
 		super("Title");
@@ -116,16 +123,12 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		jpLastName.setBounds(400, 20, 340, 60);
 		content.add(jpLastName);
 
-		FormField jpEmail = new FormField("/view/images/mail.png", "E-Mail");
-		jpEmail.setBounds(40, 100, 700, 60);
-		content.add(jpEmail);
-
 		CheckBox jcb = new CheckBox("Send me promotions and offers", new Color(138, 147, 179), new Color(114, 132, 193));
-		jcb.setBounds(40, 171, 700, 38);
+		jcb.setBounds(40, 216, 700, 38);
 		content.add(jcb);
 
 		Button jb2 = new Button(ButtonType.DANGER);
-		jb2.setButtonSize(ComponentSize.SMALL);
+		jb2.setComponentSize(ComponentSize.SMALL);
 		jb2.setButtonType(ButtonType.INFO);
 		jb2.setText("Info");
 		jb2.setBounds(480, 265, 80, 38);
@@ -167,16 +170,33 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		content.add(btnLight);
 		
 		Button btnDark = new Button(ButtonType.DANGER);
-		btnDark.setButtonSize(ComponentSize.LARGE);
+		btnDark.setComponentSize(ComponentSize.LARGE);
 		btnDark.setButtonType(ButtonType.DARK);
 		btnDark.setText("Dark");
 		btnDark.setBounds(660, 265, 80, 38);
 		content.add(btnDark);
 		
-		JButton btnPrimary = new JButton("Primary");
-		btnPrimary.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		btnPrimary.setBounds(10, 216, 144, 38);
-		content.add(btnPrimary);
+		txtInputPadro = new JTextField();
+		txtInputPadro.setText("Input Padr\u00E3o");
+		txtInputPadro.setBounds(400, 91, 340, 30);
+		content.add(txtInputPadro);
+		
+		Input panel = new Input("Texto");
+		panel.setText("Input Padr\u00E3o");
+		panel.setBounds(40, 91, 340, 21);
+		content.add(panel);
+		
+		textField = new JTextField();
+		textField.setEnabled(false);
+		textField.setText("Input Padr\u00E3o");
+		textField.setBounds(400, 132, 340, 30);
+		content.add(textField);
+		
+		Input input = new Input("Texto");
+		input.setText("Input Padr\u00E3o");
+		input.setBounds(40, 140, 340, 38);
+		input.setEnabled(false);
+		content.add(input);
 
 		BottomPanel bp = new BottomPanel(new Rectangle(0, 475, 800, 100));
 		container.add(bp);

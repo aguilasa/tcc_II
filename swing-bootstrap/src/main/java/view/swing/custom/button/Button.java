@@ -11,9 +11,10 @@ import java.awt.RenderingHints;
 
 import javax.swing.JButton;
 
-import lombok.Getter;
 import sun.swing.SwingUtilities2;
+import view.swing.custom.commons.BorderSize;
 import view.swing.custom.commons.ComponentSize;
+import view.swing.custom.commons.Constants;
 
 public class Button extends JButton {
 
@@ -21,7 +22,7 @@ public class Button extends JButton {
 
 	private ButtonColor buttonColor;
 	private ButtonType buttonType = ButtonType.PRIMARY;
-	private ComponentSize buttonSize = ComponentSize.DEFAULT;
+	private ComponentSize componentSize = ComponentSize.DEFAULT;
 	private BorderSize borderSize;
 
 	public Button(ButtonType type) {
@@ -35,7 +36,7 @@ public class Button extends JButton {
 
 	private ButtonColor getButtonColor() {
 		if (buttonColor == null) {
-			buttonColor = new ButtonColor().copyFrom(ButtonConstants.getButtonColor(ButtonType.PRIMARY));
+			buttonColor = new ButtonColor().copyFrom(Constants.getButtonColor(ButtonType.PRIMARY));
 		}
 		return buttonColor;
 	}
@@ -60,25 +61,25 @@ public class Button extends JButton {
 
 	@Override
 	public void setBounds(Rectangle r) {
-		r.height = buttonSize.getHeight();
+		r.height = componentSize.getHeight();
 		resetFont();
 		super.setBounds(r);
 	}
 
 	@Override
 	public void setBounds(int x, int y, int width, int height) {
-		height = buttonSize.getHeight();
+		height = componentSize.getHeight();
 		resetFont();
 		super.setBounds(x, y, width, height);
 	}
 
 	private void resetFont() {
-		setFont(new Font(FONT_NAME, Font.PLAIN, buttonSize.getFontSize()));
+		setFont(new Font(FONT_NAME, Font.PLAIN, componentSize.getFontSize()));
 	}
 
 	public void setButtonType(ButtonType type) {
 		this.buttonType = type;
-		getButtonColor().copyFrom(ButtonConstants.getButtonColor(buttonType));
+		getButtonColor().copyFrom(Constants.getButtonColor(buttonType));
 		repaint();
 	}
 
@@ -86,12 +87,12 @@ public class Button extends JButton {
 		return buttonType;
 	}
 
-	public ComponentSize getButtonSize() {
-		return buttonSize;
+	public ComponentSize getComponentSize() {
+		return componentSize;
 	}
 
-	public void setButtonSize(ComponentSize buttonSize) {
-		this.buttonSize = buttonSize;
+	public void setComponentSize(ComponentSize buttonSize) {
+		this.componentSize = buttonSize;
 		setBorderSize();
 		resetBounds();
 		resetFont();
@@ -106,7 +107,7 @@ public class Button extends JButton {
 	}
 
 	private void setBorderSize() {
-		borderSize = new BorderSize(getWidth(), getHeight(), buttonSize.getBorder());
+		borderSize = new BorderSize(getWidth(), getHeight(), componentSize.getBorder());
 	}
 
 	@Override
@@ -129,8 +130,8 @@ public class Button extends JButton {
 			}
 		} else {
 			drawBorder = false;
-			fontColor = applyAlpha(fontColor, 0.65f);
-			background = applyAlpha(background, 0.65f);
+			fontColor = Constants.applyAlpha(fontColor, 0.65f);
+			background = Constants.applyAlpha(background, 0.65f);
 		}
 
 		g.setColor(background);
@@ -147,19 +148,4 @@ public class Button extends JButton {
 		SwingUtilities2.drawString(this, g, getText(), auxX, auxY);
 	}
 
-	private Color applyAlpha(Color color, float alpha) {
-		return new Color(color.getRed(), color.getGreen(), color.getBlue(), Math.round(255 * alpha));
-	}
-
-}
-
-@Getter
-class BorderSize {
-
-	private int size;
-
-	public BorderSize(int width, int height, float scale) {
-		int value = Math.min(width, height);
-		size = (int) (value * scale);
-	}
 }
