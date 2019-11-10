@@ -13,6 +13,7 @@ import javax.swing.JButton;
 
 import lombok.Getter;
 import sun.swing.SwingUtilities2;
+import view.swing.custom.commons.ComponentSize;
 
 public class Button extends JButton {
 
@@ -20,7 +21,7 @@ public class Button extends JButton {
 
 	private ButtonColor buttonColor;
 	private ButtonType buttonType = ButtonType.PRIMARY;
-	private ButtonSize buttonSize = ButtonSize.DEFAULT;
+	private ComponentSize buttonSize = ComponentSize.DEFAULT;
 	private BorderSize borderSize;
 
 	public Button(ButtonType type) {
@@ -59,14 +60,14 @@ public class Button extends JButton {
 
 	@Override
 	public void setBounds(Rectangle r) {
-		r.height = buttonSize.getButtonHeight();
+		r.height = buttonSize.getHeight();
 		resetFont();
 		super.setBounds(r);
 	}
 
 	@Override
 	public void setBounds(int x, int y, int width, int height) {
-		height = buttonSize.getButtonHeight();
+		height = buttonSize.getHeight();
 		resetFont();
 		super.setBounds(x, y, width, height);
 	}
@@ -85,11 +86,11 @@ public class Button extends JButton {
 		return buttonType;
 	}
 
-	public ButtonSize getButtonSize() {
+	public ComponentSize getButtonSize() {
 		return buttonSize;
 	}
 
-	public void setButtonSize(ButtonSize buttonSize) {
+	public void setButtonSize(ComponentSize buttonSize) {
 		this.buttonSize = buttonSize;
 		setBorderSize();
 		resetBounds();
@@ -109,33 +110,45 @@ public class Button extends JButton {
 	}
 
 	@Override
-	public void paint(Graphics pg) {
+	public void paintComponent(Graphics pg) {
 		final Graphics2D g = (Graphics2D) pg;
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-		super.paint(pg);
-
+		Color fontColor = getButtonColor().getFontColor();
 		Color background = getButtonColor().getBackground();
-		Color border = getButtonColor().getBorder();
-		if (getModel().isPressed()) {
-			background = getButtonColor().getPressed();
-			border = getButtonColor().getPressedBorder();
-		} else if (getModel().isRollover()) {
-			background = getButtonColor().getHover();
-			border = getButtonColor().getHoverBorder();
+		Color borderColor = getButtonColor().getBorder();
+		boolean drawBorder = true;
+		if (getModel().isEnabled()) {
+			if (getModel().isPressed()) {
+				background = getButtonColor().getPressed();
+				borderColor = getButtonColor().getPressedBorder();
+			} else if (getModel().isRollover()) {
+				background = getButtonColor().getHover();
+				borderColor = getButtonColor().getHoverBorder();
+			}
+		} else {
+			drawBorder = false;
+			fontColor = applyAlpha(fontColor, 0.65f);
+			background = applyAlpha(background, 0.65f);
 		}
 
 		g.setColor(background);
 		g.fillRoundRect(0, 0, getWidth(), getHeight(), getBorderSize().getSize(), getBorderSize().getSize());
 
-		g.setColor(border);
-		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getBorderSize().getSize(), getBorderSize().getSize());
+		if (drawBorder) {
+			g.setColor(borderColor);
+			g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getBorderSize().getSize(), getBorderSize().getSize());
+		}
 
-		g.setColor(getButtonColor().getFontColor());
+		g.setColor(fontColor);
 		int auxY = ((getBounds().height - g.getFontMetrics().getHeight()) / 2) + g.getFontMetrics().getMaxAscent();
 		int auxX = ((getBounds().width - g.getFontMetrics().stringWidth(getText())) / 2);
 		SwingUtilities2.drawString(this, g, getText(), auxX, auxY);
+	}
+
+	private Color applyAlpha(Color color, float alpha) {
+		return new Color(color.getRed(), color.getGreen(), color.getBlue(), Math.round(255 * alpha));
 	}
 
 }
