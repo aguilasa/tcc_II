@@ -12,6 +12,7 @@ import java.awt.RenderingHints;
 import javax.swing.JButton;
 
 import lombok.Getter;
+import sun.swing.SwingUtilities2;
 
 public class Button extends JButton {
 
@@ -132,9 +133,9 @@ public class Button extends JButton {
 		g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getBorderSize().getSize(), getBorderSize().getSize());
 
 		g.setColor(getButtonColor().getFontColor());
-		int auxY = ((getBounds().height - g.getFontMetrics().getHeight()) / 2);
+		int auxY = ((getBounds().height - g.getFontMetrics().getHeight()) / 2) + g.getFontMetrics().getMaxAscent();
 		int auxX = ((getBounds().width - g.getFontMetrics().stringWidth(getText())) / 2);
-		g.drawString(getText(), auxX, g.getFontMetrics().getMaxAscent() + auxY);
+		SwingUtilities2.drawString(this, g, getText(), auxX, auxY);
 	}
 
 }
