@@ -17,13 +17,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import view.swing.custom.bs.BsButton;
-import view.swing.custom.bs.BsButtonType;
-import view.swing.custom.bs.BsCheckBox;
-import view.swing.custom.bs.BsFormField;
+import view.swing.custom.button.Button;
+import view.swing.custom.button.ButtonType;
+import view.swing.custom.button.CheckBox;
+import view.swing.custom.button.FormField;
 import view.swing.other.BottomPanel;
 import view.swing.other.RainbowPanel;
 import view.swing.other.TitlePanel;
+import javax.swing.JButton;
+import java.awt.Font;
+import view.swing.custom.button.ButtonSize;
 
 public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
@@ -105,45 +108,73 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		content.setLayout(null);
 		container.add(content);
 
-		BsFormField jpFirstName = new BsFormField("/view/images/profile-icon.png", "First Name");
+		FormField jpFirstName = new FormField("/view/images/profile-icon.png", "First Name");
 		jpFirstName.setBounds(40, 20, 340, 60);
 		content.add(jpFirstName);
 
-		BsFormField jpLastName = new BsFormField("/view/images/profile-icon.png", "Last Name");
+		FormField jpLastName = new FormField("/view/images/profile-icon.png", "Last Name");
 		jpLastName.setBounds(400, 20, 340, 60);
 		content.add(jpLastName);
 
-		BsFormField jpEmail = new BsFormField("/view/images/mail.png", "E-Mail");
+		FormField jpEmail = new FormField("/view/images/mail.png", "E-Mail");
 		jpEmail.setBounds(40, 100, 700, 60);
 		content.add(jpEmail);
 
-		BsCheckBox jcb = new BsCheckBox("Send me promotions and offers", new Color(138, 147, 179), new Color(114, 132, 193));
-		jcb.setBounds(40, 180, 700, 60);
+		CheckBox jcb = new CheckBox("Send me promotions and offers", new Color(138, 147, 179), new Color(114, 132, 193));
+		jcb.setBounds(40, 171, 700, 38);
 		content.add(jcb);
 
-		BsButton jb2 = new BsButton("Reset", BsButtonType.DANGER);
-		jb2.setBounds(590, 265, 150, 50);
+		Button jb2 = new Button(ButtonType.DANGER);
+		jb2.setButtonType(ButtonType.INFO);
+		jb2.setText("Info");
+		jb2.setBounds(480, 265, 80, 38);
 		content.add(jb2);
 
-		BsButton jb1 = new BsButton("Submit", BsButtonType.PRIMARY);
-		jb1.setBounds(420, 265, 150, 50);
+		Button jb1 = new Button(ButtonType.SECONDARY);
+		jb1.setButtonType(ButtonType.WARNING);
+		jb1.setText("Warning");
+		jb1.setBounds(390, 265, 80, 38);
 		content.add(jb1);
 
-		BsButton rectlookButton = new BsButton("Default", BsButtonType.DEFAULT);
+		Button rectlookButton = new Button(ButtonType.PRIMARY);
+		rectlookButton.setText("Primary");
 		rectlookButton.setBounds(10, 265, 80, 50);
 		content.add(rectlookButton);
 
-		BsButton rectlookButton_1 = new BsButton("Success", BsButtonType.SUCCESS);
-		rectlookButton_1.setBounds(96, 265, 80, 50);
+		Button rectlookButton_1 = new Button(ButtonType.SUCCESS);
+		rectlookButton_1.setButtonType(ButtonType.SECONDARY);
+		rectlookButton_1.setText("Secondary");
+		rectlookButton_1.setBounds(96, 265, 100, 38);
 		content.add(rectlookButton_1);
 
-		BsButton rectlookButton_2 = new BsButton("Info", BsButtonType.INFO);
-		rectlookButton_2.setBounds(182, 265, 80, 50);
+		Button rectlookButton_2 = new Button(ButtonType.INFO);
+		rectlookButton_2.setButtonType(ButtonType.SUCCESS);
+		rectlookButton_2.setText("Success");
+		rectlookButton_2.setBounds(205, 265, 80, 50);
 		content.add(rectlookButton_2);
 
-		BsButton rectlookButton_3 = new BsButton("Warning", BsButtonType.WARNING);
-		rectlookButton_3.setBounds(268, 265, 80, 50);
+		Button rectlookButton_3 = new Button(ButtonType.WARNING);
+		rectlookButton_3.setButtonType(ButtonType.DANGER);
+		rectlookButton_3.setText("Danger");
+		rectlookButton_3.setBounds(284, 265, 96, 38);
 		content.add(rectlookButton_3);
+		
+		Button btnLight = new Button(ButtonType.DANGER);
+		btnLight.setButtonType(ButtonType.LIGHT);
+		btnLight.setText("Light");
+		btnLight.setBounds(565, 265, 80, 38);
+		content.add(btnLight);
+		
+		Button btnDark = new Button(ButtonType.DANGER);
+		btnDark.setButtonType(ButtonType.DARK);
+		btnDark.setText("Dark");
+		btnDark.setBounds(660, 265, 80, 38);
+		content.add(btnDark);
+		
+		JButton btnPrimary = new JButton("Primary");
+		btnPrimary.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+		btnPrimary.setBounds(10, 216, 144, 38);
+		content.add(btnPrimary);
 
 		BottomPanel bp = new BottomPanel(new Rectangle(0, 475, 800, 100));
 		container.add(bp);

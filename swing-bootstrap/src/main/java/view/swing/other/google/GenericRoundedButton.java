@@ -1,7 +1,6 @@
 package view.swing.other.google;
 
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
@@ -11,9 +10,12 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import view.swing.custom.bs.BsButtonConstants;
-
 public class GenericRoundedButton extends JButton {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2625164778581996328L;
 
 	public GenericRoundedButton(String title) {
 		super(title);
@@ -26,7 +28,6 @@ public class GenericRoundedButton extends JButton {
 	}
 
 	private void init() {
-		setBackground(BsButtonConstants.PRIMARY_COLOR_BG);
 		setBorder(null);
 		setFocusable(false);
 	}
@@ -53,11 +54,12 @@ public class GenericRoundedButton extends JButton {
 
 		// Make it grey #DDDDDD, and make it round with 1px
 		// black border
-		g2d.setColor(BsButtonConstants.PRIMARY_COLOR_BG);
+		g2d.setColor(Color.BLACK);
 		g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
-		g2d.setColor(BsButtonConstants.PRIMARY_COLOR_BORDER);
+		g2d.setColor(Color.BLUE);
 		g2d.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, 10, 10);
 
+		g2d.setColor(Color.WHITE);
 		// Determine the label size so can center it
 		FontRenderContext frc = new FontRenderContext(null, false, false);
 		Rectangle2D r = getFont().getStringBounds(getText(), frc);

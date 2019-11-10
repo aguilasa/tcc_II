@@ -1,4 +1,4 @@
-package view.swing.custom.bs;
+package view.swing.custom.button;
 
 import static view.swing.utils.AlterFonts.FONT_NAME;
 
@@ -13,17 +13,17 @@ import javax.swing.JPanel;
 
 import view.swing.utils.bo.CustomImageIcon;
 
-public class BsFormField extends JPanel {
+public class FormField extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private BsTextField textField;
+	private TextField textField;
 	private JLabel label;
 
 	private String description;
 	private String iconPath;
 	private int height;
 
-	public BsFormField(String iconPath, String description) {
+	public FormField(String iconPath, String description) {
 		setBackground(new Color(201, 208, 232));
 		this.iconPath = iconPath;
 		this.description = description;
@@ -37,7 +37,7 @@ public class BsFormField extends JPanel {
 
 		height = this.getHeight() - 4;
 
-		textField = new BsTextField();
+		textField = new TextField();
 		textField.setBounds(2, 2, getWidth() - (height + 2), height);
 		textField.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 5));
 		textField.setFont(new Font(FONT_NAME, Font.TRUETYPE_FONT, (height / 2)));

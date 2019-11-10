@@ -1,4 +1,4 @@
-package view.swing.custom.bs;
+package view.swing.custom.button;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.Icon;
 
-public class BsCheckBoxIcon implements Icon {
+public class CheckBoxIcon implements Icon {
 	Color primaryColor, secundaryColor;
 	int border, width, height, type;
 
@@ -18,7 +18,7 @@ public class BsCheckBoxIcon implements Icon {
 	public static final int DISABLED_SELECTED = 6;
 	public static final int ROLLOVER_SELECTED = 7;
 
-	public BsCheckBoxIcon(Color primary, Color secundary, int type) {
+	public CheckBoxIcon(Color primary, Color secundary, int type) {
 		this.primaryColor = primary;
 		this.secundaryColor = secundary;
 		this.border = 1;
@@ -27,7 +27,7 @@ public class BsCheckBoxIcon implements Icon {
 		this.type = type;
 	}
 
-	public BsCheckBoxIcon(Color primary, Color secundary, int type, int border) {
+	public CheckBoxIcon(Color primary, Color secundary, int type, int border) {
 		this.primaryColor = primary;
 		this.secundaryColor = secundary;
 		this.border = border;
@@ -36,7 +36,7 @@ public class BsCheckBoxIcon implements Icon {
 		this.type = type;
 	}
 
-	public BsCheckBoxIcon(Color primary, Color secundary, int type, int border, int width, int height) {
+	public CheckBoxIcon(Color primary, Color secundary, int type, int border, int width, int height) {
 		this.primaryColor = primary;
 		this.secundaryColor = secundary;
 		this.border = border;
@@ -45,7 +45,7 @@ public class BsCheckBoxIcon implements Icon {
 		this.type = type;
 	}
 
-	public BsCheckBoxIcon(Color primary, Color secundary, int type, int width, int height) {
+	public CheckBoxIcon(Color primary, Color secundary, int type, int width, int height) {
 		this.primaryColor = primary;
 		this.secundaryColor = secundary;
 		this.border = 1;

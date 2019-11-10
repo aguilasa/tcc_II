@@ -1,4 +1,4 @@
-package view.swing.custom.bs;
+package view.swing.custom.button;
 
 import static view.swing.utils.AlterFonts.FONT_NAME;
 
@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 
-public class BsCheckBox extends JCheckBox{
+public class CheckBox extends JCheckBox{
 
 	private static final long serialVersionUID = 1L;
 	private String text = "";
@@ -20,7 +20,7 @@ public class BsCheckBox extends JCheckBox{
 	private int iconSize;
 	private int borderSize;
 	
-	public BsCheckBox(String text, Color primary, Color secundary){
+	public CheckBox(String text, Color primary, Color secundary){
 		this.text = text;
 		this.primaryColor = primary;
 		this.secundaryColor = secundary;
@@ -39,13 +39,13 @@ public class BsCheckBox extends JCheckBox{
 	}
 	
 	public void loadIcon(){
-		setIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.NORMAL, borderSize, iconSize, iconSize));
-		setSelectedIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.SELECTED, borderSize, iconSize, iconSize));
-		setRolloverIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.ROLLOVER, borderSize, iconSize, iconSize));
-		setPressedIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.PRESSED, borderSize, iconSize, iconSize));
-		setDisabledIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.DISABLED, borderSize, iconSize, iconSize));
-		setDisabledSelectedIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.DISABLED_SELECTED, borderSize, iconSize, iconSize));
-		setRolloverSelectedIcon(new BsCheckBoxIcon(primaryColor, secundaryColor, BsCheckBoxIcon.ROLLOVER_SELECTED, borderSize, iconSize, iconSize));
+		setIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.NORMAL, borderSize, iconSize, iconSize));
+		setSelectedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.SELECTED, borderSize, iconSize, iconSize));
+		setRolloverIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.ROLLOVER, borderSize, iconSize, iconSize));
+		setPressedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.PRESSED, borderSize, iconSize, iconSize));
+		setDisabledIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.DISABLED, borderSize, iconSize, iconSize));
+		setDisabledSelectedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.DISABLED_SELECTED, borderSize, iconSize, iconSize));
+		setRolloverSelectedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.ROLLOVER_SELECTED, borderSize, iconSize, iconSize));
 	}
 	
 	@Override

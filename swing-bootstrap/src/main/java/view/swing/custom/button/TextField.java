@@ -1,4 +1,4 @@
-package view.swing.custom.bs;
+package view.swing.custom.button;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -7,28 +7,28 @@ import java.awt.RenderingHints;
 import javax.swing.JTextField;
 import javax.swing.text.Document;
 
-public class BsTextField extends JTextField {
+public class TextField extends JTextField {
 
 	private static final long serialVersionUID = 1L;
 	private String placeholder;
 
-	public BsTextField() {
+	public TextField() {
 
 	}
 
-	public BsTextField(final Document pDoc, final String pText, final int pColumns) {
+	public TextField(final Document pDoc, final String pText, final int pColumns) {
 		super(pDoc, pText, pColumns);
 	}
 
-	public BsTextField(final int pColumns) {
+	public TextField(final int pColumns) {
 		super(pColumns);
 	}
 
-	public BsTextField(final String pText) {
+	public TextField(final String pText) {
 		super(pText);
 	}
 
-	public BsTextField(final String pText, final int pColumns) {
+	public TextField(final String pText, final int pColumns) {
 		super(pText, pColumns);
 	}
 

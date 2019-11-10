@@ -5,13 +5,11 @@ import java.awt.Font;
 import javax.swing.UIManager;
 
 public class AlterFonts {
-	public static final String DEFAULT_FONT_NAME = "SansSerif";
-	public static final String ALTERNATIVE_FONT_NAME = "HelveticaNeue";
-	public static final String SEGOE = "Segoe UI Light";
-	public static final String FONT_NAME = DEFAULT_FONT_NAME;
-	
-	public static final Font DEFAULT_FONT = new Font(FONT_NAME, Font.TRUETYPE_FONT, 12);
-	public static final Font ALTERNATIVE_FONT = new Font(ALTERNATIVE_FONT_NAME, Font.TRUETYPE_FONT, 12);
+	public static final String SEGOE = "Segoe UI";
+	public static final String ROBOTO = "Roboto";
+	public static final String FONT_NAME = SEGOE;
+
+	public static final Font DEFAULT_FONT = new Font(FONT_NAME, Font.PLAIN, 12);
 
 	public static void alterFonts() {
 		UIManager.put("Menu.font", DEFAULT_FONT);
