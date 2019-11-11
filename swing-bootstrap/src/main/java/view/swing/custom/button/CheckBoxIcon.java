@@ -7,7 +7,7 @@ import java.awt.Graphics;
 import javax.swing.Icon;
 
 public class CheckBoxIcon implements Icon {
-	Color primaryColor, secundaryColor;
+	Color primaryColor, secondaryColor;
 	int border, width, height, type;
 
 	public static final int NORMAL = 1;
@@ -18,36 +18,36 @@ public class CheckBoxIcon implements Icon {
 	public static final int DISABLED_SELECTED = 6;
 	public static final int ROLLOVER_SELECTED = 7;
 
-	public CheckBoxIcon(Color primary, Color secundary, int type) {
+	public CheckBoxIcon(Color primary, Color secondary, int type) {
 		this.primaryColor = primary;
-		this.secundaryColor = secundary;
+		this.secondaryColor = secondary;
 		this.border = 1;
 		this.width = 15;
 		this.height = 15;
 		this.type = type;
 	}
 
-	public CheckBoxIcon(Color primary, Color secundary, int type, int border) {
+	public CheckBoxIcon(Color primary, Color secondary, int type, int border) {
 		this.primaryColor = primary;
-		this.secundaryColor = secundary;
+		this.secondaryColor = secondary;
 		this.border = border;
 		this.width = 15;
 		this.height = 15;
 		this.type = type;
 	}
 
-	public CheckBoxIcon(Color primary, Color secundary, int type, int border, int width, int height) {
+	public CheckBoxIcon(Color primary, Color secondary, int type, int border, int width, int height) {
 		this.primaryColor = primary;
-		this.secundaryColor = secundary;
+		this.secondaryColor = secondary;
 		this.border = border;
 		this.width = width;
 		this.height = height;
 		this.type = type;
 	}
 
-	public CheckBoxIcon(Color primary, Color secundary, int type, int width, int height) {
+	public CheckBoxIcon(Color primary, Color secondary, int type, int width, int height) {
 		this.primaryColor = primary;
-		this.secundaryColor = secundary;
+		this.secondaryColor = secondary;
 		this.border = 1;
 		this.width = width;
 		this.height = height;
@@ -60,37 +60,35 @@ public class CheckBoxIcon implements Icon {
 
 		switch (type) {
 		case SELECTED:
-			g.setColor(secundaryColor);
+			g.setColor(secondaryColor);
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.WHITE);
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
 			g.setColor(primaryColor);
-			g.fillRect(x + border + selec, y + border + selec, width - (border * 2) - (selec * 2),
-					height - (border * 2) - (selec * 2));
+			g.fillRect(x + border + selec, y + border + selec, width - (border * 2) - (selec * 2), height - (border * 2) - (selec * 2));
 			break;
 		case ROLLOVER_SELECTED:
-			g.setColor(secundaryColor);
+			g.setColor(secondaryColor);
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.WHITE);
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
 			g.setColor(primaryColor);
-			g.fillRect(x + border + selec, y + border + selec, width - (border * 2) - (selec * 2),
-					height - (border * 2) - (selec * 2));
+			g.fillRect(x + border + selec, y + border + selec, width - (border * 2) - (selec * 2), height - (border * 2) - (selec * 2));
 			break;
 		case ROLLOVER:
-			g.setColor(secundaryColor);
+			g.setColor(secondaryColor);
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.WHITE);
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
 			break;
 		case PRESSED:
-			g.setColor(secundaryColor);
+			g.setColor(secondaryColor);
 			g.fillRect(x, y, width, height);
 			g.setColor(primaryColor);
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
 			break;
 		case NORMAL:
-			g.setColor(secundaryColor);
+			g.setColor(secondaryColor);
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.WHITE);
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
@@ -101,8 +99,7 @@ public class CheckBoxIcon implements Icon {
 			g.setColor(new Color(190, 190, 190));
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
 			g.setColor(new Color(141, 141, 141));
-			g.fillRect(x + border + selec, y + border + selec, width - (border * 2) - (selec * 2),
-					height - (border * 2) - (selec * 2));
+			g.fillRect(x + border + selec, y + border + selec, width - (border * 2) - (selec * 2), height - (border * 2) - (selec * 2));
 			break;
 		case DISABLED:
 			g.setColor(new Color(141, 141, 141));
@@ -111,7 +108,7 @@ public class CheckBoxIcon implements Icon {
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));
 			break;
 		default:
-			g.setColor(secundaryColor);
+			g.setColor(secondaryColor);
 			g.fillRect(x, y, width, height);
 			g.setColor(Color.WHITE);
 			g.fillRect(x + border, y + border, width - (border * 2), height - (border * 2));

@@ -11,7 +11,7 @@ import java.awt.RenderingHints;
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
 
-public class CheckBox extends JCheckBox{
+public class CheckBox extends JCheckBox {
 
 	private static final long serialVersionUID = 1L;
 	private String text = "";
@@ -19,8 +19,8 @@ public class CheckBox extends JCheckBox{
 	private Color secundaryColor;
 	private int iconSize;
 	private int borderSize;
-	
-	public CheckBox(String text, Color primary, Color secundary){
+
+	public CheckBox(String text, Color primary, Color secundary) {
 		this.text = text;
 		this.primaryColor = primary;
 		this.secundaryColor = secundary;
@@ -28,17 +28,17 @@ public class CheckBox extends JCheckBox{
 		this.borderSize = 1;
 		loadCheckBox();
 	}
-	
-	public void loadCheckBox(){
+
+	public void loadCheckBox() {
 		setText(text);
 		setFont(new Font(FONT_NAME, Font.TRUETYPE_FONT, 16));
 		setBorder(BorderFactory.createLineBorder(new Color(201, 208, 232)));
-		setForeground(new Color(115,115,115));
-		
+		setForeground(new Color(115, 115, 115));
+
 		loadIcon();
 	}
-	
-	public void loadIcon(){
+
+	public void loadIcon() {
 		setIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.NORMAL, borderSize, iconSize, iconSize));
 		setSelectedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.SELECTED, borderSize, iconSize, iconSize));
 		setRolloverIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.ROLLOVER, borderSize, iconSize, iconSize));
@@ -47,33 +47,33 @@ public class CheckBox extends JCheckBox{
 		setDisabledSelectedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.DISABLED_SELECTED, borderSize, iconSize, iconSize));
 		setRolloverSelectedIcon(new CheckBoxIcon(primaryColor, secundaryColor, CheckBoxIcon.ROLLOVER_SELECTED, borderSize, iconSize, iconSize));
 	}
-	
+
 	@Override
-	public String getText(){
+	public String getText() {
 		return text;
 	}
-	
+
 	@Override
-	public void setText(String text){
+	public void setText(String text) {
 		this.text = text;
 	}
-	
-	public void setBorderSize(int size){
+
+	public void setBorderSize(int size) {
 		borderSize = size;
 		loadIcon();
 	}
-	
-	public void setIconSize(int size){
+
+	public void setIconSize(int size) {
 		iconSize = size;
 		loadIcon();
 	}
-	
-    @Override
-    protected void paintComponent(final Graphics pG) {
-        super.paintComponent(pG);
 
-        final Graphics2D g = (Graphics2D) pG;
-        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,RenderingHints.VALUE_ANTIALIAS_ON);
-    }
+	@Override
+	protected void paintComponent(final Graphics pG) {
+		super.paintComponent(pG);
+
+		final Graphics2D g = (Graphics2D) pG;
+		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+	}
 
 }

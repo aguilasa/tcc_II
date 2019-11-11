@@ -3,7 +3,6 @@ package view.swing.screens;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
-import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,12 +11,12 @@ import java.awt.event.ComponentListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
@@ -25,13 +24,9 @@ import view.swing.custom.button.CheckBox;
 import view.swing.custom.button.FormField;
 import view.swing.custom.commons.ComponentSize;
 import view.swing.custom.input.Input;
-import view.swing.custom.input.Input2;
 import view.swing.other.BottomPanel;
 import view.swing.other.RainbowPanel;
 import view.swing.other.TitlePanel;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.border.CompoundBorder;
 
 public class MainFrame extends JFrame implements ActionListener, WindowListener {
 
