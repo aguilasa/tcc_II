@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import javax.swing.JFrame;
 
 public class JRoundRectanglesJavaExample extends JFrame {
+	private static final long serialVersionUID = 1896774006472118973L;
+
 	public void paint(Graphics gr) {
 		super.paint(gr);
 		int x = 30;
