@@ -9,7 +9,7 @@ import com.github.aguilasa.db.connection.ConnectionFactory;
 import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.MetaDataLoader;
 
-public class DbToHipster {
+public class Db2JHipster {
 
 	public static void main(String[] args) throws SQLException {
 
