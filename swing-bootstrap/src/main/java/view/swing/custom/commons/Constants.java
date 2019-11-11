@@ -60,6 +60,8 @@ public class Constants {
 	public static final Color INPUT_SELECTED = Color.WHITE;
 	public static final Color INPUT_BORDER_FOCUS = Color.decode("#80BDFF");
 	public static final Color INPUT_BORDER_SHADOW = applyAlpha(Color.decode("#007BFF"), 0.25f);
+	public static final Color COMBO_SELECTED = Color.decode("#1E90FF");
+	public static final Color ARROW = Color.decode("#495057");
 
 	static {
 		initialize();
