@@ -1,10 +1,15 @@
 package com.github.aguilasa.view;
 
+import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Toolkit;
 
 import javax.swing.JFrame;
 
 public class Db2JHipsterView {
+
+	private static final int WIDTH = 960;
+	private static final int HEIGHT = 600;
 
 	private JFrame frame;
 
@@ -17,6 +22,8 @@ public class Db2JHipsterView {
 				try {
 					Db2JHipsterView window = new Db2JHipsterView();
 					window.frame.setVisible(true);
+					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+					window.frame.setLocation(dim.width / 2 - window.frame.getSize().width / 2, dim.height / 2 - window.frame.getSize().height / 2);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -36,7 +43,8 @@ public class Db2JHipsterView {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(0, 0, WIDTH, HEIGHT);
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
