@@ -66,6 +66,12 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>com.github.aguilasa</groupId>
+			<artifactId>swing-components</artifactId>
+			<version>develop-SNAPSHOT</version>
+		</dependency>
+
 
 	</dependencies>
 </project>
