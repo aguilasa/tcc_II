@@ -14,14 +14,14 @@ import java.awt.event.FocusListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JPasswordField;
 import javax.swing.border.Border;
 
 import view.swing.custom.commons.BorderSize;
 import view.swing.custom.commons.ComponentSize;
 import view.swing.custom.commons.Constants;
 
-public class Input extends JPanel {
+public class Password extends JPanel {
 
 	private static final long serialVersionUID = -4177396588741203553L;
 	private static final Border emptyBorder = BorderFactory.createEmptyBorder();
@@ -31,16 +31,16 @@ public class Input extends JPanel {
 	private boolean enabled;
 
 	// não visíveis
-	private JTextField textField;
+	private JPasswordField textField;
 	private BorderSize borderSize;
 
 	boolean focused = false;
 
-	public Input() {
+	public Password() {
 		this(ComponentSize.DEFAULT);
 	}
 
-	public Input(ComponentSize componentSize) {
+	public Password(ComponentSize componentSize) {
 		this.componentSize = componentSize;
 		initialize();
 	}
@@ -55,8 +55,8 @@ public class Input extends JPanel {
 	}
 
 	private void createTextField() {
-		textField = new JTextField();
-		textField.addFocusListener(new InputFocusListener(this));
+		textField = new JPasswordField();
+		textField.addFocusListener(new PasswordFocusListener(this));
 		resetTextFieldSizes();
 		textField.setBorder(emptyBorder);
 		textField.setFont(getFont());
@@ -98,7 +98,7 @@ public class Input extends JPanel {
 
 	public String getText() {
 		if (textField != null) {
-			return textField.getText();
+			return String.valueOf(textField.getPassword());
 		}
 		return "";
 	}
@@ -213,12 +213,12 @@ public class Input extends JPanel {
 
 }
 
-class InputFocusListener implements FocusListener {
+class PasswordFocusListener implements FocusListener {
 
-	Input owner;
+	Password owner;
 	private Rectangle bounds;
 
-	public InputFocusListener(Input owner) {
+	public PasswordFocusListener(Password owner) {
 		this.owner = owner;
 	}
 

@@ -124,7 +124,7 @@ public class ComboPanel extends JFrame {
 		comboBox3.setBounds(10, 119, 340, 38);
 		contentPane.add(comboBox3);
 
-		Input input = new Input("Texto");
+		Input input = new Input();
 		input.setText("Input Padr\u00E3o");
 		input.setBounds(10, 191, 340, 38);
 		contentPane.add(input);

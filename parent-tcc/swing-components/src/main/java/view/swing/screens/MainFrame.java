@@ -71,7 +71,10 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 			public void componentResized(ComponentEvent arg0) {
 
 				for (Component c : container.getComponents()) {
-					if (c.getClass().getSimpleName().equals("JMenuBar") || c.getClass().getSimpleName().equals("RainbowPanel") || c.getClass().getSimpleName().equals("TitlePanel") || c.getClass().getSimpleName().equals("BottomPanel"))
+					if (c.getClass().getSimpleName().equals("JMenuBar")
+							|| c.getClass().getSimpleName().equals("RainbowPanel")
+							|| c.getClass().getSimpleName().equals("TitlePanel")
+							|| c.getClass().getSimpleName().equals("BottomPanel"))
 						c.setSize(getWidth(), c.getHeight());
 				}
 
@@ -118,7 +121,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		jpLastName.setBounds(400, 20, 340, 60);
 		content.add(jpLastName);
 
-		CheckBox jcb = new CheckBox("Send me promotions and offers", new Color(138, 147, 179), new Color(114, 132, 193));
+		CheckBox jcb = new CheckBox("Send me promotions and offers", new Color(138, 147, 179),
+				new Color(114, 132, 193));
 		jcb.setBounds(40, 216, 700, 38);
 		content.add(jcb);
 
@@ -157,37 +161,37 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		rectlookButton_3.setText("Danger");
 		rectlookButton_3.setBounds(284, 265, 96, 38);
 		content.add(rectlookButton_3);
-		
+
 		Button btnLight = new Button(ButtonType.DANGER);
 		btnLight.setButtonType(ButtonType.LIGHT);
 		btnLight.setText("Light");
 		btnLight.setBounds(565, 265, 80, 38);
 		content.add(btnLight);
-		
+
 		Button btnDark = new Button(ButtonType.DANGER);
 		btnDark.setComponentSize(ComponentSize.LARGE);
 		btnDark.setButtonType(ButtonType.DARK);
 		btnDark.setText("Dark");
 		btnDark.setBounds(660, 265, 80, 38);
 		content.add(btnDark);
-		
+
 		txtInputPadro = new JTextField();
 		txtInputPadro.setText("Input Padr\u00E3o");
 		txtInputPadro.setBounds(400, 91, 340, 30);
 		content.add(txtInputPadro);
-		
-		Input panel = new Input("Texto");
+
+		Input panel = new Input();
 		panel.setText("Input Padr\u00E3o");
 		panel.setBounds(40, 91, 340, 21);
 		content.add(panel);
-		
+
 		textField = new JTextField();
 		textField.setEnabled(false);
 		textField.setText("Input Padr\u00E3o");
 		textField.setBounds(400, 132, 340, 30);
 		content.add(textField);
-		
-		Input input = new Input("Texto");
+
+		Input input = new Input();
 		input.setText("Input Padr\u00E3o");
 		input.setBounds(40, 140, 340, 38);
 		input.setEnabled(false);

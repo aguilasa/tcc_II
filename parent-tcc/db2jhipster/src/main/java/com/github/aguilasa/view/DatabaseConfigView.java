@@ -2,24 +2,27 @@ package com.github.aguilasa.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.SwingConstants;
 
 import org.apache.commons.lang.StringUtils;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
+import com.github.aguilasa.db.connection.ConnectionFactory;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
 import view.swing.custom.combo.ComboBox;
 import view.swing.custom.input.Input;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import view.swing.custom.input.Password;
 
 public class DatabaseConfigView extends JPanel {
 
@@ -33,7 +36,7 @@ public class DatabaseConfigView extends JPanel {
 	private Input edtDatabase;
 	private Input edtSchema;
 	private Input edtUser;
-	private JPasswordField edtPassword;
+	private Password edtPassword;
 	private Button btnTestConn;
 
 	/**
@@ -123,21 +126,29 @@ public class DatabaseConfigView extends JPanel {
 		edtUser.setBounds(10, 275, 280, 38);
 		add(edtUser);
 
-		edtPassword = new JPasswordField();
+		edtPassword = new Password();
 		edtPassword.setFont(new Font("Segoe UI", Font.PLAIN, 16));
 		edtPassword.setText("postgres");
-		edtPassword.setColumns(10);
 		edtPassword.setBounds(300, 275, 280, 38);
 		add(edtPassword);
 
 		btnTestConn = new Button(ButtonType.PRIMARY);
 		btnTestConn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				testConnection();
 			}
 		});
 		btnTestConn.setText("Testar conexão");
 		btnTestConn.setBounds(10, 330, 158, 38);
 		add(btnTestConn);
+	}
+
+	protected void testConnection() {
+		try {
+			ConnectionFactory.createConnection(getDatabaseConfiguration());
+		} catch (SQLException e) {
+			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
 	}
 
 	public DatabaseConfiguration getDatabaseConfiguration() {
@@ -148,7 +159,7 @@ public class DatabaseConfigView extends JPanel {
 		configuration.setDatabase(edtDatabase.getText());
 		configuration.setSchema(edtSchema.getText());
 		configuration.setUsername(edtUser.getText());
-		configuration.setPassword(String.valueOf(edtPassword.getPassword()));
+		configuration.setPassword(edtPassword.getText());
 		return configuration;
 	}
 
