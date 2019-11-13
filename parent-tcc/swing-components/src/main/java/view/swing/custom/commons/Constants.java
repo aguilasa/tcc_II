@@ -8,20 +8,20 @@ import view.swing.custom.button.ButtonColor;
 import view.swing.custom.button.ButtonType;
 
 enum ColorProperties {
-	fontColor, background, border, hover, hoverBorder, pressed, pressedBorder;
+	fontColor, background, border, hover, hoverBorder, pressed, pressedBorder, fontColorDisabled;
 }
 
 public class Constants {
 
 	private static final String[][] COLORS = { //
-			{ "#FFFFFF", "#007BFF", "#007BFF", "#0062CC", "#005CBF", "#0062CC", "#005CBF" }, //
-			{ "#FFFFFF", "#6C757D", "#6C757D", "#545B62", "#4E555B", "#545B62", "#4E555B" }, //
-			{ "#FFFFFF", "#28A745", "#28A745", "#1E7E34", "#1C7430", "#1E7E34", "#1C7430" }, //
-			{ "#FFFFFF", "#DC3545", "#DC3545", "#BD2130", "#B21F2D", "#BD2130", "#B21F2D" }, //
-			{ "#21251A", "#FFC107", "#FFC107", "#D39E00", "#C69500", "#D39E00", "#C69500" }, //
-			{ "#FFFFFF", "#17A2B8", "#17A2B8", "#117A8B", "#10707F", "#117A8B", "#10707F" }, //
-			{ "#21251A", "#F8F9FA", "#F8F9FA", "#DAE0E5", "#D3D9DF", "#DAE0E5", "#D3D9DF" }, //
-			{ "#FFFFFF", "#343A40", "#343A40", "#1D2124", "#171A1D", "#1D2124", "#171A1D" }//
+			{ "#FFFFFF", "#007BFF", "#007BFF", "#0062CC", "#005CBF", "#0062CC", "#005CBF", "#F6FAFF" }, //
+			{ "#FFFFFF", "#6C757D", "#6C757D", "#545B62", "#4E555B", "#545B62", "#4E555B", "#F6FAFF" }, //
+			{ "#FFFFFF", "#28A745", "#28A745", "#1E7E34", "#1C7430", "#1E7E34", "#1C7430", "#F6FAFF" }, //
+			{ "#FFFFFF", "#DC3545", "#DC3545", "#BD2130", "#B21F2D", "#BD2130", "#B21F2D", "#F6FAFF" }, //
+			{ "#21251A", "#FFC107", "#FFC107", "#D39E00", "#C69500", "#D39E00", "#C69500", "#6E716A" }, //
+			{ "#FFFFFF", "#17A2B8", "#17A2B8", "#117A8B", "#10707F", "#117A8B", "#10707F", "#F6FAFF" }, //
+			{ "#21251A", "#F8F9FA", "#F8F9FA", "#DAE0E5", "#D3D9DF", "#DAE0E5", "#D3D9DF", "#6E716A" }, //
+			{ "#FFFFFF", "#343A40", "#343A40", "#1D2124", "#171A1D", "#1D2124", "#171A1D", "#F6FAFF" }//
 	};
 
 	private static final Map<ButtonType, ButtonColor> BUTTONS_COLORS = new LinkedHashMap<>();
@@ -43,6 +43,7 @@ public class Constants {
 		buttonColor.setHoverBorder(Color.decode(colors[ColorProperties.hoverBorder.ordinal()]));
 		buttonColor.setPressed(Color.decode(colors[ColorProperties.pressed.ordinal()]));
 		buttonColor.setPressedBorder(Color.decode(colors[ColorProperties.pressedBorder.ordinal()]));
+		buttonColor.setFontColorDisabled(Color.decode(colors[ColorProperties.fontColorDisabled.ordinal()]));
 		return buttonColor;
 	}
 

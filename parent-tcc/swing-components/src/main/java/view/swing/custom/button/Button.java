@@ -130,7 +130,7 @@ public class Button extends JButton {
 			}
 		} else {
 			drawBorder = false;
-			fontColor = Constants.applyAlpha(fontColor, 0.65f);
+			fontColor = getButtonColor().getFontColorDisabled();// Constants.applyAlpha(fontColor, 0.65f);
 			background = Constants.applyAlpha(background, 0.65f);
 		}
 
@@ -139,7 +139,8 @@ public class Button extends JButton {
 
 		if (drawBorder) {
 			g.setColor(borderColor);
-			g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getBorderSize().getSize(), getBorderSize().getSize());
+			g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, getBorderSize().getSize(),
+					getBorderSize().getSize());
 		}
 
 		g.setColor(fontColor);

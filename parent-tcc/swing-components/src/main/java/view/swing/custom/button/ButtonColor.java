@@ -20,6 +20,7 @@ public class ButtonColor {
 	private Color hoverBorder;
 	private Color pressed;
 	private Color pressedBorder;
+	private Color fontColorDisabled;
 
 	public ButtonColor copyFrom(ButtonColor other) {
 		setFontColor(other.getFontColor());
@@ -29,6 +30,7 @@ public class ButtonColor {
 		setHoverBorder(other.getHoverBorder());
 		setPressed(other.getPressed());
 		setPressedBorder(other.getPressedBorder());
+		setFontColorDisabled(other.getFontColorDisabled());
 		return this;
 	}
 

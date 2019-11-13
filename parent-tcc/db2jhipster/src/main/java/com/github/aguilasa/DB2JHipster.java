@@ -1,5 +1,8 @@
 package com.github.aguilasa;
 
+import java.awt.Dimension;
+import java.awt.EventQueue;
+import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -8,11 +11,40 @@ import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
 import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.MetaDataLoader;
+import com.github.aguilasa.view.MainView;
+
+import view.swing.utils.AlterFonts;
 
 public class DB2JHipster {
 
-	public static void main(String[] args) throws SQLException {
+	private MainView view;
 
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					AlterFonts.alterFonts();
+					DB2JHipster application = new DB2JHipster();
+					application.view.setVisible(true);
+					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+					application.view.setLocation(dim.width / 2 - application.view.getSize().width / 2,
+							dim.height / 2 - application.view.getSize().height / 2);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	public DB2JHipster() {
+		initialize();
+	}
+
+	private void initialize() {
+		view = new MainView();
+	}
+
+	public static void withoutScreen() throws SQLException {
 		DatabaseConfiguration pg = new DatabaseConfiguration();
 		pg.setHost("teste65");
 		pg.setPort(5432);

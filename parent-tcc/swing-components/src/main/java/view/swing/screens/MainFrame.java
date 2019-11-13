@@ -140,7 +140,8 @@ public class MainFrame extends JFrame implements ActionListener, WindowListener 
 		content.add(jb1);
 
 		Button rectlookButton = new Button(ButtonType.PRIMARY);
-		rectlookButton.setText("Primary");
+		rectlookButton.setEnabled(false);
+		rectlookButton.setText("Voltar");
 		rectlookButton.setBounds(10, 265, 80, 50);
 		content.add(rectlookButton);
 

@@ -54,7 +54,7 @@ public class Other extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
-		DatabaseConfigView panel = new DatabaseConfigView();
+		DBConfigView panel = new DBConfigView();
 		panel.setBounds(0, 0, 643, 407);
 		contentPane.add(panel);
 
@@ -82,7 +82,7 @@ public class Other extends JFrame {
 
 	}
 
-	private void load(DatabaseConfigView panel) throws SQLException {
+	private void load(DBConfigView panel) throws SQLException {
 		Connection connection = ConnectionFactory.createConnection(panel.getDatabaseConfiguration());
 		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, panel.getDatabaseConfiguration());
 		EntityLoader entityLoader = new EntityLoader(metaDataLoader);

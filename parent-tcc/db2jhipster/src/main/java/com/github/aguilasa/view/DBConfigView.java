@@ -1,6 +1,7 @@
 package com.github.aguilasa.view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,8 +24,9 @@ import view.swing.custom.button.ButtonType;
 import view.swing.custom.combo.ComboBox;
 import view.swing.custom.input.Input;
 import view.swing.custom.input.Password;
+import view.swing.custom.commons.ComponentSize;
 
-public class DatabaseConfigView extends JPanel {
+public class DBConfigView extends JPanel {
 
 	private static final long serialVersionUID = 4198299660865086518L;
 
@@ -39,12 +41,15 @@ public class DatabaseConfigView extends JPanel {
 	private Password edtPassword;
 	private Button btnTestConn;
 
+	private boolean validConnection = false;
+
 	/**
 	 * Create the panel.
 	 */
-	public DatabaseConfigView() {
+	public DBConfigView() {
 		setBackground(Color.WHITE);
 		setLayout(null);
+		setPreferredSize(MainView.AREA_SIZE);
 
 		JLabel lblBancoDeDados = new JLabel("Banco de Dados");
 		lblBancoDeDados.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -133,6 +138,7 @@ public class DatabaseConfigView extends JPanel {
 		add(edtPassword);
 
 		btnTestConn = new Button(ButtonType.PRIMARY);
+		btnTestConn.setComponentSize(ComponentSize.SMALL);
 		btnTestConn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				testConnection();
@@ -145,8 +151,11 @@ public class DatabaseConfigView extends JPanel {
 
 	protected void testConnection() {
 		try {
+			validConnection = false;
 			ConnectionFactory.createConnection(getDatabaseConfiguration());
+			validConnection = true;
 		} catch (SQLException e) {
+			validConnection = false;
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}
@@ -161,6 +170,10 @@ public class DatabaseConfigView extends JPanel {
 		configuration.setUsername(edtUser.getText());
 		configuration.setPassword(edtPassword.getText());
 		return configuration;
+	}
+
+	public boolean isValidConnection() {
+		return validConnection;
 	}
 
 	private int getPortValue() {
