@@ -2,15 +2,19 @@ package com.github.aguilasa.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import com.github.aguilasa.view.observables.ConnectionObservable;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
 import view.swing.image.ImagePanel;
 
-public class MainView extends JFrame {
+public class MainView extends JFrame implements Observer {
 
 	private static final long serialVersionUID = -732397022688096890L;
 	private static final int WIDTH = 960;
@@ -47,6 +51,7 @@ public class MainView extends JFrame {
 		buttons.setLayout(null);
 
 		btnNext = new Button(ButtonType.PRIMARY);
+		btnNext.setEnabled(false);
 		btnNext.setText("Avançar");
 		btnNext.setBounds(486, 11, 89, 23);
 		buttons.add(btnNext);
@@ -57,14 +62,21 @@ public class MainView extends JFrame {
 		btnBack.setBounds(387, 11, 89, 38);
 		buttons.add(btnBack);
 
-		JPanel area = new JPanel();
+		area = new JPanel();
 		area.setBackground(Color.WHITE);
 		area.setBounds(360, 10, 585, 480);
 		getContentPane().add(area);
 
 		dbConfigView = new DBConfigView();
 		dbConfigView.setBounds(360, 10, AREA_WIDTH, AREA_HEIGHT);
+		dbConfigView.setObservable(this);
 		area.add(dbConfigView);
+	}
 
+	@Override
+	public void update(Observable observable, Object value) {
+		if (observable instanceof ConnectionObservable) {
+			btnNext.setEnabled((boolean) value);
+		}
 	}
 }

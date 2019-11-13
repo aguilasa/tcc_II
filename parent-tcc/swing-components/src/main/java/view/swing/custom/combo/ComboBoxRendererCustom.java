@@ -28,7 +28,6 @@ class ComboBoxRendererCustom<E> extends JPanel implements ListCellRenderer<E> {
 	}
 
 	private void init(ComboBox<E> comboBox) {
-		System.out.println(comboBox.getComponentSize());
 		setLayout(new GridBagLayout());
 		GridBagConstraints constraints = new GridBagConstraints();
 		constraints.fill = GridBagConstraints.HORIZONTAL;

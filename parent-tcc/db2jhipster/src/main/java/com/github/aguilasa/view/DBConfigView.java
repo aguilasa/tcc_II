@@ -1,11 +1,9 @@
 package com.github.aguilasa.view;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -18,13 +16,14 @@ import org.apache.commons.lang.StringUtils;
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
+import com.github.aguilasa.view.observables.ConnectionObservable;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
 import view.swing.custom.combo.ComboBox;
+import view.swing.custom.commons.ComponentSize;
 import view.swing.custom.input.Input;
 import view.swing.custom.input.Password;
-import view.swing.custom.commons.ComponentSize;
 
 public class DBConfigView extends JPanel {
 
@@ -41,6 +40,7 @@ public class DBConfigView extends JPanel {
 	private Password edtPassword;
 	private Button btnTestConn;
 
+	private ConnectionObservable observable;
 	private boolean validConnection = false;
 
 	/**
@@ -149,13 +149,29 @@ public class DBConfigView extends JPanel {
 		add(btnTestConn);
 	}
 
+	public void setObservable(MainView mainView) {
+		if (mainView != null) {
+			observable = new ConnectionObservable();
+			observable.addObserver(mainView);
+		}
+	}
+
+	private void notifyValidConnection() {
+		if (observable != null) {
+			observable.changeData(validConnection);
+		}
+	}
+
 	protected void testConnection() {
 		try {
 			validConnection = false;
 			ConnectionFactory.createConnection(getDatabaseConfiguration());
+			JOptionPane.showMessageDialog(null, "Conectado");
 			validConnection = true;
-		} catch (SQLException e) {
+			notifyValidConnection();
+		} catch (Exception e) {
 			validConnection = false;
+			notifyValidConnection();
 			JOptionPane.showMessageDialog(null, e.getMessage());
 		}
 	}

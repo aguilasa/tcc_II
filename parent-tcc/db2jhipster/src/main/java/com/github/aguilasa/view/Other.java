@@ -20,15 +20,9 @@ import view.swing.custom.button.ButtonType;
 
 public class Other extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5692986452442130061L;
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -42,9 +36,6 @@ public class Other extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public Other() {
 		setLook();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

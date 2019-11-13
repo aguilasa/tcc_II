@@ -6,6 +6,8 @@ import java.awt.Toolkit;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.swing.UIManager;
+
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
@@ -24,6 +26,7 @@ public class DB2JHipster {
 			public void run() {
 				try {
 					AlterFonts.alterFonts();
+					setLook();
 					DB2JHipster application = new DB2JHipster();
 					application.view.setVisible(true);
 					Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -42,6 +45,14 @@ public class DB2JHipster {
 
 	private void initialize() {
 		view = new MainView();
+	}
+
+	private static void setLook() {
+		try {
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void withoutScreen() throws SQLException {

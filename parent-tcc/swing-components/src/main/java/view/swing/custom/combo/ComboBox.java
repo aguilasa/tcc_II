@@ -54,7 +54,6 @@ public class ComboBox<E> extends JComboBox<E> {
 		return editor;
 	}
 
-	@SuppressWarnings("unchecked")
 	private void init() {
 		componentSize = ComponentSize.DEFAULT;
 		setEditable(false);
