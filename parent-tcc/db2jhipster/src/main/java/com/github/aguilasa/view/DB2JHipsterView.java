@@ -5,6 +5,10 @@ import java.awt.EventQueue;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import view.swing.image.ImagePanel;
+import java.awt.Color;
 
 public class DB2JHipsterView {
 
@@ -43,9 +47,14 @@ public class DB2JHipsterView {
 	 */
 	private void initialize() {
 		frame = new JFrame();
+		frame.getContentPane().setBackground(Color.WHITE);
 		frame.setBounds(0, 0, WIDTH, HEIGHT);
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		ImagePanel panel = new ImagePanel("src/main/resources/images/side.jpg");
+		panel.setBounds(0, 0, 350, 600);
+		frame.getContentPane().add(panel);
 	}
-
 }

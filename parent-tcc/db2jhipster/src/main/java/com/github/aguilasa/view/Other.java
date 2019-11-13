@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -15,6 +14,9 @@ import javax.swing.border.EmptyBorder;
 import com.github.aguilasa.db.connection.ConnectionFactory;
 import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.MetaDataLoader;
+
+import view.swing.custom.button.Button;
+import view.swing.custom.button.ButtonType;
 
 public class Other extends JFrame {
 
@@ -53,10 +55,11 @@ public class Other extends JFrame {
 		contentPane.setLayout(null);
 
 		DatabaseConfigView panel = new DatabaseConfigView();
-		panel.setBounds(0, 0, 490, 218);
+		panel.setBounds(0, 0, 643, 407);
 		contentPane.add(panel);
 
-		JButton btnNewButton = new JButton("Carregar");
+		Button btnNewButton = new Button(ButtonType.PRIMARY);
+		btnNewButton.setText("Carregar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -66,7 +69,7 @@ public class Other extends JFrame {
 				}
 			}
 		});
-		btnNewButton.setBounds(10, 229, 132, 23);
+		btnNewButton.setBounds(0, 418, 132, 23);
 		contentPane.add(btnNewButton);
 	}
 
