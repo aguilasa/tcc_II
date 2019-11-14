@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Observable;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
@@ -148,13 +149,6 @@ public class DBConfigView extends AreaPanel {
 		add(btnTestConn);
 	}
 
-	public void setObservable(MainView mainView) {
-		if (mainView != null) {
-			observable = new ConnectionObservable();
-			observable.addObserver(mainView);
-		}
-	}
-
 	private void notifyValidConnection() {
 		if (observable != null) {
 			observable.changeData(isValidConnection());
@@ -165,11 +159,11 @@ public class DBConfigView extends AreaPanel {
 		try {
 			closeConnection();
 			connection = ConnectionFactory.createConnection(getDatabaseConfiguration());
-			JOptionPane.showMessageDialog(null, "Conectado");
+			JOptionPane.showMessageDialog(getMainView(), "Conectado");
 			notifyValidConnection();
 		} catch (Exception e) {
 			notifyValidConnection();
-			JOptionPane.showMessageDialog(null, e.getMessage());
+			JOptionPane.showMessageDialog(getMainView(), e.getMessage());
 		}
 	}
 
@@ -209,6 +203,14 @@ public class DBConfigView extends AreaPanel {
 
 	public Connection getConnection() {
 		return connection;
+	}
+
+	@Override
+	protected Observable getObservable() {
+		if (observable == null) {
+			observable = new ConnectionObservable();
+		}
+		return observable;
 	}
 
 }

@@ -10,12 +10,15 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.github.aguilasa.view.base.AreaPanel;
 import com.github.aguilasa.view.observables.ConnectionObservable;
+import com.github.aguilasa.view.observables.LoadingObservable;
 import com.github.aguilasa.view.step.Step;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
 import view.swing.image.ImagePanel;
+import view.swing.custom.commons.ComponentSize;
 
 public class MainView extends JFrame implements Observer {
 
@@ -33,6 +36,7 @@ public class MainView extends JFrame implements Observer {
 	private JPanel area;
 	private DBConfigView dbConfigView;
 	private LoadingView loadingView;
+	private JdlView jdlView;
 	private Step step = new Step();
 
 	public MainView() {
@@ -58,6 +62,7 @@ public class MainView extends JFrame implements Observer {
 		buttons.setLayout(null);
 
 		btnNext = new Button(ButtonType.PRIMARY);
+		btnNext.setComponentSize(ComponentSize.SMALL);
 		btnNext.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				next();
@@ -69,6 +74,7 @@ public class MainView extends JFrame implements Observer {
 		buttons.add(btnNext);
 
 		btnBack = new Button(ButtonType.PRIMARY);
+		btnBack.setComponentSize(ComponentSize.SMALL);
 		btnBack.setEnabled(false);
 		btnBack.setText("Voltar");
 		btnBack.setBounds(387, 11, 89, 38);
@@ -82,7 +88,7 @@ public class MainView extends JFrame implements Observer {
 
 		dbConfigView = new DBConfigView();
 		dbConfigView.setBounds(0, 5, 585, 480);
-		dbConfigView.setObservable(this);
+		dbConfigView.setMainView(this);
 		area.add(dbConfigView);
 	}
 
@@ -90,15 +96,28 @@ public class MainView extends JFrame implements Observer {
 	public void update(Observable observable, Object value) {
 		if (observable instanceof ConnectionObservable) {
 			btnNext.setEnabled((boolean) value);
+		} else if (observable instanceof LoadingObservable) {
+			btnNext.setEnabled((boolean) value);
 		}
+
 	}
 
 	private LoadingView getLoadingView() {
 		if (loadingView == null) {
 			loadingView = new LoadingView();
 			loadingView.setBounds(0, 0, AREA_WIDTH, AREA_HEIGHT);
+			loadingView.setMainView(this);
 		}
 		return loadingView;
+	}
+
+	private JdlView getJdlView() {
+		if (jdlView == null) {
+			jdlView = new JdlView();
+			jdlView.setBounds(0, 0, AREA_WIDTH, AREA_HEIGHT);
+			jdlView.setObservable(this);
+		}
+		return jdlView;
 	}
 
 	private void next() {
@@ -114,24 +133,53 @@ public class MainView extends JFrame implements Observer {
 			processLoading(fromNext);
 			break;
 		case TABLES:
+			processTables(fromNext);
 			break;
 		case RELATIONSHIPS:
+			processRelationships(fromNext);
 			break;
 		case END:
+			processEnd(fromNext);
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void processLoading(boolean fromNext) {
+	private void addAreaView(AreaPanel view) {
 		area.removeAll();
-		area.add(getLoadingView());
+		area.add(view);
 		repaint();
+	}
+
+	private void processLoading(boolean fromNext) {
+		addAreaView(getLoadingView());
 		enableButtons(fromNext);
 		getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
 		getLoadingView().setConnection(dbConfigView.getConnection());
 		getLoadingView().loadAll();
+	}
+
+	private void processTables(boolean fromNext) {
+		// TODO Auto-generated method stub
+		if (fromNext) {
+			next();
+		}
+
+	}
+
+	private void processRelationships(boolean fromNext) {
+		// TODO Auto-generated method stub
+		if (fromNext) {
+			next();
+		}
+
+	}
+
+	private void processEnd(boolean fromNext) {
+		addAreaView(getJdlView());
+		enableButtons(fromNext);
+		getJdlView().setText(getLoadingView().getEntityLoader().toJdl());
 	}
 
 	public void enableButtons(boolean fromNext) {

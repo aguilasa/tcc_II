@@ -3,6 +3,7 @@ package com.github.aguilasa.view;
 import java.awt.Font;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Observable;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -14,6 +15,7 @@ import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.MetaDataLoader;
 import com.github.aguilasa.view.base.AreaPanel;
+import com.github.aguilasa.view.observables.LoadingObservable;
 
 public class LoadingView extends AreaPanel {
 
@@ -23,6 +25,9 @@ public class LoadingView extends AreaPanel {
 	private JLabel lblOperation;
 	private DatabaseConfiguration databaseConfiguration;
 	private Connection connection;
+	private EntityLoader entityLoader;
+
+	private LoadingObservable observable;
 
 	public LoadingView() {
 		super();
@@ -37,6 +42,10 @@ public class LoadingView extends AreaPanel {
 		lblOperation.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblOperation.setBounds(10, 205, 565, 20);
 		add(lblOperation);
+	}
+
+	public EntityLoader getEntityLoader() {
+		return entityLoader;
 	}
 
 	public DatabaseConfiguration getDatabaseConfiguration() {
@@ -71,7 +80,7 @@ public class LoadingView extends AreaPanel {
 			@Override
 			protected Void doInBackground() throws Exception {
 				MetaDataLoader metadataLoader = new MetaDataLoader(connection, databaseConfiguration);
-				EntityLoader entityLoader = new EntityLoader(metadataLoader);
+				entityLoader = new EntityLoader(metadataLoader);
 				initializeLoading();
 				try {
 					try {
@@ -97,10 +106,11 @@ public class LoadingView extends AreaPanel {
 						entityLoader.loadRelationships();
 						sleep();
 					} catch (SQLException e) {
-						JOptionPane.showMessageDialog(null, e.getMessage());
+						JOptionPane.showMessageDialog(getMainView(), e.getMessage());
 					}
 				} finally {
 					finalizeLoading();
+					notifyFinalize();
 				}
 				return null;
 			}
@@ -116,4 +126,19 @@ public class LoadingView extends AreaPanel {
 			}
 		}
 	}
+
+	private void notifyFinalize() {
+		if (observable != null) {
+			observable.changeData(true);
+		}
+	}
+
+	@Override
+	protected Observable getObservable() {
+		if (observable == null) {
+			observable = new LoadingObservable();
+		}
+		return observable;
+	}
+
 }
