@@ -121,7 +121,7 @@ public class LoadingView extends AreaPanel {
 	private void sleep() {
 		if (MainView.TESTING) {
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(MainView.SLEEP);
 			} catch (InterruptedException e) {
 			}
 		}

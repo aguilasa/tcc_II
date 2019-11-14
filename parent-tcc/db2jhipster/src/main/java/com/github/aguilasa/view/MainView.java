@@ -30,6 +30,7 @@ public class MainView extends JFrame implements Observer {
 
 	public static final Dimension AREA_SIZE = new Dimension(AREA_WIDTH, AREA_HEIGHT);
 	public static final boolean TESTING = true;
+	public static final int SLEEP = 2000;
 
 	private Button btnNext;
 	private Button btnBack;
@@ -74,6 +75,11 @@ public class MainView extends JFrame implements Observer {
 		buttons.add(btnNext);
 
 		btnBack = new Button(ButtonType.PRIMARY);
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				previous();
+			}
+		});
 		btnBack.setComponentSize(ComponentSize.SMALL);
 		btnBack.setEnabled(false);
 		btnBack.setText("Voltar");
@@ -85,11 +91,7 @@ public class MainView extends JFrame implements Observer {
 		area.setBounds(360, 10, 585, 480);
 		getContentPane().add(area);
 		area.setLayout(null);
-
-		dbConfigView = new DBConfigView();
-		dbConfigView.setBounds(0, 5, 585, 480);
-		dbConfigView.setMainView(this);
-		area.add(dbConfigView);
+		processStart(true);
 	}
 
 	@Override
@@ -100,6 +102,15 @@ public class MainView extends JFrame implements Observer {
 			btnNext.setEnabled((boolean) value);
 		}
 
+	}
+
+	private DBConfigView getDbConfigView() {
+		if (dbConfigView == null) {
+			dbConfigView = new DBConfigView();
+			dbConfigView.setBounds(0, 0, AREA_WIDTH, AREA_HEIGHT);
+			dbConfigView.setMainView(this);
+		}
+		return dbConfigView;
 	}
 
 	private LoadingView getLoadingView() {
@@ -125,9 +136,16 @@ public class MainView extends JFrame implements Observer {
 		processStep(true);
 	}
 
+	private void previous() {
+		step.previous();
+		processStep(false);
+	}
+
 	private void processStep(boolean fromNext) {
+		enableButtons(fromNext);
 		switch (step.step()) {
 		case START:
+			processStart(fromNext);
 			break;
 		case LOADING:
 			processLoading(fromNext);
@@ -152,33 +170,39 @@ public class MainView extends JFrame implements Observer {
 		repaint();
 	}
 
+	private void processStart(boolean fromNext) {
+		addAreaView(getDbConfigView());
+	}
+
 	private void processLoading(boolean fromNext) {
-		addAreaView(getLoadingView());
-		enableButtons(fromNext);
-		getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
-		getLoadingView().setConnection(dbConfigView.getConnection());
-		getLoadingView().loadAll();
+		if (fromNext) {
+			addAreaView(getLoadingView());
+			getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
+			getLoadingView().setConnection(dbConfigView.getConnection());
+			getLoadingView().loadAll();
+		} else {
+			previous();
+		}
 	}
 
 	private void processTables(boolean fromNext) {
-		// TODO Auto-generated method stub
 		if (fromNext) {
 			next();
+		} else {
+			previous();
 		}
-
 	}
 
 	private void processRelationships(boolean fromNext) {
-		// TODO Auto-generated method stub
 		if (fromNext) {
 			next();
+		} else {
+			previous();
 		}
-
 	}
 
 	private void processEnd(boolean fromNext) {
 		addAreaView(getJdlView());
-		enableButtons(fromNext);
 		getJdlView().setText(getLoadingView().getEntityLoader().toJdl());
 	}
 
