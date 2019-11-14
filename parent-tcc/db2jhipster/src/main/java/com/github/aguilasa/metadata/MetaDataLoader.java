@@ -112,25 +112,25 @@ public class MetaDataLoader {
 		loadAllTablesUniqueConstraints();
 	}
 
-	private void loadAllTablesColumns() throws SQLException {
+	public void loadAllTablesColumns() throws SQLException {
 		for (Table table : tables) {
 			loadColumns(table);
 		}
 	}
 
-	private void loadAllTablesPrimaryKeys() throws SQLException {
+	public void loadAllTablesPrimaryKeys() throws SQLException {
 		for (Table table : tables) {
 			loadPrimaryKeys(table);
 		}
 	}
 
-	private void loadAllTablesForeignKeys() throws SQLException {
+	public void loadAllTablesForeignKeys() throws SQLException {
 		for (Table table : tables) {
 			loadForeignKeys(table);
 		}
 	}
 
-	private void loadAllTablesUniqueConstraints() throws SQLException {
+	public void loadAllTablesUniqueConstraints() throws SQLException {
 		for (Table table : tables) {
 			loadUniqueConstraints(table);
 		}
@@ -213,7 +213,8 @@ public class MetaDataLoader {
 			while (result.next()) {
 				String tableName = result.getString("FKTABLE_NAME");
 				if (!tableName.equalsIgnoreCase(table.getName())) {
-					throw new RuntimeException(String.format("Não foi possível carregar as chaves estrangeiras da tabela '%s'.", table.getName()));
+					throw new RuntimeException(String.format(
+							"Não foi possível carregar as chaves estrangeiras da tabela '%s'.", table.getName()));
 				}
 				String columnName = result.getString("FKCOLUMN_NAME");
 				String referenceTableName = result.getString("PKTABLE_NAME");
@@ -267,7 +268,8 @@ public class MetaDataLoader {
 			while (result.next()) {
 				String tableName = result.getString("TABLE_NAME");
 				if (!tableName.equalsIgnoreCase(table.getName())) {
-					throw new RuntimeException(String.format("Não foi possível carregar as constraints únicas da tabela '%s'.", table.getName()));
+					throw new RuntimeException(String.format(
+							"Não foi possível carregar as constraints únicas da tabela '%s'.", table.getName()));
 				}
 				String columnName = result.getString("COLUMN_NAME");
 				if (columnName != null) {

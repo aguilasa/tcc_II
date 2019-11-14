@@ -2,6 +2,8 @@ package com.github.aguilasa.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -9,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.github.aguilasa.view.observables.ConnectionObservable;
+import com.github.aguilasa.view.step.Step;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
@@ -21,12 +24,16 @@ public class MainView extends JFrame implements Observer {
 	private static final int HEIGHT = 600;
 	private static final int AREA_WIDTH = 585;
 	private static final int AREA_HEIGHT = 480;
+
 	public static final Dimension AREA_SIZE = new Dimension(AREA_WIDTH, AREA_HEIGHT);
+	public static final boolean TESTING = true;
 
 	private Button btnNext;
 	private Button btnBack;
 	private JPanel area;
 	private DBConfigView dbConfigView;
+	private LoadingView loadingView;
+	private Step step = new Step();
 
 	public MainView() {
 		initialize();
@@ -51,6 +58,11 @@ public class MainView extends JFrame implements Observer {
 		buttons.setLayout(null);
 
 		btnNext = new Button(ButtonType.PRIMARY);
+		btnNext.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				next();
+			}
+		});
 		btnNext.setEnabled(false);
 		btnNext.setText("Avançar");
 		btnNext.setBounds(486, 11, 89, 23);
@@ -66,9 +78,10 @@ public class MainView extends JFrame implements Observer {
 		area.setBackground(Color.WHITE);
 		area.setBounds(360, 10, 585, 480);
 		getContentPane().add(area);
+		area.setLayout(null);
 
 		dbConfigView = new DBConfigView();
-		dbConfigView.setBounds(360, 10, AREA_WIDTH, AREA_HEIGHT);
+		dbConfigView.setBounds(0, 5, 585, 480);
 		dbConfigView.setObservable(this);
 		area.add(dbConfigView);
 	}
@@ -78,5 +91,51 @@ public class MainView extends JFrame implements Observer {
 		if (observable instanceof ConnectionObservable) {
 			btnNext.setEnabled((boolean) value);
 		}
+	}
+
+	private LoadingView getLoadingView() {
+		if (loadingView == null) {
+			loadingView = new LoadingView();
+			loadingView.setBounds(0, 0, AREA_WIDTH, AREA_HEIGHT);
+		}
+		return loadingView;
+	}
+
+	private void next() {
+		step.next();
+		processStep(true);
+	}
+
+	private void processStep(boolean fromNext) {
+		switch (step.step()) {
+		case START:
+			break;
+		case LOADING:
+			processLoading(fromNext);
+			break;
+		case TABLES:
+			break;
+		case RELATIONSHIPS:
+			break;
+		case END:
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void processLoading(boolean fromNext) {
+		area.removeAll();
+		area.add(getLoadingView());
+		repaint();
+		enableButtons(fromNext);
+		getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
+		getLoadingView().setConnection(dbConfigView.getConnection());
+		getLoadingView().loadAll();
+	}
+
+	public void enableButtons(boolean fromNext) {
+		btnNext.setEnabled(!fromNext);
+		btnBack.setEnabled(fromNext);
 	}
 }

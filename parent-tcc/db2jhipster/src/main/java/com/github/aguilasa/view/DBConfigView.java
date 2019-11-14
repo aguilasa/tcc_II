@@ -1,14 +1,14 @@
 package com.github.aguilasa.view;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import org.apache.commons.lang.StringUtils;
@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringUtils;
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
+import com.github.aguilasa.view.base.AreaPanel;
 import com.github.aguilasa.view.observables.ConnectionObservable;
 
 import view.swing.custom.button.Button;
@@ -25,7 +26,7 @@ import view.swing.custom.commons.ComponentSize;
 import view.swing.custom.input.Input;
 import view.swing.custom.input.Password;
 
-public class DBConfigView extends JPanel {
+public class DBConfigView extends AreaPanel {
 
 	private static final long serialVersionUID = 4198299660865086518L;
 
@@ -39,17 +40,15 @@ public class DBConfigView extends JPanel {
 	private Input edtUser;
 	private Password edtPassword;
 	private Button btnTestConn;
+	private Connection connection;
 
 	private ConnectionObservable observable;
-	private boolean validConnection = false;
 
 	/**
 	 * Create the panel.
 	 */
 	public DBConfigView() {
-		setBackground(Color.WHITE);
-		setLayout(null);
-		setPreferredSize(MainView.AREA_SIZE);
+		super();
 
 		JLabel lblBancoDeDados = new JLabel("Banco de Dados");
 		lblBancoDeDados.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -158,21 +157,29 @@ public class DBConfigView extends JPanel {
 
 	private void notifyValidConnection() {
 		if (observable != null) {
-			observable.changeData(validConnection);
+			observable.changeData(isValidConnection());
 		}
 	}
 
 	protected void testConnection() {
 		try {
-			validConnection = false;
-			ConnectionFactory.createConnection(getDatabaseConfiguration());
+			closeConnection();
+			connection = ConnectionFactory.createConnection(getDatabaseConfiguration());
 			JOptionPane.showMessageDialog(null, "Conectado");
-			validConnection = true;
 			notifyValidConnection();
 		} catch (Exception e) {
-			validConnection = false;
 			notifyValidConnection();
 			JOptionPane.showMessageDialog(null, e.getMessage());
+		}
+	}
+
+	private void closeConnection() {
+		if (connection != null) {
+			try {
+				connection.close();
+				connection = null;
+			} catch (SQLException e) {
+			}
 		}
 	}
 
@@ -189,7 +196,7 @@ public class DBConfigView extends JPanel {
 	}
 
 	public boolean isValidConnection() {
-		return validConnection;
+		return connection != null;
 	}
 
 	private int getPortValue() {
@@ -199,4 +206,9 @@ public class DBConfigView extends JPanel {
 		}
 		return -1;
 	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
 }
