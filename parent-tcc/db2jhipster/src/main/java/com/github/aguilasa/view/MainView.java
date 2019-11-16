@@ -30,7 +30,7 @@ public class MainView extends JFrame implements Observer {
 
 	public static final Dimension AREA_SIZE = new Dimension(AREA_WIDTH, AREA_HEIGHT);
 	public static final boolean TESTING = true;
-	public static final int SLEEP = 2000;
+	public static final int SLEEP = 1 * 1000;
 
 	private Button btnNext;
 	private Button btnBack;
@@ -204,13 +204,9 @@ public class MainView extends JFrame implements Observer {
 	}
 
 	private void processRelationships(boolean fromNext) {
-		if (fromNext) {
-			addAreaView(getRelationshipView());
-			getRelationshipView().setEntityLoader(getLoadingView().getEntityLoader());
-			getRelationshipView().loadEntities();
-		} else {
-			previous();
-		}
+		addAreaView(getRelationshipView());
+		getRelationshipView().setEntityLoader(getLoadingView().getEntityLoader());
+		getRelationshipView().loadEntities();
 	}
 
 	private void processEnd(boolean fromNext) {

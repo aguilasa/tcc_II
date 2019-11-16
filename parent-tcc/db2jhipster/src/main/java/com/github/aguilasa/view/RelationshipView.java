@@ -36,7 +36,6 @@ public class RelationshipView extends AreaPanel {
 
 	@Override
 	protected Observable getObservable() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
