@@ -17,6 +17,7 @@ public abstract class AreaPanel extends JPanel {
 		setBackground(Color.WHITE);
 		setLayout(null);
 		setPreferredSize(MainView.AREA_SIZE);
+		setSize(getPreferredSize());
 	}
 
 	public MainView getMainView() {
