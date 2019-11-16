@@ -17,8 +17,8 @@ import com.github.aguilasa.view.step.Step;
 
 import view.swing.custom.button.Button;
 import view.swing.custom.button.ButtonType;
-import view.swing.image.ImagePanel;
 import view.swing.custom.commons.ComponentSize;
+import view.swing.image.ImagePanel;
 
 public class MainView extends JFrame implements Observer {
 
@@ -37,6 +37,7 @@ public class MainView extends JFrame implements Observer {
 	private JPanel area;
 	private DBConfigView dbConfigView;
 	private LoadingView loadingView;
+	private RelationshipView relationshipView;
 	private JdlView jdlView;
 	private Step step = new Step();
 
@@ -70,7 +71,7 @@ public class MainView extends JFrame implements Observer {
 			}
 		});
 		btnNext.setEnabled(false);
-		btnNext.setText("Avançar");
+		btnNext.setText("AvanÃ§ar");
 		btnNext.setBounds(486, 11, 89, 23);
 		buttons.add(btnNext);
 
@@ -126,9 +127,18 @@ public class MainView extends JFrame implements Observer {
 		if (jdlView == null) {
 			jdlView = new JdlView();
 			jdlView.setBounds(0, 0, AREA_WIDTH, AREA_HEIGHT);
-			jdlView.setObservable(this);
+			jdlView.setMainView(this);
 		}
 		return jdlView;
+	}
+
+	private RelationshipView getRelationshipView() {
+		if (relationshipView == null) {
+			relationshipView = new RelationshipView();
+			relationshipView.setBounds(0, 0, AREA_WIDTH, AREA_HEIGHT);
+			relationshipView.setMainView(this);
+		}
+		return relationshipView;
 	}
 
 	private void next() {
@@ -195,7 +205,9 @@ public class MainView extends JFrame implements Observer {
 
 	private void processRelationships(boolean fromNext) {
 		if (fromNext) {
-			next();
+			addAreaView(getRelationshipView());
+			getRelationshipView().setEntityLoader(getLoadingView().getEntityLoader());
+			getRelationshipView().loadEntities();
 		} else {
 			previous();
 		}

@@ -117,11 +117,6 @@ public class JdlView extends AreaPanel {
 		return matcher.matches();
 	}
 
-	public void setObservable(MainView mainView) {
-		// TODO Auto-generated method stub
-
-	}
-
 	@Override
 	protected Observable getObservable() {
 		return null;
