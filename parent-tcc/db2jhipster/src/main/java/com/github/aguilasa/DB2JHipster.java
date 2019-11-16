@@ -49,7 +49,7 @@ public class DB2JHipster {
 
 	private static void setLook() {
 		try {
-			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

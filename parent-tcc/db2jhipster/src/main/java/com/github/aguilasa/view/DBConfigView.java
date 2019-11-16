@@ -112,7 +112,7 @@ public class DBConfigView extends AreaPanel {
 		edtSchema.setBounds(300, 195, 280, 38);
 		add(edtSchema);
 
-		JLabel lblUsurio = new JLabel("Usu\u00E1rio");
+		JLabel lblUsurio = new JLabel("Usuário");
 		lblUsurio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUsurio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUsurio.setFont(LABEL_FONT);

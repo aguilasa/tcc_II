@@ -2,6 +2,7 @@ package view.swing.custom.combo;
 
 import static view.swing.utils.AlterFonts.FONT_NAME;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.Rectangle;
 import java.util.Vector;
@@ -59,6 +60,7 @@ public class ComboBox<E> extends JComboBox<E> {
 		setEditable(false);
 		setSize(100, ComponentSize.DEFAULT.getHeight());
 		setBorder(new ComboBoxBorder<>(this));
+		setBackground(Color.WHITE);
 		setUI(new ComboBoxUICustom());
 		setRenderer(new ComboBoxRendererCustom<>(this));
 	}
