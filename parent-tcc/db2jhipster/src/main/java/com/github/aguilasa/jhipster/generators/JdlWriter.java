@@ -1,20 +1,19 @@
 package com.github.aguilasa.jhipster.generators;
 
+import java.io.StringWriter;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
+
 import com.github.aguilasa.jhipster.types.Entity;
 import com.github.aguilasa.jhipster.types.EntityField;
 import com.github.aguilasa.jhipster.types.Relationship;
 import com.github.aguilasa.jhipster.types.RelationshipType;
 import com.github.aguilasa.metadata.Table;
 import com.github.aguilasa.utils.Converter;
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-
-import java.io.StringWriter;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class JdlWriter {
 

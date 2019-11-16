@@ -90,7 +90,7 @@ public class LoadingView extends AreaPanel {
 						lblOperation.setText("Carregando campos da base de dados");
 						metadataLoader.loadAllTablesColumns();
 						sleep();
-						lblOperation.setText("Carregando chaves prim·rias da base de dados");
+						lblOperation.setText("Carregando chaves prim√°rias da base de dados");
 						metadataLoader.loadAllTablesPrimaryKeys();
 						sleep();
 						lblOperation.setText("Carregando chaves estrangeiras da base de dados");

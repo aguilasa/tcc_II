@@ -112,7 +112,7 @@ public class DBConfigView extends AreaPanel {
 		edtSchema.setBounds(300, 195, 280, 38);
 		add(edtSchema);
 
-		JLabel lblUsurio = new JLabel("Usu·rio");
+		JLabel lblUsurio = new JLabel("Usu√°rio");
 		lblUsurio.setVerticalAlignment(SwingConstants.BOTTOM);
 		lblUsurio.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUsurio.setFont(LABEL_FONT);
@@ -144,7 +144,7 @@ public class DBConfigView extends AreaPanel {
 				testConnection();
 			}
 		});
-		btnTestConn.setText("Testar conex„o");
+		btnTestConn.setText("Testar conex√£o");
 		btnTestConn.setBounds(10, 330, 158, 38);
 		add(btnTestConn);
 	}

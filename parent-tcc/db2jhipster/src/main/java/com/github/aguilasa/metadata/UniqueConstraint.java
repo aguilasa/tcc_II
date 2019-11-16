@@ -2,10 +2,6 @@ package com.github.aguilasa.metadata;
 
 import lombok.Getter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 public class UniqueConstraint extends Constraint {
 
     @Getter
