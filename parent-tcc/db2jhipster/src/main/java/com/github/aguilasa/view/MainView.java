@@ -181,15 +181,25 @@ public class MainView extends JFrame implements Observer {
 	}
 
 	private void processStart(boolean fromNext) {
+		btnNext.setEnabled(true);
 		addAreaView(getDbConfigView());
 	}
 
 	private void processLoading(boolean fromNext) {
 		if (fromNext) {
-			addAreaView(getLoadingView());
-			getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
-			getLoadingView().setConnection(dbConfigView.getConnection());
-			getLoadingView().loadAll();
+			boolean isValid = getDbConfigView().isValidConnection();
+			if (!isValid) {
+				getDbConfigView().testConnection();
+				isValid = getDbConfigView().isValidConnection();
+			}
+			if (isValid) {
+				addAreaView(getLoadingView());
+				getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
+				getLoadingView().setConnection(dbConfigView.getConnection());
+				getLoadingView().loadAll();
+			} else {
+				previous();
+			}
 		} else {
 			previous();
 		}

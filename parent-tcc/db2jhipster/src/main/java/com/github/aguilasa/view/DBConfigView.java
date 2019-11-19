@@ -155,14 +155,14 @@ public class DBConfigView extends AreaPanel {
 		}
 	}
 
-	protected void testConnection() {
+	public void testConnection() {
 		try {
 			closeConnection();
 			connection = ConnectionFactory.createConnection(getDatabaseConfiguration());
 			JOptionPane.showMessageDialog(getMainView(), "Conectado");
-			notifyValidConnection();
+//			notifyValidConnection();
 		} catch (Exception e) {
-			notifyValidConnection();
+//			notifyValidConnection();
 			JOptionPane.showMessageDialog(getMainView(), e.getMessage());
 		}
 	}
