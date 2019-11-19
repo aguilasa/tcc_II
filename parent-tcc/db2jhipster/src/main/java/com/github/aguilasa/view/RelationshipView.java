@@ -103,14 +103,16 @@ public class RelationshipView extends AreaPanel {
 
 	public void loadComponents() {
 		Entity entity = (Entity) comboEntities.getSelectedItem();
-		innerPanel.removeAll();
-		for (Relationship relationship : entity.getRelationships()) {
-			Row row = new Row();
-			innerPanel.add(row);
-			row.setRelationship(relationship);
-		}
+		if (entity != null) {
+			innerPanel.removeAll();
+			for (Relationship relationship : entity.getRelationships()) {
+				Row row = new Row();
+				innerPanel.add(row);
+				row.setRelationship(relationship);
+			}
 
-		revalidate();
-		repaint();
+			revalidate();
+			repaint();
+		}
 	}
 }

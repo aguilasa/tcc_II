@@ -208,6 +208,8 @@ public class MainView extends JFrame implements Observer {
 		getRelationshipView().setEntityLoader(getLoadingView().getEntityLoader());
 		getRelationshipView().loadEntities();
 		getRelationshipView().loadComponents();
+		btnNext.setEnabled(true);
+		btnBack.setEnabled(true);
 	}
 
 	private void processEnd(boolean fromNext) {

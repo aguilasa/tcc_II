@@ -13,6 +13,7 @@ import org.apache.velocity.util.StringUtils;
 
 import java.sql.SQLException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Getter
 @RequiredArgsConstructor
@@ -27,7 +28,7 @@ public class EntityLoader {
 	private MetaDataLoader metaDataLoader;
 
 	private Set<Entity> entities = new LinkedHashSet<>();
-	private Map<RelationshipType, List<Relationship>> relationships = new LinkedHashMap<>();
+	private List<Relationship> relationships = new LinkedList<>();
 	private Set<String> relationshipsNames = new LinkedHashSet<>();
 
 	public void loadAll() throws SQLException {
@@ -146,12 +147,7 @@ public class EntityLoader {
 	}
 
 	private void addRelationship(Relationship relationship) {
-		RelationshipType relationshipType = relationship.getRelationshipType();
-		if (!relationships.containsKey(relationshipType)) {
-			relationships.put(relationshipType, new LinkedList<>());
-		}
-		List<Relationship> list = relationships.get(relationshipType);
-		list.add(relationship);
+		relationships.add(relationship);
 	}
 
 	public String toJdl() {
@@ -162,7 +158,10 @@ public class EntityLoader {
 			sb.append(LB).append(LB);
 		}
 
-		relationships.entrySet().stream().forEach(r -> {
+		Map<RelationshipType, List<Relationship>> collect = relationships.stream()
+				.collect(Collectors.groupingBy(Relationship::getRelationshipType));
+
+		collect.entrySet().stream().forEach(r -> {
 			sb.append(writer.relationshipToJdl(r.getKey(), r.getValue()));
 			sb.append(LB).append(LB);
 		});
