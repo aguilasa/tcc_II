@@ -55,7 +55,7 @@ public class DB2JHipster {
 		}
 	}
 
-	public static void withoutScreen() throws SQLException {
+	public static void withoutScreen() throws SQLException, ClassNotFoundException {
 		DatabaseConfiguration pg = new DatabaseConfiguration();
 		pg.setHost("teste65");
 		pg.setPort(5432);

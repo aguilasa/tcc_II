@@ -12,7 +12,7 @@ public abstract class BaseConnection {
 
 	protected DatabaseConfiguration configuration;
 
-	public abstract Connection getConnection() throws SQLException;
+	public abstract Connection getConnection() throws SQLException, ClassNotFoundException;
 
 	public abstract String getJdbcUrl();
 

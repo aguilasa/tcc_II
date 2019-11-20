@@ -187,12 +187,8 @@ public class MainView extends JFrame implements Observer {
 
 	private void processLoading(boolean fromNext) {
 		if (fromNext) {
-			boolean isValid = getDbConfigView().isValidConnection();
-			if (!isValid) {
-				getDbConfigView().testConnection();
-				isValid = getDbConfigView().isValidConnection();
-			}
-			if (isValid) {
+			getDbConfigView().testConnection();
+			if (getDbConfigView().isValidConnection()) {
 				addAreaView(getLoadingView());
 				getLoadingView().setDatabaseConfiguration(dbConfigView.getDatabaseConfiguration());
 				getLoadingView().setConnection(dbConfigView.getConnection());

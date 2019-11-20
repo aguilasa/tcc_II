@@ -149,20 +149,12 @@ public class DBConfigView extends AreaPanel {
 		add(btnTestConn);
 	}
 
-	private void notifyValidConnection() {
-		if (observable != null) {
-			observable.changeData(isValidConnection());
-		}
-	}
-
 	public void testConnection() {
 		try {
 			closeConnection();
 			connection = ConnectionFactory.createConnection(getDatabaseConfiguration());
 			JOptionPane.showMessageDialog(getMainView(), "Conectado");
-//			notifyValidConnection();
 		} catch (Exception e) {
-//			notifyValidConnection();
 			JOptionPane.showMessageDialog(getMainView(), e.getMessage());
 		}
 	}
