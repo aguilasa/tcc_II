@@ -25,7 +25,7 @@ public class EntityLoader {
 			"Nine", "Ten" };
 
 	@NonNull
-	private MetaDataLoader metaDataLoader;
+	private DatabaseLoader databaseLoader;
 
 	private Set<Entity> entities = new LinkedHashSet<>();
 	private List<Relationship> relationships = new LinkedList<>();
@@ -43,9 +43,9 @@ public class EntityLoader {
 	public void loadEntities(boolean loadMetadata) throws SQLException {
 		entities.clear();
 		if (loadMetadata) {
-			metaDataLoader.loadAll();
+			databaseLoader.loadAll();
 		}
-		Set<Table> tables = metaDataLoader.getTables();
+		Set<Table> tables = databaseLoader.getTables();
 		for (Table table : tables) {
 			entities.add(Converter.tableToEntity(table));
 		}
@@ -55,7 +55,7 @@ public class EntityLoader {
 		relationships.clear();
 		Set<Entity> remove = new LinkedHashSet<>();
 		for (Entity entity : entities) {
-			Table table = metaDataLoader.findTableByName(entity.getName());
+			Table table = databaseLoader.findTableByName(entity.getName());
 			if (isManyToManyTable(table)) {
 				addManyToManyRelationship(table, entity);
 				remove.add(entity);

@@ -12,7 +12,7 @@ import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
 import com.github.aguilasa.jhipster.EntityLoader;
-import com.github.aguilasa.metadata.MetaDataLoader;
+import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.MainView;
 
 import view.swing.utils.AlterFonts;
@@ -92,10 +92,10 @@ public class DB2JHipster {
 
 		DatabaseConfiguration conf = pg_local;
 		Connection connection = ConnectionFactory.createConnection(conf);
-		MetaDataLoader metaDataLoader = new MetaDataLoader(connection, conf);
+		DatabaseLoader databaseLoader = new DatabaseLoader(connection, conf);
 //		metaDataLoader.loadAll();
 //		metaDataLoader.printTables();
-		EntityLoader entityLoader = new EntityLoader(metaDataLoader);
+		EntityLoader entityLoader = new EntityLoader(databaseLoader);
 		entityLoader.loadAll();
 		System.out.println(entityLoader.toJdl());
 	}

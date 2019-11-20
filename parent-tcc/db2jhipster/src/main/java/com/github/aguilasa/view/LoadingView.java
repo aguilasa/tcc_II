@@ -13,7 +13,7 @@ import javax.swing.SwingWorker;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.jhipster.EntityLoader;
-import com.github.aguilasa.metadata.MetaDataLoader;
+import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.base.AreaPanel;
 import com.github.aguilasa.view.observables.LoadingObservable;
 
@@ -79,25 +79,25 @@ public class LoadingView extends AreaPanel {
 
 			@Override
 			protected Void doInBackground() throws Exception {
-				MetaDataLoader metadataLoader = new MetaDataLoader(connection, databaseConfiguration);
-				entityLoader = new EntityLoader(metadataLoader);
+				DatabaseLoader databaseLoader = new DatabaseLoader(connection, databaseConfiguration);
+				entityLoader = new EntityLoader(databaseLoader);
 				initializeLoading();
 				try {
 					try {
 						lblOperation.setText("Carregando tabelas da base de dados");
-						metadataLoader.loadTables();
+						databaseLoader.loadTables();
 						sleep();
 						lblOperation.setText("Carregando campos da base de dados");
-						metadataLoader.loadAllTablesColumns();
+						databaseLoader.loadAllTablesColumns();
 						sleep();
 						lblOperation.setText("Carregando chaves primárias da base de dados");
-						metadataLoader.loadAllTablesPrimaryKeys();
+						databaseLoader.loadAllTablesPrimaryKeys();
 						sleep();
 						lblOperation.setText("Carregando chaves estrangeiras da base de dados");
-						metadataLoader.loadAllTablesForeignKeys();
+						databaseLoader.loadAllTablesForeignKeys();
 						sleep();
 						lblOperation.setText("Carregando constraints da base de dados");
-						metadataLoader.loadAllTablesUniqueConstraints();
+						databaseLoader.loadAllTablesUniqueConstraints();
 						sleep();
 						lblOperation.setText("Convertendo tabelas para entidades JHipster");
 						entityLoader.loadEntities(false);

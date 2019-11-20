@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 
-public class MetaDataLoader {
+public class DatabaseLoader {
 
 	private static final String TABLE = "TABLE";
 	private static final String[] TABLE_TYPE = { TABLE };
@@ -38,7 +38,7 @@ public class MetaDataLoader {
 	@Getter
 	private Set<Table> tables = new LinkedHashSet<>();
 
-	public MetaDataLoader(Connection connection, DatabaseConfiguration configuration) {
+	public DatabaseLoader(Connection connection, DatabaseConfiguration configuration) {
 		this.connection = connection;
 		this.configuration = configuration;
 		this.schema = getSchema();
