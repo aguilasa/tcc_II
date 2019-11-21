@@ -31,7 +31,10 @@ public enum ColumnType {
 	VARCHAR2("varchar2"), //
 	NUMBER("number"), //
 	CLOB("clob"), //
-	BLOB("blob");
+	BLOB("blob"),//
+	INT_UNSIGNED ("INT UNSIGNED"),//
+	CHAR("char"),//
+	FLOAT("float");//
 
 	private String value;
 

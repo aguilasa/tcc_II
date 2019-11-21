@@ -51,7 +51,7 @@ class ComboBoxRendererCustom<E> extends JPanel implements ListCellRenderer<E> {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-		label.setText(value.toString());
+		label.setText(value != null ? value.toString() : "");
 
 		if (isSelected) {
 			content.setBackground(Constants.COMBO_SELECTED);

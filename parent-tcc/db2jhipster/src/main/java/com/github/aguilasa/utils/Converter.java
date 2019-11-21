@@ -15,86 +15,119 @@ import java.util.Set;
 
 public class Converter {
 
-    private static final Map<ColumnType, FieldType> COLUMN_TYPE_FIELD_TYPES_MAP = new LinkedHashMap<>();
+	private static final Map<ColumnType, FieldType> COLUMN_TYPE_FIELD_TYPES_MAP = new LinkedHashMap<>();
 
-    public static Entity tableToEntity(Table table) {
-        Entity entity = new Entity(StringUtils.capitalizeFirstLetter(table.getName()));
-        Set<Column> columns = table.getColumns();
-        for (Column column : columns) {
-            if (checkCreateField(table, column)) {
-                EntityField entityField = columnToEntityField(column);
-                entity.addField(entityField);
-            }
-        }
-        return entity;
-    }
+	static public String lowerFirstLetter(String data) {
+		String firstLetter = data.substring(0, 1).toLowerCase();
+		String restLetters = data.substring(1);
+		return firstLetter + restLetters;
+	}
 
-    private static boolean checkCreateField(Table table, Column column) {
-        PrimaryKey primaryKey = table.getPrimaryKey();
-        if (primaryKey.getColumns().size() == 1 && primaryKey.existsColumnByName(column.getName())) {
-            return false;
-        }
-        return !table.existsForeignKeyByColumnName(column.getName());
-    }
+	public static String normalizeName(String name) {
+		String[] split = name.split("_");
+		if (split.length > 1) {
+			StringBuilder sb = new StringBuilder();
+			for (String s : split) {
+				sb.append(StringUtils.capitalizeFirstLetter(s));
+			}
+			return sb.toString();
+		}
+		return StringUtils.capitalizeFirstLetter(name);
+	}
 
-    public static EntityField columnToEntityField(Column column) {
-        EntityField field = new EntityField();
-        field.setName(column.getName());
-        field.setType(fieldTypeFromColumn(column));
-        return field;
-    }
+	public static String normalizeFieldName(String name) {
+		String[] split = name.split("_");
+		if (split.length > 1) {
+			StringBuilder sb = new StringBuilder();
+			for (String s : split) {
+				sb.append(StringUtils.capitalizeFirstLetter(s));
+			}
+			name = sb.toString();
+		}
+		return lowerFirstLetter(name);
+	}
 
-    public static FieldType fieldTypeFromColumn(Column column) {
-        ColumnType columnType = column.getType();
-        if (COLUMN_TYPE_FIELD_TYPES_MAP.containsKey(columnType)) {
-            return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
-        } else if (columnType.equals(ColumnType.NUMBER) || columnType.equals(ColumnType.NUMERIC)) {
-            int columnSize = column.getLength();
-            if (column.getScale() >= 0) {
-                if (columnSize <= 19) {
-                    return FieldType.DOUBLE;
-                }
-            } else {
-                if (columnSize <= 10) {
-                    return FieldType.INTEGER;
-                } else if (columnSize <= 19) {
-                    return FieldType.LONG;
-                }
-            }
-            return FieldType.BIGDECIMAL;
-        }
-        return null;
-    }
+	public static Entity tableToEntity(Table table) {
+		Entity entity = new Entity(normalizeName(table.getName()));
+		Set<Column> columns = table.getColumns();
+		for (Column column : columns) {
+			if (checkCreateField(table, column)) {
+				EntityField entityField = columnToEntityField(column);
+				entity.addField(entityField);
+			}
+		}
+		return entity;
+	}
 
-    static {
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGINT, FieldType.LONG);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGINT_IDENTITY, FieldType.LONG);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGSERIAL, FieldType.LONG);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BLOB, FieldType.BLOB);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BOOL, FieldType.BOOLEAN);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BPCHAR, FieldType.STRING);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BYTEA, FieldType.BLOB);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.CLOB, FieldType.TEXTBLOB);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATE, FieldType.LOCALDATE);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATETIME, FieldType.LOCALDATE);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.FLOAT8, FieldType.DOUBLE);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.IMAGE, FieldType.IMAGEBLOB);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT_IDENTITY, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT2, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT4, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT8, FieldType.LONG);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.JSONB, FieldType.BLOB);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.NVARCHAR, FieldType.STRING);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SERIAL, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SMALLINT, FieldType.INTEGER);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.STRING);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIME, FieldType.DURATION);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMP, FieldType.INSTANT);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMPTZ, FieldType.INSTANT);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.UUID, FieldType.UUID);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.VARCHAR, FieldType.STRING);
-        COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.VARCHAR2, FieldType.STRING);
-    }
+	private static boolean checkCreateField(Table table, Column column) {
+		PrimaryKey primaryKey = table.getPrimaryKey();
+		if (primaryKey.getColumns().size() == 1 && primaryKey.existsColumnByName(column.getName())) {
+			return false;
+		}
+		return !table.existsForeignKeyByColumnName(column.getName());
+	}
+
+	public static EntityField columnToEntityField(Column column) {
+		EntityField field = new EntityField();
+		field.setName(normalizeFieldName(column.getName()));
+		field.setType(fieldTypeFromColumn(column));
+		return field;
+	}
+
+	public static FieldType fieldTypeFromColumn(Column column) {
+		ColumnType columnType = column.getType();
+		if (COLUMN_TYPE_FIELD_TYPES_MAP.containsKey(columnType)) {
+			return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
+		} else if (columnType.equals(ColumnType.NUMBER) || columnType.equals(ColumnType.NUMERIC)) {
+			int columnSize = column.getLength();
+			if (column.getScale() >= 0) {
+				if (columnSize <= 19) {
+					return FieldType.DOUBLE;
+				}
+			} else {
+				if (columnSize <= 10) {
+					return FieldType.INTEGER;
+				} else if (columnSize <= 19) {
+					return FieldType.LONG;
+				}
+			}
+			return FieldType.BIGDECIMAL;
+		}
+		return null;
+	}
+
+	static {
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGINT, FieldType.LONG);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGINT_IDENTITY, FieldType.LONG);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGSERIAL, FieldType.LONG);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BLOB, FieldType.BLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BOOL, FieldType.BOOLEAN);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BPCHAR, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BYTEA, FieldType.BLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.CLOB, FieldType.TEXTBLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATE, FieldType.LOCALDATE);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATETIME, FieldType.LOCALDATE);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.FLOAT8, FieldType.DOUBLE);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.FLOAT, FieldType.DOUBLE);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.IMAGE, FieldType.IMAGEBLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT_IDENTITY, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT2, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT4, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT8, FieldType.LONG);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.JSONB, FieldType.BLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.NVARCHAR, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SERIAL, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SMALLINT, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIME, FieldType.DURATION);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMP, FieldType.INSTANT);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMPTZ, FieldType.INSTANT);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.UUID, FieldType.UUID);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.VARCHAR, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.VARCHAR2, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT_UNSIGNED, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.CHAR, FieldType.STRING);
+	}
 
 }
