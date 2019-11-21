@@ -27,7 +27,7 @@ npm start
 
 jhipster import-jdl <arquivo.jdl>
 
-jhipster import-jdl model\model.jdl
+jhipster import-jdl model\model.jh
 
 
 

@@ -239,7 +239,7 @@ public class DatabaseLoader {
 		column.setName(result.getString("COLUMN_NAME"));
 		String typeName = result.getString("TYPE_NAME");
 		types.add(typeName);
-		System.out.println(typeName);
+//		System.out.println(typeName);
 		column.setType(ColumnType.getEnum(typeName));
 		String columnSize = result.getString("COLUMN_SIZE");
 		if (StringUtils.isNumeric(columnSize)) {
