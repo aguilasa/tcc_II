@@ -55,7 +55,7 @@ public class EntityLoader {
 		relationships.clear();
 		Set<Entity> remove = new LinkedHashSet<>();
 		for (Entity entity : entities) {
-			Table table = databaseLoader.findTableByName(entity.getName());
+			Table table = databaseLoader.findTableByName(entity.getTableName());
 			if (isManyToManyTable(table)) {
 				addManyToManyRelationship(table, entity);
 				remove.add(entity);
@@ -86,8 +86,8 @@ public class EntityLoader {
 	public Relationship createRelationshipFromColumn(Column fromColumn, Column toColumn,
 			RelationshipType relationshipType) {
 		Relationship relationship = new Relationship();
-		Entity from = findEntityByName(fromColumn.getOwner().getName());
-		Entity to = findEntityByName(toColumn.getOwner().getName());
+		Entity from = findEntityByTableName(fromColumn.getOwner().getName());
+		Entity to = findEntityByTableName(toColumn.getOwner().getName());
 		relationship.setFromEntity(from);
 		String first = to.getName().toLowerCase();
 		String second = from.getName().toLowerCase();
@@ -139,11 +139,11 @@ public class EntityLoader {
 		return columns_length == MTM_SIZE && columns_length == foreign_length && columns_length == primary_length;
 	}
 
-	public Entity findEntityByName(String entityName) {
+	public Entity findEntityByTableName(String tableName) {
 		return entities.stream() //
-				.filter(e -> e.getName().equalsIgnoreCase(entityName)) //
+				.filter(e -> e.getTableName().equalsIgnoreCase(tableName)) //
 				.findFirst() //
-				.orElseThrow(() -> new RuntimeException(String.format("Entidade '%s' não encontrada.", entityName)));
+				.orElseThrow(() -> new RuntimeException(String.format("Entidade '%s' não encontrada.", tableName)));
 	}
 
 	private void addRelationship(Relationship relationship) {

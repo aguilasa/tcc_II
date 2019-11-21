@@ -14,6 +14,8 @@ public class Entity {
 
 	@NonNull
 	private String name;
+	
+	private String tableName;
 
 	private List<Relationship> relationships = new LinkedList<>();
 

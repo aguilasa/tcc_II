@@ -49,6 +49,7 @@ public class Converter {
 
 	public static Entity tableToEntity(Table table) {
 		Entity entity = new Entity(normalizeName(table.getName()));
+		entity.setTableName(table.getName());
 		Set<Column> columns = table.getColumns();
 		for (Column column : columns) {
 			if (checkCreateField(table, column)) {
