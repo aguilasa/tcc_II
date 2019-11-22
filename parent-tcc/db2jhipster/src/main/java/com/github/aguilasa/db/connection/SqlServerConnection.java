@@ -26,9 +26,9 @@ public class SqlServerConnection extends BaseConnection {
 
 		Connection connection = DriverManager.getConnection(getJdbcUrl(), configuration.getUsername(),
 				configuration.getPassword());
-		if (!StringUtils.isEmpty(configuration.getSchema())) {
-			connection.setSchema(configuration.getSchema());
-		}
+//		if (!StringUtils.isEmpty(configuration.getSchema())) {
+//			connection.setSchema(configuration.getSchema());
+//		}
 		return connection;
 	}
 
