@@ -53,7 +53,7 @@ public class MainView extends JFrame implements Observer {
 		getContentPane().setBackground(Color.WHITE);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		ImagePanel panel = new ImagePanel("src/main/resources/images/side.jpg");
+		ImagePanel panel = new ImagePanel("/images/side.jpg");
 		panel.setBounds(0, 0, 350, 600);
 		getContentPane().add(panel);
 

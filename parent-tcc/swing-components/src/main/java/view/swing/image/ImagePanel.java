@@ -2,7 +2,6 @@ package view.swing.image;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -46,7 +45,7 @@ public class ImagePanel extends JPanel {
 
 	private void createImage() throws IOException {
 		if (StringUtils.isNotEmpty(imagePath)) {
-			image = ImageIO.read(new File(imagePath));
+			image = ImageIO.read(getClass().getResource(imagePath));
 		}
 	}
 

@@ -1,18 +1,17 @@
 package com.github.aguilasa.jhipster.generators;
 
 public enum TemplatesPath {
-    entity("src/main/resources/templates/entity.vm"), //
-    relationship("src/main/resources/templates/relationship.vm");
+	entity("templates/entity.vm"), //
+	relationship("templates/relationship.vm");
 
-    private String path;
+	private String path;
 
-    private TemplatesPath(String path) {
-        this.path = path;
-    }
+	private TemplatesPath(String path) {
+		this.path = path;
+	}
 
-    public String getPath() {
-        return path;
-    }
-    
-    
+	public String getPath() {
+		return path;
+	}
+
 }

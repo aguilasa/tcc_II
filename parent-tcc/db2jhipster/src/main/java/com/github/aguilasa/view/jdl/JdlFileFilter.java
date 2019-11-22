@@ -22,14 +22,14 @@ public class JdlFileFilter extends FileFilter {
 
 	public JdlFileFilter(String description, String... extensions) {
 		if (extensions == null || extensions.length == 0) {
-			throw new IllegalArgumentException("As extensıes devem ser informadas");
+			throw new IllegalArgumentException("As extens√µes devem ser informadas");
 		}
 		this.description = description;
 		this.extensions = new String[extensions.length];
 		this.lowerCaseExtensions = new String[extensions.length];
 		for (int i = 0; i < extensions.length; i++) {
 			if (extensions[i] == null || extensions[i].length() == 0) {
-				throw new IllegalArgumentException("Cada extens„o deve ser informada.");
+				throw new IllegalArgumentException("Cada extens√£o deve ser informada.");
 			}
 			this.extensions[i] = extensions[i];
 			lowerCaseExtensions[i] = extensions[i].toLowerCase(Locale.ENGLISH);
