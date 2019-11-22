@@ -15,6 +15,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.text.DefaultCaret;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
@@ -36,6 +38,7 @@ public class JdlView extends AreaPanel {
 	private Button btnSave;
 	private Button btnJdlStudio;
 	private JTextArea textArea;
+	private JScrollPane scrollPane;
 	private SendToJdlStudio sender = new SendToJdlStudio();
 
 	/**
@@ -50,12 +53,14 @@ public class JdlView extends AreaPanel {
 		lblJdlGerada.setBounds(10, 10, 326, 20);
 		add(lblJdlGerada);
 
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 35, 570, 393);
 		add(scrollPane);
 
 		textArea = new JTextArea();
 		textArea.setFont(new Font("Courier New", Font.PLAIN, 14));
+		DefaultCaret caret = (DefaultCaret) textArea.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		scrollPane.setViewportView(textArea);
 		scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -85,6 +90,12 @@ public class JdlView extends AreaPanel {
 
 	public void setText(String text) {
 		textArea.setText(text);
+
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				scrollPane.getVerticalScrollBar().setValue(scrollPane.getVerticalScrollBar().getMinimum());
+			}
+		});
 	}
 
 	private boolean canSave() {
