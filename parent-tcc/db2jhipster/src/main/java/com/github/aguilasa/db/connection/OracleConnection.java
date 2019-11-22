@@ -32,7 +32,8 @@ public class OracleConnection extends BaseConnection {
 
 	@Override
 	public String getJdbcUrl() {
-		return String.format(JDBC_URL_ORA, configuration.getHost(), configuration.getPort(), configuration.getDatabase());
+		return String.format(JDBC_URL_ORA, configuration.getHost(), configuration.getPort(),
+				configuration.getDatabase());
 	}
 
 }
