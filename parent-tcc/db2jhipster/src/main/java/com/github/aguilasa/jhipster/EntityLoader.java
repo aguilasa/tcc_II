@@ -41,13 +41,17 @@ public class EntityLoader {
 	}
 
 	public void loadEntities(boolean loadMetadata) throws SQLException {
-		entities.clear();
-		if (loadMetadata) {
-			databaseLoader.loadAll();
-		}
-		Set<Table> tables = databaseLoader.getTables();
-		for (Table table : tables) {
-			entities.add(Converter.tableToEntity(table));
+		try {
+			entities.clear();
+			if (loadMetadata) {
+				databaseLoader.loadAll();
+			}
+			Set<Table> tables = databaseLoader.getTables();
+			for (Table table : tables) {
+				entities.add(Converter.tableToEntity(table));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

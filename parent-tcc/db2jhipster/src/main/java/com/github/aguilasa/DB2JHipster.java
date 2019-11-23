@@ -11,7 +11,6 @@ import javax.swing.UIManager;
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
-import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.MainView;
 
@@ -21,7 +20,11 @@ public class DB2JHipster {
 
 	private MainView view;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+		runWithScreen();
+	}
+
+	public static void runWithScreen() {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -55,7 +58,7 @@ public class DB2JHipster {
 		}
 	}
 
-	public static void withoutScreen() throws SQLException, ClassNotFoundException {
+	public static void runWithoutScreen() throws SQLException, ClassNotFoundException {
 		DatabaseConfiguration pg = new DatabaseConfiguration();
 		pg.setHost("teste65");
 		pg.setPort(5432);
@@ -82,6 +85,15 @@ public class DB2JHipster {
 		sql.setPassword("S3nior2018");
 		sql.setDatabaseType(DatabaseType.SqlServer);
 
+		DatabaseConfiguration adv = new DatabaseConfiguration();
+		adv.setHost("localhost");
+		adv.setPort(1433);
+		adv.setDatabase("AdventureWorksLT2014");
+		adv.setUsername("sa");
+		adv.setPassword("12345678");
+		adv.setSchema("SalesLT");
+		adv.setDatabaseType(DatabaseType.SqlServer);
+
 		DatabaseConfiguration ora = new DatabaseConfiguration();
 		ora.setHost("teste65");
 		ora.setPort(1521);
@@ -90,14 +102,18 @@ public class DB2JHipster {
 		ora.setPassword("rhpayroll");
 		ora.setDatabaseType(DatabaseType.Oracle);
 
-		DatabaseConfiguration conf = pg_local;
+		DatabaseConfiguration conf = ora;
 		Connection connection = ConnectionFactory.createConnection(conf);
 		DatabaseLoader databaseLoader = new DatabaseLoader(connection, conf);
+//		databaseLoader.loadTypeInfo();
+		databaseLoader.loadTables();
+		databaseLoader.loadAllTablesColumns();
+		databaseLoader.printTypeNames();
 //		metaDataLoader.loadAll();
 //		metaDataLoader.printTables();
-		EntityLoader entityLoader = new EntityLoader(databaseLoader);
-		entityLoader.loadAll();
-		System.out.println(entityLoader.toJdl());
+//		EntityLoader entityLoader = new EntityLoader(databaseLoader);
+//		entityLoader.loadAll();
+//		System.out.println(entityLoader.toJdl());
 	}
 
 }

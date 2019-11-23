@@ -1,5 +1,11 @@
 package com.github.aguilasa.utils;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+
+import org.apache.velocity.util.StringUtils;
+
 import com.github.aguilasa.jhipster.types.Entity;
 import com.github.aguilasa.jhipster.types.EntityField;
 import com.github.aguilasa.jhipster.types.FieldType;
@@ -7,11 +13,6 @@ import com.github.aguilasa.metadata.Column;
 import com.github.aguilasa.metadata.ColumnType;
 import com.github.aguilasa.metadata.PrimaryKey;
 import com.github.aguilasa.metadata.Table;
-import org.apache.velocity.util.StringUtils;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
 
 public class Converter {
 
@@ -79,7 +80,7 @@ public class Converter {
 		ColumnType columnType = column.getType();
 		if (COLUMN_TYPE_FIELD_TYPES_MAP.containsKey(columnType)) {
 			return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
-		} else if (columnType.equals(ColumnType.NUMBER) || columnType.equals(ColumnType.NUMERIC)) {
+		} else if (columnType.equals(ColumnType.DECIMAL) || columnType.equals(ColumnType.NUMERIC)) {
 			int columnSize = column.getLength();
 			if (column.getScale() >= 0) {
 				if (columnSize <= 19) {
@@ -99,36 +100,25 @@ public class Converter {
 
 	static {
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGINT, FieldType.LONG);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGINT_IDENTITY, FieldType.LONG);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIGSERIAL, FieldType.LONG);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BLOB, FieldType.BLOB);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BOOL, FieldType.BOOLEAN);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BPCHAR, FieldType.STRING);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BYTEA, FieldType.BLOB);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.CLOB, FieldType.TEXTBLOB);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATE, FieldType.LOCALDATE);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DATETIME, FieldType.LOCALDATE);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.FLOAT8, FieldType.DOUBLE);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.FLOAT, FieldType.DOUBLE);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.IMAGE, FieldType.IMAGEBLOB);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT, FieldType.INTEGER);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT_IDENTITY, FieldType.INTEGER);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT2, FieldType.INTEGER);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT4, FieldType.INTEGER);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT8, FieldType.LONG);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.JSONB, FieldType.BLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INTEGER, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.DOUBLE, FieldType.DOUBLE);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.NVARCHAR, FieldType.STRING);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SERIAL, FieldType.INTEGER);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.SMALLINT, FieldType.INTEGER);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.STRING);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIME, FieldType.DURATION);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMP, FieldType.INSTANT);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TIMESTAMPTZ, FieldType.INSTANT);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.UUID, FieldType.UUID);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.VARCHAR, FieldType.STRING);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.VARCHAR2, FieldType.STRING);
-		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.INT_UNSIGNED, FieldType.INTEGER);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.CHAR, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.NCHAR, FieldType.STRING);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TINYINT, FieldType.INTEGER);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.UUID, FieldType.UUID);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.JSONB, FieldType.TEXTBLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.TEXTBLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.XML, FieldType.TEXTBLOB);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIT, FieldType.BOOLEAN);
 	}
 
 }

@@ -2,16 +2,19 @@ package com.github.aguilasa.metadata;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
+import java.sql.JDBCType;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import com.github.aguilasa.jhipster.generators.JdlWriter;
 import org.apache.commons.lang.StringUtils;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
+import com.github.aguilasa.jhipster.generators.JdlWriter;
 
 import lombok.Getter;
 import lombok.NonNull;
@@ -37,6 +40,8 @@ public class DatabaseLoader {
 
 	@Getter
 	private Set<Table> tables = new LinkedHashSet<>();
+
+	private HashMap<String, String> typeInfo = new LinkedHashMap<>();
 
 	public DatabaseLoader(Connection connection, DatabaseConfiguration configuration) {
 		this.connection = connection;
@@ -74,6 +79,37 @@ public class DatabaseLoader {
 		System.out.println();
 	}
 
+	public void printColumnRs(ResultSet result) throws SQLException {
+		ResultSetMetaData md = result.getMetaData();
+		int columnCount = md.getColumnCount();
+		if (header) {
+			for (int i = 1; i <= columnCount; i++) {
+				if (i > 1)
+					System.out.print("\t");
+				String columnName = md.getColumnName(i);
+				System.out.print(columnName);
+				if (columnName.equalsIgnoreCase("DATA_TYPE")) {
+					System.out.print("\t");
+					System.out.print("DATA_TYPE");
+				}
+			}
+			System.out.println();
+			header = false;
+		}
+		for (int i = 1; i <= columnCount; i++) {
+			String columnName = md.getColumnName(i);
+			if (i > 1)
+				System.out.print("\t");
+			System.out.print(result.getString(i));
+			if (columnName.equalsIgnoreCase("DATA_TYPE")) {
+				String typeName = result.getString("TYPE_NAME");
+				System.out.print("\t");
+				System.out.print(typeInfo.get(typeName.toUpperCase()));
+			}
+		}
+		System.out.println();
+	}
+
 	public Table findTableByName(String tableName) {
 		return tables.stream() //
 				.filter(t -> t.getName().equalsIgnoreCase(tableName)) //
@@ -88,6 +124,7 @@ public class DatabaseLoader {
 	 */
 	public void loadTables() throws SQLException {
 		header = true;
+		loadTypeInfo();
 		tables.clear();
 		try (ResultSet result = getMetaData().getTables(null, null, null, TABLE_TYPE);) {
 			while (result.next()) {
@@ -144,9 +181,9 @@ public class DatabaseLoader {
 		}
 	}
 
-	private boolean validateSchema(String tableSchema) {
+	private boolean validateSchema(String objectSchema) {
 		if (this.schema != null) {
-			return this.schema.equalsIgnoreCase(tableSchema);
+			return this.schema.equalsIgnoreCase(objectSchema);
 		}
 		return true;
 	}
@@ -174,9 +211,16 @@ public class DatabaseLoader {
 	public void loadColumns(Table table) throws SQLException {
 		try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
 			while (result.next()) {
-				Column column = new Column();
-				loadColumnProperties(column, result);
-				table.addColumn(column);
+				String columnSchema = result.getString("TABLE_SCHEM");
+				if (validateSchema(columnSchema)) {
+//					printColumnRs(result);
+					TypeName typeName = new TypeName();
+					typeName.fromRs(result);
+					typeNames.add(typeName);
+					Column column = new Column();
+					loadColumnProperties(column, result);
+					table.addColumn(column);
+				}
 			}
 		}
 	}
@@ -238,9 +282,10 @@ public class DatabaseLoader {
 	private void loadColumnProperties(Column column, ResultSet result) throws SQLException {
 		column.setName(result.getString("COLUMN_NAME"));
 		String typeName = result.getString("TYPE_NAME");
+		int dataType = result.getInt("DATA_TYPE");
 		types.add(typeName);
-//		System.out.println(typeName);
-		column.setType(ColumnType.getEnum(typeName));
+		ColumnType columnType = getColumnType(dataType, typeName);
+		column.setType(columnType);
 		String columnSize = result.getString("COLUMN_SIZE");
 		if (StringUtils.isNumeric(columnSize)) {
 			column.setLength(Integer.valueOf(columnSize));
@@ -256,6 +301,46 @@ public class DatabaseLoader {
 		}
 		column.setPosition(result.getInt("ORDINAL_POSITION"));
 //		printResultset(result);
+	}
+
+	/**
+	 * Determina o tipo do campo
+	 * 
+	 * @param dataType código do tipo
+	 * @param typeName nome do tipo
+	 * @return tipo do campo
+	 */
+	private ColumnType getColumnType(int dataType, String typeName) {
+		JDBCType jdbcType = getJDBCType(dataType);
+		if (jdbcType != null) {
+			switch (jdbcType) {
+			case LONGNVARCHAR:
+			case LONGVARCHAR:
+				if (typeName.equalsIgnoreCase("xml")) {
+					return ColumnType.XML;
+				}
+				return ColumnType.TEXT;
+			case LONGVARBINARY:
+				if (typeName.equalsIgnoreCase("image")) {
+					return ColumnType.IMAGE;
+				}
+				return ColumnType.BLOB;
+			case VARCHAR:
+				if (typeName.equalsIgnoreCase("text")) {
+					return ColumnType.TEXT;
+				}
+			case OTHER:
+				if (typeName.equalsIgnoreCase("jsonb")) {
+					return ColumnType.JSONB;
+				}
+				if (typeName.equalsIgnoreCase("uuid")) {
+					return ColumnType.UUID;
+				}
+			default:
+				return ColumnType.getEnum(jdbcType.getName());
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -299,6 +384,41 @@ public class DatabaseLoader {
 		}
 	}
 
+	private String getTypeString(int type) {
+		JDBCType jdbcType = getJDBCType(type);
+		if (jdbcType != null) {
+			return jdbcType.getName();
+		}
+		return "UNKNOW";
+	}
+
+	public JDBCType getJDBCType(int type) {
+		try {
+			return JDBCType.valueOf(type);
+		} catch (IllegalArgumentException e) {
+			return null;
+		}
+	}
+
+	public void loadTypeInfo() throws SQLException {
+		typeInfo.clear();
+		try (ResultSet result = getMetaData().getTypeInfo();) {
+			while (result.next()) {
+				typeInfo.put(result.getString("TYPE_NAME").toUpperCase(), getTypeString(result.getInt("DATA_TYPE")));
+			}
+		}
+	}
+
+	public void printTypeNames() {
+		System.out.println(
+				"DATA_TYPE\tDATA_TYPE_NAME\tTYPE_NAME\tCOLUMN_SIZE\tBUFFER_LENGTH\tDECIMAL_DIGITS\tNUM_PREC_RADIX");
+		for (TypeName t : typeNames) {
+			System.out.println(t);
+		}
+
+	}
+
 	private Set<String> types = new LinkedHashSet<>();
+	private Set<TypeName> typeNames = new LinkedHashSet<>();
 
 }
