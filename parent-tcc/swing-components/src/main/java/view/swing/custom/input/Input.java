@@ -31,7 +31,7 @@ public class Input extends JPanel {
 	private boolean enabled;
 
 	// não visíveis
-	private JTextField textField;
+	JTextField textField;
 	private BorderSize borderSize;
 
 	boolean focused = false;
@@ -224,6 +224,7 @@ class InputFocusListener implements FocusListener {
 
 	@Override
 	public void focusGained(FocusEvent e) {
+		selectText();
 		owner.focused = true;
 		bounds = owner.getBounds();
 		owner.setBounds(new Rectangle(bounds.x - 3, bounds.y - 3, bounds.width + 6, bounds.height + 6));
@@ -231,8 +232,21 @@ class InputFocusListener implements FocusListener {
 
 	@Override
 	public void focusLost(FocusEvent e) {
+		clearSelectText();
 		owner.focused = false;
 		owner.setBounds(bounds);
+	}
+
+	private void selectText() {
+		if (owner.textField != null) {
+			owner.textField.select(0, owner.textField.getText().length());
+		}
+	}
+
+	private void clearSelectText() {
+		if (owner.textField != null) {
+			owner.textField.select(0, 0);
+		}
 	}
 
 }
