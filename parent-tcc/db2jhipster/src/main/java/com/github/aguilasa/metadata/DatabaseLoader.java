@@ -14,6 +14,7 @@ import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
+import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.jhipster.generators.JdlWriter;
 
 import lombok.Getter;
@@ -24,6 +25,8 @@ public class DatabaseLoader {
 
 	private static final String TABLE = "TABLE";
 	private static final String[] TABLE_TYPE = { TABLE };
+	private static final String TS_WTZ = "TIMESTAMP(6) WITH TIME ZONE";
+	private static final String TS_WLTZ = "TIMESTAMP(6) WITH LOCAL TIME ZONE";
 
 	@Getter
 	@Setter
@@ -209,19 +212,24 @@ public class DatabaseLoader {
 	 * @throws SQLException
 	 */
 	public void loadColumns(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
-			while (result.next()) {
-				String columnSchema = result.getString("TABLE_SCHEM");
-				if (validateSchema(columnSchema)) {
+		try {
+			try (ResultSet result = getMetaData().getColumns(null, null, table.getName(), null);) {
+				while (result.next()) {
+					String columnSchema = result.getString("TABLE_SCHEM");
+					if (validateSchema(columnSchema)) {
 //					printColumnRs(result);
-					TypeName typeName = new TypeName();
-					typeName.fromRs(result);
-					typeNames.add(typeName);
-					Column column = new Column();
-					loadColumnProperties(column, result);
-					table.addColumn(column);
+						TypeName typeName = new TypeName();
+						typeName.fromRs(result);
+						typeNames.add(typeName);
+						Column column = new Column();
+						loadColumnProperties(column, result);
+						table.addColumn(column);
+					}
 				}
 			}
+		} catch (Exception e) {
+			System.out.println("Erro ao carregar colunas da tabela:" + table.getName());
+			e.printStackTrace();
 		}
 	}
 
@@ -232,7 +240,8 @@ public class DatabaseLoader {
 	 * @throws SQLException
 	 */
 	public void loadPrimaryKeys(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getPrimaryKeys(null, null, table.getName());) {
+		String paramSchema = configuration.getDatabaseType().equals(DatabaseType.SqlServer) ? schema : null;
+		try (ResultSet result = getMetaData().getPrimaryKeys(null, paramSchema, table.getName());) {
 			boolean hasSetName = false;
 			while (result.next()) {
 //				System.out.println(result.getString("TABLE_SCHEM"));
@@ -254,7 +263,8 @@ public class DatabaseLoader {
 	 * @throws SQLException
 	 */
 	public void loadForeignKeys(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getImportedKeys(null, null, table.getName());) {
+		String paramSchema = configuration.getDatabaseType().equals(DatabaseType.SqlServer) ? schema : null;
+		try (ResultSet result = getMetaData().getImportedKeys(null, paramSchema, table.getName());) {
 			while (result.next()) {
 //				System.out.println(result.getString("FKTABLE_SCHEM"));
 				String tableName = result.getString("FKTABLE_NAME");
@@ -287,6 +297,9 @@ public class DatabaseLoader {
 		int dataType = result.getInt("DATA_TYPE");
 		types.add(typeName);
 		ColumnType columnType = getColumnType(dataType, typeName);
+		if (columnType == null) {
+			System.out.println("Coluna: " + column.getName());
+		}
 		column.setType(columnType);
 		String columnSize = result.getString("COLUMN_SIZE");
 		if (StringUtils.isNumeric(columnSize)) {
@@ -339,9 +352,20 @@ public class DatabaseLoader {
 					return ColumnType.UUID;
 				}
 			default:
-				return ColumnType.getEnum(jdbcType.getName());
+				ColumnType enum1 = ColumnType.getEnum(jdbcType.getName());
+				if (enum1 == null) {
+					System.out.println("JDBCType: " + jdbcType.getName() + ", tipo não encontrado: " + typeName
+							+ ", dataType: " + dataType);
+				}
+				return enum1;
 			}
 		}
+
+		if (typeName.equalsIgnoreCase(TS_WTZ) || typeName.equalsIgnoreCase(TS_WLTZ)) {
+			return ColumnType.TIMESTAMP_TZ;
+		}
+
+		System.out.println("Tipo não encontrado: " + typeName + ", dataType: " + dataType);
 		return null;
 	}
 

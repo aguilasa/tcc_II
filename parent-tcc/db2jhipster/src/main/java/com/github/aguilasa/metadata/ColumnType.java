@@ -21,6 +21,7 @@ public enum ColumnType {
 	SMALLINT("SMALLINT"), //
 	TIME("TIME"), //
 	TIMESTAMP("TIMESTAMP"), //
+	TIMESTAMP_TZ("TIMESTAMP_TZ"), //
 	TINYINT("TINYINT"), //
 	VARCHAR("VARCHAR"), //
 	IMAGE("IMAGE"), //
@@ -28,6 +29,9 @@ public enum ColumnType {
 	JSONB("JSONB"), //
 	TEXT("TEXT"), //
 	XML("XML"), //
+	SQLXML("SQLXML"), //
+	FLOAT("FLOAT"), //
+	VARBINARY("VARBINARY"), //
 	REAL("REAL");
 
 	private String value;

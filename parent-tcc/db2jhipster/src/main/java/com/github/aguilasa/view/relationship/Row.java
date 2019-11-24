@@ -65,7 +65,9 @@ public class Row extends JPanel {
 	public void setRelationship(Relationship relationship) {
 		this.relationship = relationship;
 		comboType.setSelectedIndex(relationship.getRelationshipType().ordinal());
-		lblRelationship.setText(String.format("%s to %s", relationship.getFromEntity(), relationship.getToEntity()));
+//		lblRelationship.setText(String.format("%s to %s", relationship.getFromEntity(), relationship.getToEntity()));
+		lblRelationship.setText(String.format("%s", relationship.getToEntity()));
+		lblRelationship.setToolTipText(lblRelationship.getText());
 	}
 
 }

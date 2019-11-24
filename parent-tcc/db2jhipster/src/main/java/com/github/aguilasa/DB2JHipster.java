@@ -11,6 +11,7 @@ import javax.swing.UIManager;
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
+import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.MainView;
 
@@ -52,7 +53,7 @@ public class DB2JHipster {
 
 	private static void setLook() {
 		try {
-			UIManager.setLookAndFeel("javax.swing.plaf.metal.MetalLookAndFeel");
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,7 +96,7 @@ public class DB2JHipster {
 		adv.setDatabaseType(DatabaseType.SqlServer);
 
 		DatabaseConfiguration ora = new DatabaseConfiguration();
-		ora.setHost("teste65");
+		ora.setHost("localhost");
 		ora.setPort(1521);
 		ora.setDatabase("XE");
 		ora.setUsername("rhpayroll");
@@ -106,14 +107,16 @@ public class DB2JHipster {
 		Connection connection = ConnectionFactory.createConnection(conf);
 		DatabaseLoader databaseLoader = new DatabaseLoader(connection, conf);
 //		databaseLoader.loadTypeInfo();
-		databaseLoader.loadTables();
-		databaseLoader.loadAllTablesColumns();
-		databaseLoader.printTypeNames(true);
+
+//		databaseLoader.loadTables();
+//		databaseLoader.loadAllTablesColumns();
+//		databaseLoader.printTypeNames(true);
+
 //		metaDataLoader.loadAll();
 //		metaDataLoader.printTables();
-//		EntityLoader entityLoader = new EntityLoader(databaseLoader);
-//		entityLoader.loadAll();
-//		System.out.println(entityLoader.toJdl());
+		EntityLoader entityLoader = new EntityLoader(databaseLoader);
+		entityLoader.loadAll();
+		System.out.println(entityLoader.toJdl());
 	}
 
 }

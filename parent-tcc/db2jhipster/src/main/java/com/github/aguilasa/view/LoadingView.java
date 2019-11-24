@@ -9,13 +9,14 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
-import javax.swing.SwingWorker;
+import javax.swing.SwingUtilities;
 
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.base.AreaPanel;
 import com.github.aguilasa.view.observables.LoadingObservable;
+import com.github.aguilasa.view.utils.SimpleSwingWorker;
 
 public class LoadingView extends AreaPanel {
 
@@ -75,7 +76,7 @@ public class LoadingView extends AreaPanel {
 	}
 
 	public void loadAll() {
-		final SwingWorker<Void, Void> worker = new SwingWorker<Void, Void>() {
+		final SimpleSwingWorker worker = new SimpleSwingWorker() {
 
 			@Override
 			protected Void doInBackground() throws Exception {
@@ -105,15 +106,25 @@ public class LoadingView extends AreaPanel {
 						lblOperation.setText("Convertendo relacionamentos das entidades JHipster");
 						entityLoader.loadRelationships();
 						sleep();
-					} catch (SQLException e) {
-						e.printStackTrace();
-						JOptionPane.showMessageDialog(getMainView(), e.getMessage());
+					} catch (final SQLException e) {
+						SwingUtilities.invokeLater(new Runnable() {
+							public void run() {
+								e.printStackTrace();
+								JOptionPane.showMessageDialog(getMainView(), e.getMessage());
+							}
+						});
+
 					}
 				} finally {
 					finalizeLoading();
 					notifyFinalize();
 				}
 				return null;
+			}
+
+			@Override
+			protected void done() {
+
 			}
 		};
 		worker.execute();
