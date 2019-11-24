@@ -61,14 +61,18 @@ public class Other {
 		furb2.setPassword("root");
 		furb2.setDatabaseType(DatabaseType.MySql);
 
-		DatabaseConfiguration[] confs = { sql, pg_local, ora, adv, furb };
+		DatabaseConfiguration[] confs = { ora, sql, pg_local, adv, furb, furb2 };
 
+		boolean header = true;
 		for (DatabaseConfiguration conf : confs) {
 			Connection connection = ConnectionFactory.createConnection(conf);
 			DatabaseLoader databaseLoader = new DatabaseLoader(connection, conf);
 			databaseLoader.loadTables();
 			databaseLoader.loadAllTablesColumns();
-			databaseLoader.printTypeNames();
+			databaseLoader.printTypeNames(header);
+			header = false;
+//			databaseLoader.loadAll();
+//			databaseLoader.printTables();
 		}
 
 	}

@@ -232,9 +232,10 @@ public class DatabaseLoader {
 	 * @throws SQLException
 	 */
 	public void loadPrimaryKeys(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getPrimaryKeys(null, schema, table.getName());) {
+		try (ResultSet result = getMetaData().getPrimaryKeys(null, null, table.getName());) {
 			boolean hasSetName = false;
 			while (result.next()) {
+//				System.out.println(result.getString("TABLE_SCHEM"));
 				String columnName = result.getString("COLUMN_NAME");
 				int keyPosition = result.getInt("KEY_SEQ");
 				table.addPrimaryKey(columnName, keyPosition);
@@ -253,8 +254,9 @@ public class DatabaseLoader {
 	 * @throws SQLException
 	 */
 	public void loadForeignKeys(Table table) throws SQLException {
-		try (ResultSet result = getMetaData().getImportedKeys(null, schema, table.getName());) {
+		try (ResultSet result = getMetaData().getImportedKeys(null, null, table.getName());) {
 			while (result.next()) {
+//				System.out.println(result.getString("FKTABLE_SCHEM"));
 				String tableName = result.getString("FKTABLE_NAME");
 				if (!tableName.equalsIgnoreCase(table.getName())) {
 					throw new RuntimeException(String.format(
@@ -409,9 +411,11 @@ public class DatabaseLoader {
 		}
 	}
 
-	public void printTypeNames() {
-		System.out.println(
-				"DATA_TYPE\tDATA_TYPE_NAME\tTYPE_NAME\tCOLUMN_SIZE\tBUFFER_LENGTH\tDECIMAL_DIGITS\tNUM_PREC_RADIX");
+	public void printTypeNames(boolean header) {
+		if (header) {
+			System.out.println(
+					"DATA_TYPE\tDATA_TYPE_NAME\tTYPE_NAME\tCOLUMN_SIZE\tBUFFER_LENGTH\tDECIMAL_DIGITS\tNUM_PREC_RADIX");
+		}
 		for (TypeName t : typeNames) {
 			System.out.println(t);
 		}

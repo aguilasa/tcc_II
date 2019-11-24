@@ -26,8 +26,9 @@ public enum ColumnType {
 	IMAGE("IMAGE"), //
 	UUID("UUID"), //
 	JSONB("JSONB"), //
-	TEXT("TEXT"),//
-	XML("XML");
+	TEXT("TEXT"), //
+	XML("XML"), //
+	REAL("REAL");
 
 	private String value;
 

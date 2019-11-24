@@ -106,6 +106,7 @@ public class LoadingView extends AreaPanel {
 						entityLoader.loadRelationships();
 						sleep();
 					} catch (SQLException e) {
+						e.printStackTrace();
 						JOptionPane.showMessageDialog(getMainView(), e.getMessage());
 					}
 				} finally {

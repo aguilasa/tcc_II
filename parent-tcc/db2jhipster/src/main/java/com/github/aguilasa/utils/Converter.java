@@ -119,6 +119,7 @@ public class Converter {
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.TEXT, FieldType.TEXTBLOB);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.XML, FieldType.TEXTBLOB);
 		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.BIT, FieldType.BOOLEAN);
+		COLUMN_TYPE_FIELD_TYPES_MAP.put(ColumnType.REAL, FieldType.FLOAT);
 	}
 
 }

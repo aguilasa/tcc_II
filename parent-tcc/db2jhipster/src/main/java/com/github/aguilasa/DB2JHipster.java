@@ -108,7 +108,7 @@ public class DB2JHipster {
 //		databaseLoader.loadTypeInfo();
 		databaseLoader.loadTables();
 		databaseLoader.loadAllTablesColumns();
-		databaseLoader.printTypeNames();
+		databaseLoader.printTypeNames(true);
 //		metaDataLoader.loadAll();
 //		metaDataLoader.printTables();
 //		EntityLoader entityLoader = new EntityLoader(databaseLoader);
