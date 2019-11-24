@@ -1,5 +1,5 @@
 relationship ${name} {
 #foreach( $relationship in $relationships )
-	${relationship.fromEntity.name}Entity{$relationship.fromName} to ${relationship.toEntity.name}Entity{$relationship.toName}
+	${relationship.fromEntity.name}{$relationship.fromName} to ${relationship.toEntity.name}{$relationship.toName}
 #end
 }
