@@ -1,47 +1,41 @@
 package com.github.aguilasa.metadata;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
-@AllArgsConstructor
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class ForeignKey extends Constraint {
 
-    @Getter
-    private Column column;
-    @Getter
-    private Column referenceColumn;
+	@NonNull
+	@Setter
+	@Getter
+	private String referenceTable;
 
-    public void setColumn(Column column) {
-        checkOwner(column);
-        checkColumnOwner(column);
-        this.column = column;
-    }
+	@Getter
+	private List<ForeignKeyColumn> columns = new LinkedList<>();
 
-    public void setReferenceColumn(Column referenceColumn) {
-        checkOwner(referenceColumn, true);
-        this.referenceColumn = referenceColumn;
-    }
+	public void addColumn(ForeignKeyColumn column) {
+		columns.add(column);
+	}
 
-    private void checkOwner(Column checkedColumn) {
-        checkOwner(checkedColumn, false);
-    }
-
-    private void checkOwner(Column checkedColumn, boolean isReference) {
-        if (getOwner() == null) {
-            String reference = isReference ? " referência" : "";
-            throw new RuntimeException(String.format("Erro ao adicionar o campo%s '%s' na chave estrangeira, pois não foi atribuída uma tabela para esta chave.", reference, checkedColumn.getName()));
-        }
-    }
-
-    private void checkColumnOwner(Column checkedColumn) {
-        if (checkedColumn.getOwner() == null) {
-            throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na chave estrangeira da tabela '%', pois o mesmo não pertence a nenhuma tabela.", checkedColumn.getName(), getOwner().getName()));
-        }
-    }
-
-    @Override
-    public String toString() {
-        return String.format("CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)", getName(), getColumn().getName(), getReferenceColumn().getOwner().getName(), getReferenceColumn().getName());
-    }
+	@Override
+	public String toString() {
+		if (!columns.isEmpty()) {
+			String fields = columns.stream().map(c -> c.getColumn().getName()).collect(Collectors.joining(", ")).trim();
+			String referenceFields = columns.stream().map(c -> c.getReferenceColumn().getName())
+					.collect(Collectors.joining(", ")).trim();
+			return String.format("CONSTRAINT %s FOREIGN KEY (%s) REFERENCES %s(%s)", getName(), fields, referenceTable,
+					referenceFields);
+		}
+		return "";
+	}
 
 }

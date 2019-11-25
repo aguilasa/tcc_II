@@ -64,8 +64,7 @@ public class EntityLoader {
 				addManyToManyRelationship(table, entity);
 				remove.add(entity);
 			} else {
-				List<ForeignKey> foreignKeys = table.getForeignKeys();
-				foreignKeys.forEach(f -> {
+				table.getForeignKeys().entrySet().stream().map(Map.Entry::getValue).forEach(f -> {
 					addOneToOneRelationship(f, entity);
 				});
 			}
@@ -103,11 +102,16 @@ public class EntityLoader {
 	}
 
 	public Relationship createRelationshipFromForeignKey(ForeignKey foreignKey, RelationshipType relationshipType) {
-		Relationship relationship = createRelationshipFromColumn( //
-				foreignKey.getColumn(), //
-				foreignKey.getReferenceColumn(), //
-				relationshipType //
-		);
+		Relationship relationship = new Relationship();
+		Entity from = findEntityByTableName(foreignKey.getOwner().getName());
+		Entity to = findEntityByTableName(foreignKey.getReferenceTable());
+		relationship.setFromEntity(from);
+		String first = to.getName().toLowerCase();
+		String second = from.getName().toLowerCase();
+		relationship.setFromName(relationshipName(first, second));
+		relationship.setToEntity(to);
+		relationship.setToName(relationshipName(second, first));
+		relationship.setRelationshipType(relationshipType);
 		return relationship;
 	}
 
@@ -128,9 +132,10 @@ public class EntityLoader {
 	}
 
 	public void addManyToManyRelationship(Table table, Entity entity) {
-		List<ForeignKey> foreignKeys = table.getForeignKeys();
-		Column fromColumn = foreignKeys.get(0).getReferenceColumn();
-		Column toColumn = foreignKeys.get(1).getReferenceColumn();
+		List<ForeignKey> foreignKeys = table.getForeignKeys().entrySet().stream().map(Map.Entry::getValue)
+				.collect(Collectors.toList());
+		Column fromColumn = foreignKeys.get(0).getColumns().get(0).getReferenceColumn();
+		Column toColumn = foreignKeys.get(1).getColumns().get(0).getReferenceColumn();
 		Relationship relationship = createRelationshipFromColumn(fromColumn, toColumn, RelationshipType.ManyToMany);
 		entity.addRelationship(relationship);
 		addRelationship(relationship);

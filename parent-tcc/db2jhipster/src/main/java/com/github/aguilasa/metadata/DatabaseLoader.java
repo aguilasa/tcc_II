@@ -272,14 +272,14 @@ public class DatabaseLoader {
 					throw new RuntimeException(String.format(
 							"Não foi possível carregar as chaves estrangeiras da tabela '%s'.", table.getName()));
 				}
+				String fkName = result.getString("FK_NAME");
 				String columnName = result.getString("FKCOLUMN_NAME");
 				String referenceTableName = result.getString("PKTABLE_NAME");
 				String referenceColumnName = result.getString("PKCOLUMN_NAME");
 				Column column = table.findColumnByName(columnName);
 				Table referenceTable = findTableByName(referenceTableName);
 				Column referenceColumn = referenceTable.findColumnByName(referenceColumnName);
-				ForeignKey foreignKey = table.addForeignKey(column, referenceColumn);
-				foreignKey.setName(result.getString("FK_NAME"));
+				table.addForeignKey(fkName, referenceTable.getName(), column, referenceColumn);
 			}
 		}
 	}
