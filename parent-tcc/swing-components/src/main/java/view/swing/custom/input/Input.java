@@ -26,11 +26,11 @@ public class Input extends JPanel {
 	private static final long serialVersionUID = -4177396588741203553L;
 	private static final Border emptyBorder = BorderFactory.createEmptyBorder();
 
-	// visíveis
+	// visï¿½veis
 	private ComponentSize componentSize = ComponentSize.DEFAULT;
 	private boolean enabled;
 
-	// não visíveis
+	// nï¿½o visï¿½veis
 	JTextField textField;
 	private BorderSize borderSize;
 
@@ -224,7 +224,7 @@ class InputFocusListener implements FocusListener {
 
 	@Override
 	public void focusGained(FocusEvent e) {
-		selectText();
+		selectText(e);
 		owner.focused = true;
 		bounds = owner.getBounds();
 		owner.setBounds(new Rectangle(bounds.x - 3, bounds.y - 3, bounds.width + 6, bounds.height + 6));
@@ -237,7 +237,8 @@ class InputFocusListener implements FocusListener {
 		owner.setBounds(bounds);
 	}
 
-	private void selectText() {
+	private void selectText(FocusEvent e) {
+		System.out.println(e);
 		if (owner.textField != null) {
 			owner.textField.select(0, owner.textField.getText().length());
 		}

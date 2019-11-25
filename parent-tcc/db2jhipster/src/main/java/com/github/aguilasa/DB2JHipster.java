@@ -11,7 +11,6 @@ import javax.swing.UIManager;
 import com.github.aguilasa.db.DatabaseConfiguration;
 import com.github.aguilasa.db.DatabaseType;
 import com.github.aguilasa.db.connection.ConnectionFactory;
-import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.MainView;
 
@@ -103,20 +102,21 @@ public class DB2JHipster {
 		ora.setPassword("rhpayroll");
 		ora.setDatabaseType(DatabaseType.Oracle);
 
-		DatabaseConfiguration conf = ora;
+		DatabaseConfiguration conf = pg;
 		Connection connection = ConnectionFactory.createConnection(conf);
 		DatabaseLoader databaseLoader = new DatabaseLoader(connection, conf);
 //		databaseLoader.loadTypeInfo();
 
-//		databaseLoader.loadTables();
-//		databaseLoader.loadAllTablesColumns();
+		databaseLoader.loadTables();
+		databaseLoader.loadAllTablesColumns();
+		databaseLoader.loadAllTablesForeignKeys();
 //		databaseLoader.printTypeNames(true);
 
 //		metaDataLoader.loadAll();
 //		metaDataLoader.printTables();
-		EntityLoader entityLoader = new EntityLoader(databaseLoader);
-		entityLoader.loadAll();
-		System.out.println(entityLoader.toJdl());
+//		EntityLoader entityLoader = new EntityLoader(databaseLoader);
+//		entityLoader.loadAll();
+//		System.out.println(entityLoader.toJdl());
 	}
 
 }

@@ -266,20 +266,27 @@ public class DatabaseLoader {
 		String paramSchema = configuration.getDatabaseType().equals(DatabaseType.SqlServer) ? schema : null;
 		try (ResultSet result = getMetaData().getImportedKeys(null, paramSchema, table.getName());) {
 			while (result.next()) {
-//				System.out.println(result.getString("FKTABLE_SCHEM"));
-				String tableName = result.getString("FKTABLE_NAME");
-				if (!tableName.equalsIgnoreCase(table.getName())) {
-					throw new RuntimeException(String.format(
-							"Não foi possível carregar as chaves estrangeiras da tabela '%s'.", table.getName()));
+				try {
+					if (!validateSchema(result.getString("FKTABLE_SCHEM"))) {
+						continue;
+					}
+					String tableName = result.getString("FKTABLE_NAME");
+					if (!tableName.equalsIgnoreCase(table.getName())) {
+						throw new RuntimeException(String.format(
+								"Não foi possível carregar as chaves estrangeiras da tabela '%s'.", table.getName()));
+					}
+					String fkName = result.getString("FK_NAME");
+					String columnName = result.getString("FKCOLUMN_NAME");
+					String referenceTableName = result.getString("PKTABLE_NAME");
+					String referenceColumnName = result.getString("PKCOLUMN_NAME");
+					Column column = table.findColumnByName(columnName);
+					Table referenceTable = findTableByName(referenceTableName);
+					Column referenceColumn = referenceTable.findColumnByName(referenceColumnName);
+					table.addForeignKey(fkName, referenceTable.getName(), column, referenceColumn);
+				} catch (Exception e) {
+					throw new RuntimeException(
+							String.format("Tabela '%s', erro ao carregar foreignkey: ", table.getName()), e);
 				}
-				String fkName = result.getString("FK_NAME");
-				String columnName = result.getString("FKCOLUMN_NAME");
-				String referenceTableName = result.getString("PKTABLE_NAME");
-				String referenceColumnName = result.getString("PKCOLUMN_NAME");
-				Column column = table.findColumnByName(columnName);
-				Table referenceTable = findTableByName(referenceTableName);
-				Column referenceColumn = referenceTable.findColumnByName(referenceColumnName);
-				table.addForeignKey(fkName, referenceTable.getName(), column, referenceColumn);
 			}
 		}
 	}
