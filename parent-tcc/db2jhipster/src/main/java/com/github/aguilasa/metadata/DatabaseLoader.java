@@ -13,8 +13,8 @@ import java.util.Set;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.github.aguilasa.db.DatabaseConfiguration;
-import com.github.aguilasa.db.DatabaseType;
+import com.github.aguilasa.database.DatabaseConfiguration;
+import com.github.aguilasa.database.DatabaseType;
 import com.github.aguilasa.jhipster.generators.JdlWriter;
 
 import lombok.Getter;

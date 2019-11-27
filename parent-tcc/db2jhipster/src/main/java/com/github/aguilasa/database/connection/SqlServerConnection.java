@@ -1,12 +1,10 @@
-package com.github.aguilasa.db.connection;
+package com.github.aguilasa.database.connection;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.github.aguilasa.db.DatabaseConfiguration;
+import com.github.aguilasa.database.DatabaseConfiguration;
 
 public class SqlServerConnection extends BaseConnection {
 

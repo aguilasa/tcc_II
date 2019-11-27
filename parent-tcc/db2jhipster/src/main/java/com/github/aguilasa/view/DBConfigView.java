@@ -14,9 +14,9 @@ import javax.swing.SwingConstants;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.github.aguilasa.db.DatabaseConfiguration;
-import com.github.aguilasa.db.DatabaseType;
-import com.github.aguilasa.db.connection.ConnectionFactory;
+import com.github.aguilasa.database.DatabaseConfiguration;
+import com.github.aguilasa.database.DatabaseType;
+import com.github.aguilasa.database.connection.ConnectionFactory;
 import com.github.aguilasa.view.base.AreaPanel;
 import com.github.aguilasa.view.observables.ConnectionObservable;
 

@@ -11,7 +11,7 @@ import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
-import com.github.aguilasa.db.DatabaseConfiguration;
+import com.github.aguilasa.database.DatabaseConfiguration;
 import com.github.aguilasa.jhipster.EntityLoader;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.base.AreaPanel;

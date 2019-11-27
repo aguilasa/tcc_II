@@ -1,4 +1,4 @@
-package com.github.aguilasa.db;
+package com.github.aguilasa.database;
 
 import lombok.Getter;
 import lombok.Setter;
