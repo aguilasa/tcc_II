@@ -224,7 +224,7 @@ class InputFocusListener implements FocusListener {
 
 	@Override
 	public void focusGained(FocusEvent e) {
-		selectText(e);
+		selectText();
 		owner.focused = true;
 		bounds = owner.getBounds();
 		owner.setBounds(new Rectangle(bounds.x - 3, bounds.y - 3, bounds.width + 6, bounds.height + 6));
@@ -237,10 +237,11 @@ class InputFocusListener implements FocusListener {
 		owner.setBounds(bounds);
 	}
 
-	private void selectText(FocusEvent e) {
-		System.out.println(e);
+	private void selectText() {
 		if (owner.textField != null) {
-			owner.textField.select(0, owner.textField.getText().length());
+			if (owner.textField.getMousePosition() == null) {
+				owner.textField.select(0, owner.textField.getText().length());
+			}
 		}
 	}
 

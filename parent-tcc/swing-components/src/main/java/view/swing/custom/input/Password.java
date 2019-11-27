@@ -239,7 +239,9 @@ class PasswordFocusListener implements FocusListener {
 
 	private void selectText() {
 		if (owner.textField != null) {
-			owner.textField.select(0, owner.getText().length());
+			if (owner.textField.getMousePosition() == null) {
+				owner.textField.select(0, owner.getText().length());
+			}
 		}
 	}
 
