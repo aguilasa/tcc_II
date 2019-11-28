@@ -1,22 +1,25 @@
 package com.github.aguilasa.jhipster;
 
+import java.sql.SQLException;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.apache.velocity.util.StringUtils;
+
 import com.github.aguilasa.jhipster.generators.JdlWriter;
 import com.github.aguilasa.jhipster.types.Entity;
 import com.github.aguilasa.jhipster.types.Relationship;
 import com.github.aguilasa.jhipster.types.RelationshipType;
-import com.github.aguilasa.metadata.*;
+import com.github.aguilasa.metadata.Column;
+import com.github.aguilasa.metadata.DatabaseLoader;
+import com.github.aguilasa.metadata.ForeignKey;
+import com.github.aguilasa.metadata.Table;
 import com.github.aguilasa.utils.Converter;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import org.apache.velocity.util.StringUtils;
 
-import java.sql.SQLException;
-import java.util.*;
-import java.util.stream.Collectors;
-
-@Getter
-@RequiredArgsConstructor
 public class EntityLoader {
 
 	private static final int MTM_SIZE = 2;
@@ -24,12 +27,22 @@ public class EntityLoader {
 	private static final String[] NAMES_SUFFIX = { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
 			"Nine", "Ten" };
 
-	@NonNull
 	private DatabaseLoader databaseLoader;
-
 	private Set<Entity> entities = new LinkedHashSet<>();
 	private List<Relationship> relationships = new LinkedList<>();
 	private Set<String> relationshipsNames = new LinkedHashSet<>();
+
+	public EntityLoader(DatabaseLoader databaseLoader) {
+		this.databaseLoader = databaseLoader;
+	}
+
+	public Set<Entity> getEntities() {
+		return entities;
+	}
+
+	public List<Relationship> getRelationships() {
+		return relationships;
+	}
 
 	public void loadAll() throws SQLException {
 		loadEntities();

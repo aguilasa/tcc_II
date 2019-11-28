@@ -17,10 +17,6 @@ import com.github.aguilasa.database.DatabaseConfiguration;
 import com.github.aguilasa.database.DatabaseType;
 import com.github.aguilasa.jhipster.generators.JdlWriter;
 
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
-
 public class DatabaseLoader {
 
 	private static final String TABLE = "TABLE";
@@ -28,28 +24,37 @@ public class DatabaseLoader {
 	private static final String TS_WTZ = "TIMESTAMP(6) WITH TIME ZONE";
 	private static final String TS_WLTZ = "TIMESTAMP(6) WITH LOCAL TIME ZONE";
 
-	@Getter
-	@Setter
-	@NonNull
 	private Connection connection;
-	@Getter
-	@Setter
-	@NonNull
 	private DatabaseConfiguration configuration;
-
 	private DatabaseMetaData metaData;
-
 	private String schema = null;
-
-	@Getter
 	private Set<Table> tables = new LinkedHashSet<>();
-
 	private HashMap<String, String> typeInfo = new LinkedHashMap<>();
 
 	public DatabaseLoader(Connection connection, DatabaseConfiguration configuration) {
 		this.connection = connection;
 		this.configuration = configuration;
 		this.schema = getSchema();
+	}
+
+	public Connection getConnection() {
+		return connection;
+	}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
+	}
+
+	public DatabaseConfiguration getConfiguration() {
+		return configuration;
+	}
+
+	public void setConfiguration(DatabaseConfiguration configuration) {
+		this.configuration = configuration;
+	}
+
+	public Set<Table> getTables() {
+		return tables;
 	}
 
 	private DatabaseMetaData getMetaData() throws SQLException {

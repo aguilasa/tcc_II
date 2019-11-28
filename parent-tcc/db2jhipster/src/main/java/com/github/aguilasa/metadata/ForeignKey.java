@@ -4,23 +4,31 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class ForeignKey extends Constraint {
 
-	@NonNull
-	@Setter
-	@Getter
 	private String referenceTable;
 
-	@Getter
 	private List<ForeignKeyColumn> columns = new LinkedList<>();
+
+	public ForeignKey() {
+
+	}
+
+	public ForeignKey(String referenceTable) {
+		this.referenceTable = referenceTable;
+	}
+
+	public String getReferenceTable() {
+		return referenceTable;
+	}
+
+	public void setReferenceTable(String referenceTable) {
+		this.referenceTable = referenceTable;
+	}
+
+	public List<ForeignKeyColumn> getColumns() {
+		return columns;
+	}
 
 	public void addColumn(ForeignKeyColumn column) {
 		columns.add(column);

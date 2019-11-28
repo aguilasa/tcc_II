@@ -1,40 +1,45 @@
 package com.github.aguilasa.metadata;
 
-import lombok.Getter;
-
 public class UniqueConstraint extends Constraint {
 
-    @Getter
-    private Column column;
+	private Column column;
 
-    public UniqueConstraint(Table owner) {
-        this.setOwner(owner);
-    }
+	public Column getColumn() {
+		return column;
+	}
 
-    public void setColumn(Column column) {
-        checkOwner(column);
-        checkColumnOwner(column);
-        this.column = column;
-    }
+	public UniqueConstraint(Table owner) {
+		this.setOwner(owner);
+	}
 
-    private void checkOwner(Column column) {
-        if (getOwner() == null) {
-            throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na constraint única, pois não foi atribuída uma tabela a esta chave.", column.getName()));
-        }
-    }
+	public void setColumn(Column column) {
+		checkOwner(column);
+		checkColumnOwner(column);
+		this.column = column;
+	}
 
-    private void checkColumnOwner(Column column) {
-        if (!this.getOwner().equals(column.getOwner())) {
-            throw new RuntimeException(String.format("Erro ao adicionar o campo '%s' na constraint única da tabela '%', pois são de tabelas diferentes.", column.getName(), getOwner().getName()));
-        }
-    }
+	private void checkOwner(Column column) {
+		if (getOwner() == null) {
+			throw new RuntimeException(String.format(
+					"Erro ao adicionar o campo '%s' na constraint única, pois não foi atribuída uma tabela a esta chave.",
+					column.getName()));
+		}
+	}
 
-    @Override
-    public String toString() {
-        if (column != null) {
-            return String.format("CONSTRAINT %s UNIQUE (%s)", getName(), column.getName());
-        }
-        return "";
-    }
+	private void checkColumnOwner(Column column) {
+		if (!this.getOwner().equals(column.getOwner())) {
+			throw new RuntimeException(String.format(
+					"Erro ao adicionar o campo '%s' na constraint única da tabela '%', pois são de tabelas diferentes.",
+					column.getName(), getOwner().getName()));
+		}
+	}
+
+	@Override
+	public String toString() {
+		if (column != null) {
+			return String.format("CONSTRAINT %s UNIQUE (%s)", getName(), column.getName());
+		}
+		return "";
+	}
 
 }

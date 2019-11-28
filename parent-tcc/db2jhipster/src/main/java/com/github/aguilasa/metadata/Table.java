@@ -10,32 +10,49 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.StringUtils;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class Table {
 
-	@Getter
-	@Setter
-	@NonNull
 	private String name;
 
-	@Getter
 	private Set<Column> columns = new LinkedHashSet<>();
 
-	@Getter
 	private PrimaryKey primaryKey = new PrimaryKey(this);
 
-	@Getter
 	private Map<String, ForeignKey> foreignKeys = new LinkedHashMap<>();
 
-	@Getter
 	private List<UniqueConstraint> uniqueConstraints = new LinkedList<>();
+
+	public Table() {
+
+	}
+
+	public Table(String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Set<Column> getColumns() {
+		return columns;
+	}
+
+	public PrimaryKey getPrimaryKey() {
+		return primaryKey;
+	}
+
+	public Map<String, ForeignKey> getForeignKeys() {
+		return foreignKeys;
+	}
+
+	public List<UniqueConstraint> getUniqueConstraints() {
+		return uniqueConstraints;
+	}
 
 	public void addColumn(Column column) {
 		column.setOwner(this);

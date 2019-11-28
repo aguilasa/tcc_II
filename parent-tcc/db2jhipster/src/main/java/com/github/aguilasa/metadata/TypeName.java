@@ -4,26 +4,71 @@ import java.sql.JDBCType;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@EqualsAndHashCode
 public class TypeName {
 
-	private String DATA_TYPE;
-	private String DATA_TYPE_NAME;
-	private String TYPE_NAME;
-	private String COLUMN_SIZE;
-	private String BUFFER_LENGTH;
-	private String DECIMAL_DIGITS;
-	private String NUM_PREC_RADIX;
+	private String dataType;
+	private String dataTypeName;
+	private String typeName;
+	private String columnSize;
+	private String bufferLength;
+	private String decimalDigits;
+	private String numPrecRadix;
+
+	public String getDataType() {
+		return dataType;
+	}
+
+	public void setDataType(String dataType) {
+		this.dataType = dataType;
+	}
+
+	public String getDataTypeName() {
+		return dataTypeName;
+	}
+
+	public void setDataTypeName(String dataTypeName) {
+		this.dataTypeName = dataTypeName;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+	public String getColumnSize() {
+		return columnSize;
+	}
+
+	public void setColumnSize(String columnSize) {
+		this.columnSize = columnSize;
+	}
+
+	public String getBufferLength() {
+		return bufferLength;
+	}
+
+	public void setBufferLength(String bufferLength) {
+		this.bufferLength = bufferLength;
+	}
+
+	public String getDecimalDigits() {
+		return decimalDigits;
+	}
+
+	public void setDecimalDigits(String decimalDigits) {
+		this.decimalDigits = decimalDigits;
+	}
+
+	public String getNumPrecRadix() {
+		return numPrecRadix;
+	}
+
+	public void setNumPrecRadix(String numPrecRadix) {
+		this.numPrecRadix = numPrecRadix;
+	}
 
 	private String getType(int type) {
 		try {
@@ -34,31 +79,31 @@ public class TypeName {
 	}
 
 	public void fromRs(ResultSet result) throws SQLException {
-		DATA_TYPE = result.getString("DATA_TYPE");
-		DATA_TYPE_NAME = getType(result.getInt("DATA_TYPE"));
-		TYPE_NAME = result.getString("TYPE_NAME");
-		COLUMN_SIZE = result.getString("COLUMN_SIZE");
-		BUFFER_LENGTH = result.getString("BUFFER_LENGTH");
-		DECIMAL_DIGITS = result.getString("DECIMAL_DIGITS");
-		NUM_PREC_RADIX = result.getString("NUM_PREC_RADIX");
+		dataType = result.getString("DATA_TYPE");
+		dataTypeName = getType(result.getInt("DATA_TYPE"));
+		typeName = result.getString("TYPE_NAME");
+		columnSize = result.getString("COLUMN_SIZE");
+		bufferLength = result.getString("BUFFER_LENGTH");
+		decimalDigits = result.getString("DECIMAL_DIGITS");
+		numPrecRadix = result.getString("NUM_PREC_RADIX");
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(DATA_TYPE);
+		builder.append(dataType);
 		builder.append("\t");
-		builder.append(DATA_TYPE_NAME);
+		builder.append(dataTypeName);
 		builder.append("\t");
-		builder.append(TYPE_NAME);
+		builder.append(typeName);
 		builder.append("\t");
-		builder.append(COLUMN_SIZE);
+		builder.append(columnSize);
 		builder.append("\t");
-		builder.append(BUFFER_LENGTH);
+		builder.append(bufferLength);
 		builder.append("\t");
-		builder.append(DECIMAL_DIGITS);
+		builder.append(decimalDigits);
 		builder.append("\t");
-		builder.append(NUM_PREC_RADIX);
+		builder.append(numPrecRadix);
 		return builder.toString();
 	}
 

@@ -1,25 +1,25 @@
 package com.github.aguilasa.jhipster.types;
 
-import lombok.*;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@RequiredArgsConstructor
 public class Entity {
 
-	@NonNull
 	private String name;
-	
+
 	private String tableName;
 
 	private List<Relationship> relationships = new LinkedList<>();
 
-	@Setter(AccessLevel.NONE)
+	public Entity() {
+
+	}
+
+	public Entity(String name) {
+		this.name = name;
+	}
+
 	private List<EntityField> fields = new LinkedList<>();
 
 	public void addField(EntityField field) {
@@ -28,6 +28,30 @@ public class Entity {
 
 	public void addRelationship(Relationship relationship) {
 		relationships.add(relationship);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getTableName() {
+		return tableName;
+	}
+
+	public void setTableName(String tableName) {
+		this.tableName = tableName;
+	}
+
+	public List<Relationship> getRelationships() {
+		return relationships;
+	}
+
+	public List<EntityField> getFields() {
+		return fields;
 	}
 
 	@Override

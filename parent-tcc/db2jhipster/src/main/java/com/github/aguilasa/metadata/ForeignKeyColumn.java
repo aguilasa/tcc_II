@@ -1,20 +1,45 @@
 package com.github.aguilasa.metadata;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+public class ForeignKeyColumn {
 
-@AllArgsConstructor
-public class ForeignKeyColumn extends Constraint {
-
-	@Getter
+	private Table owner;
+	private String name;
 	private Column column;
-	@Getter
 	private Column referenceColumn;
+
+	public Table getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Table owner) {
+		this.owner = owner;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public ForeignKeyColumn(Column column, Column referenceColumn) {
+		this.column = column;
+		this.referenceColumn = referenceColumn;
+	}
+
+	public Column getColumn() {
+		return column;
+	}
 
 	public void setColumn(Column column) {
 		checkOwner(column);
 		checkColumnOwner(column);
 		this.column = column;
+	}
+
+	public Column getReferenceColumn() {
+		return referenceColumn;
 	}
 
 	public void setReferenceColumn(Column referenceColumn) {

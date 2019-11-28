@@ -8,15 +8,26 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class SendToJdlStudio {
 
 	private String filePath;
 	private boolean isSending = false;
+
+	public String getFilePath() {
+		return filePath;
+	}
+
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+
+	public boolean isSending() {
+		return isSending;
+	}
+
+	public void setSending(boolean isSending) {
+		this.isSending = isSending;
+	}
 
 	public void send() {
 		try {

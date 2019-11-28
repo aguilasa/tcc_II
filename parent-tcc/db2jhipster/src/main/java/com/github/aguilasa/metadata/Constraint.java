@@ -1,14 +1,25 @@
 package com.github.aguilasa.metadata;
 
-import lombok.Getter;
-import lombok.Setter;
-
-@Getter
-@Setter
 public class Constraint {
 
 	private Table owner;
 	private String name;
+
+	public Table getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Table owner) {
+		this.owner = owner;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	@Override
 	public int hashCode() {
