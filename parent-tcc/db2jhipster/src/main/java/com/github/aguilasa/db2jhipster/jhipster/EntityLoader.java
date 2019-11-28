@@ -10,12 +10,12 @@ import java.util.stream.Collectors;
 
 import org.apache.velocity.util.StringUtils;
 
+import com.github.aguilasa.db2jhipster.generators.Converter;
 import com.github.aguilasa.db2jhipster.generators.JdlWriter;
 import com.github.aguilasa.db2jhipster.metadata.Column;
 import com.github.aguilasa.db2jhipster.metadata.DatabaseLoader;
 import com.github.aguilasa.db2jhipster.metadata.ForeignKey;
 import com.github.aguilasa.db2jhipster.metadata.Table;
-import com.github.aguilasa.db2jhipster.utils.Converter;
 
 public class EntityLoader {
 

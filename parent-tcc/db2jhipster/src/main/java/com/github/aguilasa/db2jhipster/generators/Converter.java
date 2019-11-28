@@ -1,4 +1,4 @@
-package com.github.aguilasa.db2jhipster.utils;
+package com.github.aguilasa.db2jhipster.generators;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

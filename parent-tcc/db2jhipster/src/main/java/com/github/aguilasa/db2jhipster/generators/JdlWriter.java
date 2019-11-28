@@ -15,7 +15,6 @@ import com.github.aguilasa.db2jhipster.jhipster.EntityField;
 import com.github.aguilasa.db2jhipster.jhipster.Relationship;
 import com.github.aguilasa.db2jhipster.jhipster.RelationshipType;
 import com.github.aguilasa.db2jhipster.metadata.Table;
-import com.github.aguilasa.db2jhipster.utils.Converter;
 
 public class JdlWriter {
 
