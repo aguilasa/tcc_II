@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 import javax.swing.UIManager;
 
+import com.github.aguilasa.database.ConnectionFactory;
 import com.github.aguilasa.database.DatabaseConfiguration;
 import com.github.aguilasa.database.DatabaseType;
-import com.github.aguilasa.database.connection.ConnectionFactory;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.view.MainView;
 

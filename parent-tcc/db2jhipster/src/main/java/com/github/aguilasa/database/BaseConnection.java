@@ -1,9 +1,7 @@
-package com.github.aguilasa.database.connection;
+package com.github.aguilasa.database;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
-import com.github.aguilasa.database.DatabaseConfiguration;
 
 public abstract class BaseConnection {
 

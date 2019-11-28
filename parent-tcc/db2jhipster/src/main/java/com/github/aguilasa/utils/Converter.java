@@ -6,9 +6,9 @@ import java.util.Set;
 
 import org.apache.velocity.util.StringUtils;
 
-import com.github.aguilasa.jhipster.types.Entity;
-import com.github.aguilasa.jhipster.types.EntityField;
-import com.github.aguilasa.jhipster.types.FieldType;
+import com.github.aguilasa.jhipster.Entity;
+import com.github.aguilasa.jhipster.EntityField;
+import com.github.aguilasa.jhipster.FieldType;
 import com.github.aguilasa.metadata.Column;
 import com.github.aguilasa.metadata.ColumnType;
 import com.github.aguilasa.metadata.PrimaryKey;

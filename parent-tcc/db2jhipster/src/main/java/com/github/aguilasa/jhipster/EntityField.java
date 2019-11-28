@@ -1,4 +1,4 @@
-package com.github.aguilasa.jhipster.types;
+package com.github.aguilasa.jhipster;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

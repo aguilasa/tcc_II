@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.MatteBorder;
 
-import com.github.aguilasa.jhipster.types.Relationship;
-import com.github.aguilasa.jhipster.types.RelationshipType;
+import com.github.aguilasa.jhipster.Relationship;
+import com.github.aguilasa.jhipster.RelationshipType;
 
 import view.swing.custom.combo.ComboBox;
 

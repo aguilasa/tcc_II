@@ -15,7 +15,7 @@ import org.apache.commons.lang.StringUtils;
 
 import com.github.aguilasa.database.DatabaseConfiguration;
 import com.github.aguilasa.database.DatabaseType;
-import com.github.aguilasa.jhipster.generators.JdlWriter;
+import com.github.aguilasa.generators.JdlWriter;
 
 public class DatabaseLoader {
 

@@ -15,9 +15,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
+import com.github.aguilasa.jhipster.Entity;
 import com.github.aguilasa.jhipster.EntityLoader;
-import com.github.aguilasa.jhipster.types.Entity;
-import com.github.aguilasa.jhipster.types.Relationship;
+import com.github.aguilasa.jhipster.Relationship;
 import com.github.aguilasa.view.base.AreaPanel;
 import com.github.aguilasa.view.relationship.Header;
 import com.github.aguilasa.view.relationship.Row;

@@ -1,4 +1,4 @@
-package com.github.aguilasa.jhipster.types;
+package com.github.aguilasa.jhipster;
 
 public enum FieldType {
 	STRING ("String"), //

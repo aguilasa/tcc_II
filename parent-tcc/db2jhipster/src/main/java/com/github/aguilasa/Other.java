@@ -3,9 +3,9 @@ package com.github.aguilasa;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.github.aguilasa.database.ConnectionFactory;
 import com.github.aguilasa.database.DatabaseConfiguration;
 import com.github.aguilasa.database.DatabaseType;
-import com.github.aguilasa.database.connection.ConnectionFactory;
 import com.github.aguilasa.metadata.DatabaseLoader;
 
 public class Other {

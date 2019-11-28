@@ -10,10 +10,7 @@ import java.util.stream.Collectors;
 
 import org.apache.velocity.util.StringUtils;
 
-import com.github.aguilasa.jhipster.generators.JdlWriter;
-import com.github.aguilasa.jhipster.types.Entity;
-import com.github.aguilasa.jhipster.types.Relationship;
-import com.github.aguilasa.jhipster.types.RelationshipType;
+import com.github.aguilasa.generators.JdlWriter;
 import com.github.aguilasa.metadata.Column;
 import com.github.aguilasa.metadata.DatabaseLoader;
 import com.github.aguilasa.metadata.ForeignKey;

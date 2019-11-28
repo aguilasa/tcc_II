@@ -1,4 +1,4 @@
-package com.github.aguilasa.jhipster.generators;
+package com.github.aguilasa.generators;
 
 public enum TemplatesPath {
 	entity("templates/entity.vm"), //

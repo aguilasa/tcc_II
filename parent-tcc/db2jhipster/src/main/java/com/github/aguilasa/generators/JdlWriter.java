@@ -1,4 +1,4 @@
-package com.github.aguilasa.jhipster.generators;
+package com.github.aguilasa.generators;
 
 import java.io.StringWriter;
 import java.util.List;
@@ -10,10 +10,10 @@ import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeConstants;
 import org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader;
 
-import com.github.aguilasa.jhipster.types.Entity;
-import com.github.aguilasa.jhipster.types.EntityField;
-import com.github.aguilasa.jhipster.types.Relationship;
-import com.github.aguilasa.jhipster.types.RelationshipType;
+import com.github.aguilasa.jhipster.Entity;
+import com.github.aguilasa.jhipster.EntityField;
+import com.github.aguilasa.jhipster.Relationship;
+import com.github.aguilasa.jhipster.RelationshipType;
 import com.github.aguilasa.metadata.Table;
 import com.github.aguilasa.utils.Converter;
 
