@@ -52,7 +52,7 @@
 							<archive>
 								<manifest>
 									<mainClass>
-										com.github.aguilasa.DB2JHipster
+										com.github.aguilasa.db2jhipster.DB2JHipster
 									</mainClass>
 								</manifest>
 							</archive>
