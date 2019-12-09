@@ -76,11 +76,12 @@ public class Converter {
 		return field;
 	}
 
-	public static FieldType fieldTypeFromColumn(Column column) {
+	public static FieldType fieldTypeFromColumn(Column column) throws RuntimeException {
 		ColumnType columnType = column.getType();
 		if (COLUMN_TYPE_FIELD_TYPES_MAP.containsKey(columnType)) {
 			return COLUMN_TYPE_FIELD_TYPES_MAP.get(columnType);
-		} else if (columnType.equals(ColumnType.DECIMAL) || columnType.equals(ColumnType.NUMERIC)) {
+		} else if (columnType.equals(ColumnType.DECIMAL) || //
+				columnType.equals(ColumnType.NUMERIC)) {
 			int columnSize = column.getLength();
 			if (column.getScale() >= 0) {
 				if (columnSize <= 19) {
@@ -95,7 +96,9 @@ public class Converter {
 			}
 			return FieldType.BIGDECIMAL;
 		}
-		return null;
+		throw new RuntimeException(//
+				String.format("Não foi possível converver o tipo: %s", columnType)//
+		);
 	}
 
 	static {

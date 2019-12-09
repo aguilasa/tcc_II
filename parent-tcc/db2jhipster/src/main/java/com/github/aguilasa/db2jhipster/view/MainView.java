@@ -42,6 +42,7 @@ public class MainView extends JFrame implements Observer {
 	private Step step = new Step();
 
 	public MainView() {
+		setTitle("DB2JHipster");
 		initialize();
 	}
 

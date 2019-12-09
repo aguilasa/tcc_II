@@ -69,14 +69,17 @@ public class EntityLoader {
 		relationships.clear();
 		Set<Entity> remove = new LinkedHashSet<>();
 		for (Entity entity : entities) {
-			Table table = databaseLoader.findTableByName(entity.getTableName());
+			Table table = databaseLoader.findTableByName(//
+					entity.getTableName() //
+			);
 			if (isManyToManyTable(table)) {
 				addManyToManyRelationship(table, entity);
 				remove.add(entity);
 			} else {
-				table.getForeignKeys().entrySet().stream().map(Map.Entry::getValue).forEach(f -> {
-					addOneToOneRelationship(f, entity);
-				});
+				table.getForeignKeys().entrySet().stream().map(//
+						Map.Entry::getValue).forEach(f -> {
+							addOneToOneRelationship(f, entity);
+						});
 			}
 		}
 		for (Entity entity : remove) {

@@ -22,7 +22,7 @@ https://www.baeldung.com/jhipster
 https://www.ionos.com/digitalguide/websites/web-development/jhipster/
 
 
-https://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html
+https://docs.oracle.com/javase/8/docs/api/java/sql/DatabaseMetaData.html
 
 https://www.baeldung.com/apache-velocity
 

@@ -16,7 +16,11 @@ public class PostgreSQLConnection extends BaseConnection {
 
 	@Override
 	public Connection getConnection() throws SQLException {
-		Connection connection = DriverManager.getConnection(getJdbcUrl(), configuration.getUsername(), configuration.getPassword());
+		Connection connection = DriverManager.getConnection(//
+				getJdbcUrl(), //
+				configuration.getUsername(), //
+				configuration.getPassword()//
+		);
 		if (!StringUtils.isEmpty(configuration.getSchema())) {
 			connection.setSchema(configuration.getSchema());
 		}
@@ -25,7 +29,10 @@ public class PostgreSQLConnection extends BaseConnection {
 
 	@Override
 	public String getJdbcUrl() {
-		return String.format(JDBC_URL_PG, configuration.getHost(), configuration.getPort(), configuration.getDatabase());
+		return String.format(JDBC_URL_PG, //
+				configuration.getHost(), //
+				configuration.getPort(), //
+				configuration.getDatabase());
 	}
 
 }
