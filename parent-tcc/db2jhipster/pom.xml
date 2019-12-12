@@ -72,22 +72,16 @@
 			<groupId>com.oracle</groupId>
 			<artifactId>ojdbc8</artifactId>
 			<version>12.2.0.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/ojdbc8.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>ucp</artifactId>
 			<version>12.2.0.1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/ucp.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.microsoft.sqlserver</groupId>
 			<artifactId>sqljdbc42</artifactId>
 			<version>4.2</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/sqljdbc42.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.postgresql/postgresql -->
 		<dependency>
