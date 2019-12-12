@@ -18,13 +18,14 @@ public class Converter {
 
 	private static final Map<ColumnType, FieldType> COLUMN_TYPE_FIELD_TYPES_MAP = new LinkedHashMap<>();
 
-	static public String lowerFirstLetter(String data) {
+	public static String lowerFirstLetter(String data) {
 		String firstLetter = data.substring(0, 1).toLowerCase();
 		String restLetters = data.substring(1);
 		return firstLetter + restLetters;
 	}
 
 	public static String normalizeName(String name) {
+		name = name.toLowerCase();
 		String[] split = name.split("_");
 		if (split.length > 1) {
 			StringBuilder sb = new StringBuilder();
@@ -37,6 +38,7 @@ public class Converter {
 	}
 
 	public static String normalizeFieldName(String name) {
+		name = name.toLowerCase();
 		String[] split = name.split("_");
 		if (split.length > 1) {
 			StringBuilder sb = new StringBuilder();

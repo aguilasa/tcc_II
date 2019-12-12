@@ -60,7 +60,7 @@ public class DBConfigView extends AreaPanel {
 
 		cbDatabaseType = new ComboBox<>();
 		cbDatabaseType.setModel(new DefaultComboBoxModel<>(DatabaseType.values()));
-		cbDatabaseType.setSelectedIndex(2);
+		cbDatabaseType.setSelectedIndex(0);
 		cbDatabaseType.setBounds(10, 35, 570, 38);
 		add(cbDatabaseType);
 
@@ -84,7 +84,7 @@ public class DBConfigView extends AreaPanel {
 		add(lblPort);
 
 		edtPort = new Input();
-		edtPort.setText("5432");
+		edtPort.setText("1521");
 		edtPort.setBounds(464, 115, 116, 38);
 		add(edtPort);
 
@@ -96,7 +96,7 @@ public class DBConfigView extends AreaPanel {
 		add(lblDatabase);
 
 		edtDatabase = new Input();
-		edtDatabase.setText("postgres");
+		edtDatabase.setText("XE");
 		edtDatabase.setBounds(10, 195, 280, 38);
 		add(edtDatabase);
 
@@ -108,7 +108,7 @@ public class DBConfigView extends AreaPanel {
 		add(lblSchema);
 
 		edtSchema = new Input();
-		edtSchema.setText("empresa");
+		edtSchema.setText("banca");
 		edtSchema.setBounds(300, 195, 280, 38);
 		add(edtSchema);
 
@@ -127,13 +127,13 @@ public class DBConfigView extends AreaPanel {
 		add(lblSenha);
 
 		edtUser = new Input();
-		edtUser.setText("postgres");
+		edtUser.setText("banca");
 		edtUser.setBounds(10, 275, 280, 38);
 		add(edtUser);
 
 		edtPassword = new Password();
 		edtPassword.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-		edtPassword.setText("postgres");
+		edtPassword.setText("banca");
 		edtPassword.setBounds(300, 275, 280, 38);
 		add(edtPassword);
 
