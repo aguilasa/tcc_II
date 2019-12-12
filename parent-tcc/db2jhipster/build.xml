@@ -28,7 +28,7 @@
 	</macrodef>
 	<macrodef name="installSqlJdbc">
 		<sequential>
-			<echo message="Instalando UCP" />
+			<echo message="Instalando SqlServer JDBC" />
 			<exec executable="cmd" dir="${current.directory}/lib" failonerror="true">
 				<arg line="/c mvn install:install-file -Dfile=sqljdbc42.jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc42 -Dversion=4.2 -Dpackaging=jar" />
 			</exec>
