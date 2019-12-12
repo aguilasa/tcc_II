@@ -26,11 +26,11 @@ public class Password extends JPanel {
 	private static final long serialVersionUID = -4177396588741203553L;
 	private static final Border emptyBorder = BorderFactory.createEmptyBorder();
 
-	// visÌveis
+	// vis√≠veis
 	private ComponentSize componentSize = ComponentSize.DEFAULT;
 	private boolean enabled;
 
-	// n„o visÌveis
+	// n√£o vis√≠veis
 	JPasswordField textField;
 	private BorderSize borderSize;
 
