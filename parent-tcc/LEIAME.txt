@@ -1,0 +1,7 @@
+Pré-requisitos:
+- instalar o maven: https://dicasdejava.com.br/como-instalar-o-maven-no-windows/
+- instalar o ant: https://loiane.com/2015/03/instalando-o-apache-ant-e-configurando-a-variavel-de-ambiente-ant_home-no-windows/
+
+Antes de importar o projeto, executar a seguinte linha de comando:
+
+ant -buildfile build.xml
